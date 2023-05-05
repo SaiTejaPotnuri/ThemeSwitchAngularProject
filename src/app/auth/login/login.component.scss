@@ -1,0 +1,340 @@
+@import '../../../global.scss';
+
+.containerLogin {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--secondaryColor1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainContainer {
+    width: 100%;
+    height: 40rem;
+    margin: 30px;
+    margin-left: 7rem;
+    margin-right: 7rem;
+    display: flex;
+    filter: drop-shadow(9px 9px 2px #aeadad);
+}
+
+
+@media screen and (max-height:600px) {
+    .mainContainer {
+        height: 35rem !important;
+    }
+}
+
+@media screen and (min-width:1180px) and (max-width:1250px) {
+
+    .mainContainer {
+        margin-left: 5rem;
+        margin-right: 5rem;
+
+    }
+}
+
+@media screen and (min-width:970px) and (max-width:1180px) {
+
+    .mainContainer {
+        margin-left: 2rem;
+        margin-right: 2rem;
+
+    }
+
+    .mainContainer .imagePart {
+        width: 55% !important;
+    }
+
+    .mainContainer .formPart {
+        width: 45% !important;
+
+    }
+
+}
+
+@media screen and (min-width:735px) and (max-width:969px) {
+
+    .mainContainer {
+        margin-left: 2rem;
+        margin-right: 2rem;
+
+    }
+
+    .mainContainer .imagePart {
+        width: 50% !important;
+    }
+
+    .mainContainer .formPart {
+        width: 50% !important;
+    }
+
+}
+
+@media screen and (max-width:735px) {
+
+    .mainContainer {
+        margin-left: 1rem !important;
+        margin-right: 1rem !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url('../../../assets/Images/logisticLogo.png');
+        object-fit: fill;
+        width: auto !important;
+        height: 97% !important;
+
+
+    }
+
+    .mainContainer .imagePart {
+        display: none !important;
+    }
+
+    .mainContainer .formPart {
+        width: fit-content !important;
+        background-color: transparent !important;
+    }
+
+}
+
+
+.mainContainer .imagePart {
+    width: 60%;
+    height: 100%;
+
+}
+
+.mainContainer .imagePart img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    border-top-left-radius: 2%;
+    border-bottom-left-radius: 2%;
+}
+
+.mainContainer .formPart {
+    width: 40%;
+    height: 100%;
+    background-color:var(--secondaryColor1);
+    border-top-right-radius: 2%;
+    border-bottom-right-radius: 2%;
+}
+
+
+.signInForm{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+    padding-left: 37px;
+
+}
+
+.signInForm form {
+    width: 100%;
+    height: auto;
+    
+}
+
+
+
+.signInForm h2{
+    font-family: $fontFamily;
+    font-weight: 600;
+    font-size: 2.5em;
+    letter-spacing: 3px;
+    color: var(--primaryColor1);
+    margin-bottom: 1rem;
+
+}
+
+.signInForm p{
+    font-family: $fontFamily;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color:var(--fontColor1);
+}
+
+.signInForm p:nth-child(3),
+.signUpForm p:nth-child(3) {
+    margin-bottom: 2rem;
+}
+
+.emailTag {
+    width: 90%;
+    height: 3.5rem;
+}
+.themeInput {
+    width: 80%;
+    height: 3.5rem;
+}
+.themeInput2 {
+    width: 20%;
+    height: 3.5rem;
+}
+.primaryTheme,.secondaryTheme{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+}
+
+
+.passwordTag {
+    width: 90%;
+    height: 3.5rem;
+    margin-top: 2.5rem;
+}
+
+
+.submitButton {
+    width: 90%;
+    height: auto;
+    margin-top: 2.5rem;
+    cursor: pointer;
+    margin-bottom: 4rem;
+}
+.createThemeButton{
+    width: 70%;
+    height: auto;
+    cursor: pointer;
+}
+
+.formFooter {
+    width: 80%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.5rem;
+    position: absolute;
+    bottom: 24px;
+    
+}
+
+.formFooter a {
+    text-decoration: none;
+    cursor: pointer;
+    font-family: $fontFamily;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgb(50 50 214);
+    
+
+}
+
+
+
+::ng-deep {
+
+    .emailTag,
+    .passwordTag,.themeInput {
+        .p-inputtext {
+            background-color: var(--secondaryColor1) !important;
+            transition: none !important;
+            color: var(--fontColor1);
+
+        }
+
+        .p-inputtext.ng-dirty.ng-invalid {
+            border: var(--primaryColor1) !important;
+        }
+
+        .p-inputtext:enabled:hover {
+            border-color: var(--primaryColor1) !important;
+            
+        }
+
+        .p-inputtext:enabled:focus {
+            border:1px solid var(--primaryColor1) !important;
+            box-shadow: none !important;
+
+        }
+        .p-float-label > label {
+            color: var(--fontColor1);
+        }
+
+    }
+
+
+
+    .submitButton {
+        .p-button:focus {
+                            box-shadow: 5px 7px rgb(208, 204, 204);
+        }
+         .p-button {
+                color:var(--buttonFontColor) !important;
+                background:var(--primaryColor1) !important;
+                border: 1px solid var(--primaryColor1) !important;
+            }
+    }
+
+
+    @media screen and (max-width:735px) {
+
+        .emailTag,
+        .passwordTag,.themeInput {
+            .p-inputtext {
+                background-color: var(--secondaryColor1) !important;
+                transition: none !important;
+
+            }
+
+            .p-inputtext.ng-dirty.ng-invalid {
+                border: none !important;
+            }
+
+            .p-inputtext:enabled:hover {
+                border-color: var(--primaryColor1) !important;
+            }
+
+            .p-inputtext:enabled:focus {
+                border: var(--primaryColor1) !important;
+                box-shadow: none !important;
+
+            }
+        }
+
+
+
+        .submitButton {
+            margin-top: 3rem !important;
+
+            .p-button {
+                color:var(--buttonFontColor) !important;
+                background:var(--primaryColor1) !important;
+                border: 1px solid var(--primaryColor1) !important;
+            }
+        }
+
+
+    }
+
+    .themeChangeDialog{
+        .p-dialog {
+            max-height: auto;
+        }
+        .p-dialog .p-dialog-header {
+            padding: 0.8rem;
+        }
+        .dialogbodyPart{
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
+               
+        }
+        
+    }
+}

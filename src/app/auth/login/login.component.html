@@ -1,0 +1,87 @@
+<div class="containerLogin">
+    <div class="mainContainer">
+
+        <div class="imagePart">
+            <img [src]="imagesList.logisticsImage" alt="">
+        </div>
+        <div class="formPart">
+
+            <section id="In" class="signInForm">
+                <h2>Sign In</h2>
+                <p>Welcome to logistics supply chain platform</p>
+                <p>Login as member to experience</p>
+                <div class="emailTag">
+                    <app-inputtag [type]="'email'" [label]="'UserName'" [idInfo]="'float-input1'"
+                        [formGroupInfo]="signInForm" [formControlNameInfo]="'signInEmail'"></app-inputtag>
+
+                </div>
+                <div class="passwordTag">
+                    <app-inputtag [type]="'password'" [label]="'Password'" [formGroupInfo]="signInForm"
+                        [formControlNameInfo]="'signINPassword'"></app-inputtag>
+
+                </div>
+                <div class="submitButton">
+                    <app-buttontag [classInfo]="'p-button-raised'" [label]="' Sign In '" [buttonType]="'submit'"
+                        (buttonStatus)="submitSignInDetails(signInForm)"
+                        [disabledInfo]="signInForm.invalid"></app-buttontag>
+                </div>
+
+                <div class="formFooter">
+                    <p>Change Theme?</p>
+                    <a (click)="changeTheme()">Click here</a>
+
+                </div>
+                <div class="themeChangeDialog">
+                    <p-dialog header="Create Theme" [(visible)]="visible" [style]="{width: '30vw'}" [modal]="true"
+                        [draggable]="false" [resizable]="false">
+                        <div class="dialogbodyPart">
+                            <div class="primaryTheme">
+                                <div class="themeInput">
+                                    <app-inputtag [type]="'text'" [label]="'Primary Color'" [idInfo]="'float-input5'"
+                                        [formGroupInfo]="customTheme"
+                                        [formControlNameInfo]="'primaryColor'"></app-inputtag>
+                                </div>
+                                <div class="themeInput2">
+                                    <app-inputtag [type]="'color'" [idInfo]="'float-input6'"
+                                        [formGroupInfo]="customTheme"
+                                        [formControlNameInfo]="'primaryColor'"></app-inputtag>
+
+                                </div>
+
+                            </div>
+                            <div class="secondaryTheme">
+                                <div class="themeInput">
+                                    <app-inputtag [type]="'text'" [label]="'Secondary Color'" [idInfo]="'float-input4'"
+                                        [formGroupInfo]="customTheme"
+                                        [formControlNameInfo]="'secondaryColor'"></app-inputtag>
+
+                                </div>
+                                <div class="themeInput2">
+                                    <app-inputtag [type]="'color'" [idInfo]="'float-input7'"
+                                        [formGroupInfo]="customTheme"
+                                        [formControlNameInfo]="'secondaryColor'"></app-inputtag>
+
+                                </div>
+                            </div>
+
+
+                            <div class="createThemeButton">
+                                <app-buttontag [classInfo]="'p-button-raised'" [label]="' Create '"
+                                    [buttonType]="'submit'" [disabledInfo]="customTheme.invalid"
+                                    (buttonStatus)="newTheme(customTheme.value)"></app-buttontag>
+                            </div>
+                        </div>
+
+                    </p-dialog>
+                </div>
+
+
+
+            </section>
+
+
+        </div>
+
+    </div>
+
+</div>

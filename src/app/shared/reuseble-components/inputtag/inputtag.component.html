@@ -1,0 +1,5 @@
+<span class="p-float-label" [formGroup]="formGroupInfo">
+    <input [id]="idInfo" class="inputStyle"  [type]="type" [placeholder]="placeholderText" [(ngModel)]="colorName"
+        (keyup)="onchangeFunctionOnInput(colorName)" (input)="fetchColorPicker(colorName)" [formControlName]="formControlNameInfo" pInputText />
+    <label [for]="idInfo">{{label}}</label>
+</span>

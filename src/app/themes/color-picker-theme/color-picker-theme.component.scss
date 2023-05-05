@@ -1,0 +1,47 @@
+@import '../../../global.scss';
+
+
+
+
+
+.mainContainer {
+    width: 100%;
+    height: 100%;
+    background-color: var(--secondaryColor1);
+}
+
+.subContainer {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.subContainer .card {
+    width: 60%;
+    padding: 1rem;
+    border: 2px solid var(--primaryColor1);
+    height: fit-content;
+    background-color: var(--secondaryColor1);
+
+}
+
+.subContainer .card h2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-family: $fontFamily;
+    margin-bottom: 0.5rem;
+    color: var(--primaryColor1);
+}
+
+.subContainer .card p {
+    font-size: 0.9rem;
+    font-weight: 100;
+    font-family: $fontFamily;
+    text-align: left;
+    color:var(--fontColor1);
+}
+
+

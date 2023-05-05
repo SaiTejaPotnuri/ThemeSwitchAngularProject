@@ -1,0 +1,67 @@
+<div class="headerContainer">
+        <div class="logoPart">
+                <h2>MyTheme</h2>
+        </div>
+        <div class="subContainer">
+
+                <ul>
+                        <li><a routerLink="/mythemes/themeHome" routerLinkActive="active" >Home</a></li>
+                        <li><a routerLink="/mythemes/colorPicker" routerLinkActive="active">ColorPicker</a></li>
+                        <li><a routerLink="/login" routerLinkActive="active">LogOut</a></li>
+
+                </ul>
+                <div class="themeChangeButton">
+                
+                        <app-buttontag [classInfo]="'p-button-info p-button-text'" [label]="' Create Your Theme '" [buttonType]="'submit'"
+                                (buttonStatus)="buttonClicked()"></app-buttontag>
+                
+                </div>
+
+                
+        </div>
+
+</div>
+
+<div class="themeChangeDialog">
+        <p-dialog header="Create Theme" [(visible)]="visible" [style]="{width: '30vw'}" [modal]="true"
+                [draggable]="false" [resizable]="false">
+                <div class="dialogbodyPart">
+                        <div class="primaryTheme">
+                                <div class="themeInput">
+                                        <app-inputtag [type]="'text'" [label]="'Primary Color'"
+                                                [idInfo]="'float-input5'" [formGroupInfo]="myNewTheme"
+                                                [formControlNameInfo]="'primaryColor'"></app-inputtag>
+                                </div>
+                                <div class="themeInput2">
+                                        <app-inputtag [type]="'color'" [idInfo]="'float-input6'"
+                                                [formGroupInfo]="myNewTheme"
+                                                [formControlNameInfo]="'primaryColor'"></app-inputtag>
+
+                                </div>
+
+                        </div>
+                        <div class="secondaryTheme">
+                                <div class="themeInput">
+                                        <app-inputtag [type]="'text'" [label]="'Secondary Color'"
+                                                [idInfo]="'float-input4'" [formGroupInfo]="myNewTheme"
+                                                [formControlNameInfo]="'secondaryColor'"></app-inputtag>
+
+                                </div>
+                                <div class="themeInput2">
+                                        <app-inputtag [type]="'color'" [idInfo]="'float-input7'"
+                                                [formGroupInfo]="myNewTheme"
+                                                [formControlNameInfo]="'secondaryColor'"></app-inputtag>
+
+                                </div>
+                        </div>
+
+
+                        <div class="createThemeButton">
+                                <app-buttontag [classInfo]="'p-button-raised'" [label]="' Create '"
+                                        [buttonType]="'submit'" [disabledInfo]="myNewTheme.invalid"
+                                        (buttonStatus)="newThemeInDashboard(myNewTheme.value)"></app-buttontag>
+                        </div>
+                </div>
+
+        </p-dialog>
+</div>
