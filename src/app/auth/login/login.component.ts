@@ -73,6 +73,7 @@ export class LoginComponent {
     this.customTheme.patchValue(this.fetchedColors)
     this.colorPickerTheme.get('primaryColor11').setValue(this.fetchedColors.primaryColor)
     this.colorPickerTheme.get('secondaryColor11').setValue(this.fetchedColors.secondaryColor)
+    
    
   }
 
@@ -82,12 +83,24 @@ export class LoginComponent {
     this.router.navigate(['/mythemes'])
 
   }
+
+
+
+
+
+
   changeTheme() {
     this.visible = !this.visible
+    this.fetchedColors = this.customThemeService.fetchPrimaryColor();
     this.customTheme.patchValue(this.fetchedColors)
+    
     this.colorPickerTheme.get('primaryColor11').setValue(this.fetchedColors.primaryColor)
     this.colorPickerTheme.get('secondaryColor11').setValue(this.fetchedColors.secondaryColor)
-    document.documentElement.style.setProperty('--fontColor1', '#000000')
+    document.documentElement.style.setProperty('--defaultPrimary', this.fetchedColors.primaryColor)
+    document.documentElement.style.setProperty('--defaultSecondary', this.fetchedColors.secondaryColor)
+    document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(this.fetchedColors.primaryColor))
+    document.documentElement.style.setProperty('--fontColor12', this.customThemeService.getFontColor(this.fetchedColors.secondaryColor))
+
 
         
   }
@@ -96,8 +109,6 @@ export class LoginComponent {
 
     let { primaryColor, secondaryColor } = themeDetails;
     this.themesColorFetchingStatus = false
-
-   
       themeDetails.primaryColor.length <= 3 ? themeDetails.primaryColor = '#' + this.customThemeService.fetchHexaCode(primaryColor) : themeDetails.primaryColor = primaryColor
       themeDetails.secondaryColor.length <= 3 ? themeDetails.secondaryColor = '#' + this.customThemeService.fetchHexaCode(secondaryColor) : themeDetails.secondaryColor = secondaryColor
    
@@ -108,15 +119,31 @@ export class LoginComponent {
 
 
 
-  applyingColorsToInput(colorData,idData,colorPickerFormController,customThemeControlername){
-    
-    
-    document.getElementById(idData).style.backgroundColor = "#" + this.customThemeService.fetchHexaCode(colorData)
-    let colorPickerSetValue = '#' + this.customThemeService.fetchHexaCode(colorData)
-    this.colorPickerTheme.get(colorPickerFormController)?.setValue(colorPickerSetValue) 
-    this.customTheme.get(customThemeControlername)?.setValue(colorData)
-    
+  applyingColorsToInput(colorData,colorPickerFormController,customThemeControlername){
+      let colorData1
+   if(this.customTheme.valid){
+     colorData1 = "#" + this.customThemeService.fetchHexaCode(colorData)
+     if (customThemeControlername === "primaryColor") {
+       document.documentElement.style.setProperty('--defaultPrimary', colorData1)
+       document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(colorData1))
 
+
+     }
+     else {
+       document.documentElement.style.setProperty('--defaultSecondary', colorData1)
+       document.documentElement.style.setProperty('--fontColor12', this.customThemeService.getFontColor(colorData1))
+
+     }
+  
+
+
+     let colorPickerSetValue = '#' + this.customThemeService.fetchHexaCode(colorData)
+     this.colorPickerTheme.get(colorPickerFormController)?.setValue(colorPickerSetValue)
+     this.customTheme.get(customThemeControlername)?.setValue(colorData)
+
+
+   } 
+   
   }
 
 

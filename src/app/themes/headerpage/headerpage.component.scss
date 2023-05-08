@@ -141,30 +141,59 @@ h2::first-letter {
     }
    
    
-    .themeInput {
+      .themeInput {
         .p-inputtext {
-        //    background-color: var(--secondaryColor1) !important;
+              background-color: var(--defaultPrimary) !important;
             transition: none !important;
-            color: var(--fontColor1);
+            color: var(--fontColor11);
 
         }
 
         .p-inputtext.ng-dirty.ng-invalid {
-            border: var(--primaryColor1) !important;
+            border-color: var(--defaultSecondary) !important;
         }
 
         .p-inputtext:enabled:hover {
-            border-color: var(--primaryColor1) !important;
-            
+            border-color: var(--defaultSecondary) !important;
+
         }
 
         .p-inputtext:enabled:focus {
-            border:1px solid var(--primaryColor1) !important;
+            border: 1px solid var(--defaultSecondary) !important;
             box-shadow: none !important;
 
         }
-        .p-float-label > label {
-            color: var(--fontColor1);
+
+        .p-float-label>label {
+            color: var(--fontColor11);
+        }
+
+    }
+     .themeInputSecondary {
+        .p-inputtext {
+              background-color: var(--defaultSecondary) !important;
+            transition: none !important;
+            color: var(--fontColor12);
+
+        }
+
+        .p-inputtext.ng-dirty.ng-invalid {
+            border-color: var(--defaultPrimary) !important;
+        }
+
+        .p-inputtext:enabled:hover {
+            border-color: var(--defaultPrimary) !important;
+
+        }
+
+        .p-inputtext:enabled:focus {
+            border: 1px solid var(--defaultPrimary) !important;
+            box-shadow: none !important;
+
+        }
+
+        .p-float-label>label {
+            color: var(--fontColor12);
         }
 
     }
@@ -172,33 +201,68 @@ h2::first-letter {
 
 
 
+
     @media screen and (max-width:735px) {
 
-        .themeInput {
-            .p-inputtext {
-             //   background-color: var(--secondaryColor1) !important;
-                transition: none !important;
+       
+         .themeInput {
+        .p-inputtext {
+              background-color: var(--secondaryColor1) !important;
+            transition: none !important;
+            color: var(--fontColor11);
 
-            }
-
-            .p-inputtext.ng-dirty.ng-invalid {
-                border: none !important;
-            }
-
-            .p-inputtext:enabled:hover {
-                border-color: var(--primaryColor1) !important;
-            }
-
-            .p-inputtext:enabled:focus {
-                border: var(--primaryColor1) !important;
-                box-shadow: none !important;
-
-            }
         }
 
+        .p-inputtext.ng-dirty.ng-invalid {
+            border-color: var(--primaryColor1) !important;
+        }
 
+        .p-inputtext:enabled:hover {
+            border-color: var(--primaryColor1) !important;
 
-        
+        }
+
+        .p-inputtext:enabled:focus {
+            border: 1px solid var(--primaryColor1) !important;
+            box-shadow: none !important;
+
+        }
+
+        .p-float-label>label {
+            color: var(--fontColor11);
+        }
+
+    }
+     .themeInputSecondary {
+        .p-inputtext {
+              background-color: var(--secondaryColor1) !important;
+            transition: none !important;
+            color: var(--fontColor12);
+
+        }
+
+        .p-inputtext.ng-dirty.ng-invalid {
+            border-color: var(--primaryColor1) !important;
+        }
+
+        .p-inputtext:enabled:hover {
+            border-color: var(--primaryColor1) !important;
+
+        }
+
+        .p-inputtext:enabled:focus {
+            border: 1px solid var(--primaryColor1) !important;
+            box-shadow: none !important;
+
+        }
+
+        .p-float-label>label {
+            color: var(--fontColor12);
+        }
+
+    }
+
+ 
 
 
     }

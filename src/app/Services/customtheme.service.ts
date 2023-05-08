@@ -13,7 +13,6 @@ export class CustomthemeService {
 
   fetchPrimaryColor(){
 
-    console.log(localStorage.getItem('primary'),"Check value");
 
     let prim = localStorage.getItem('primary')
     let seco = localStorage.getItem('secondary')
@@ -95,8 +94,8 @@ export class CustomthemeService {
     }
     else if (hex.length === 6) {
       hex = hex;
-
     }
+    
     
    
     return hex;

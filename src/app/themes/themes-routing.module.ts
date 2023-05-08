@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       { path: 'colorPicker', component: ColorPickerThemeComponent },
       {path:'themeHome',component:HomepageComponent},
-      { path: '', redirectTo:'/mythemes/themeHome',pathMatch:'full'}
+      { path: '', redirectTo:'/mythemes/colorPicker',pathMatch:'full'}
     ]
 
   }

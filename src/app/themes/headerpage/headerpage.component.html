@@ -30,27 +30,27 @@
                         <div class="themeInput">
                                 <app-inputtag [type]="'text'" [label]="'Primary Color'" [idInfo]="'float-input9'" [formGroupInfo]="myNewTheme"
                                         [formControlNameInfo]="'primaryColor'"
-                                        (valueChangeStatus)="applyingColorsToInput1($event,'float-input9','primaryColor11','primaryColor')"></app-inputtag>
+                                        (valueChangeStatus)="applyingColorsToInput1($event,'primaryColor11','primaryColor')"></app-inputtag>
                         </div>
                         <div class="themeInput2">
                                 <app-inputtag [type]="'color'" [idInfo]="'float-input6'" [formGroupInfo]="colorPickerTheme1"
                                         [formControlNameInfo]="'primaryColor11'"
-                                        (valueChangeStatus)="applyingColorsToInput1($event,'float-input9','primaryColor11','primaryColor')"></app-inputtag>
+                                        (valueChangeStatus)="applyingColorsToInput1($event,'primaryColor11','primaryColor')"></app-inputtag>
                         
                         </div>
 
                         </div>
                         <div class="secondaryTheme">
-                                <div class="themeInput">
+                                <div class="themeInputSecondary">
                                         <app-inputtag [type]="'text'" [label]="'Secondary Color'" [idInfo]="'float-input10'"
                                                 [formGroupInfo]="myNewTheme" [formControlNameInfo]="'secondaryColor'"
-                                                (valueChangeStatus)="applyingColorsToInput1($event,'float-input10','secondaryColor11','secondaryColor')"></app-inputtag>
+                                                (valueChangeStatus)="applyingColorsToInput1($event,'secondaryColor11','secondaryColor')"></app-inputtag>
                                 
                                 </div>
                                 <div class="themeInput2">
                                         <app-inputtag [type]="'color'" [idInfo]="'float-input7'" [formGroupInfo]="colorPickerTheme1"
                                                 [formControlNameInfo]="'secondaryColor11'"
-                                                (valueChangeStatus)="applyingColorsToInput1($event,'float-input10','secondaryColor11','secondaryColor')"></app-inputtag>
+                                                (valueChangeStatus)="applyingColorsToInput1($event,'secondaryColor11','secondaryColor')"></app-inputtag>
                                 
                                 </div>
                         </div>

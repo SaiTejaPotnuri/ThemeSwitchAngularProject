@@ -117,13 +117,13 @@
 .mainContainer .formPart {
     width: 40%;
     height: 100%;
-    background-color:var(--secondaryColor1);
+    background-color: var(--secondaryColor1);
     border-top-right-radius: 2%;
     border-bottom-right-radius: 2%;
 }
 
 
-.signInForm{
+.signInForm {
     width: 100%;
     height: 100%;
     display: flex;
@@ -139,12 +139,12 @@
 .signInForm form {
     width: 100%;
     height: auto;
-    
+
 }
 
 
 
-.signInForm h2{
+.signInForm h2 {
     font-family: $fontFamily;
     font-weight: 600;
     font-size: 2.5em;
@@ -154,12 +154,12 @@
 
 }
 
-.signInForm p{
+.signInForm p {
     font-family: $fontFamily;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color:var(--fontColor1);
+    color: var(--fontColor1);
 }
 
 .signInForm p:nth-child(3),
@@ -171,15 +171,19 @@
     width: 90%;
     height: 3.5rem;
 }
-.themeInput {
+
+.themeInput,.themeInputSecondary {
     width: 80%;
     height: 3.5rem;
 }
+
 .themeInput2 {
     width: 20%;
     height: 3.5rem;
 }
-.primaryTheme,.secondaryTheme{
+
+.primaryTheme,
+.secondaryTheme {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -202,7 +206,8 @@
     cursor: pointer;
     margin-bottom: 4rem;
 }
-.createThemeButton{
+
+.createThemeButton {
     width: 70%;
     height: auto;
     cursor: pointer;
@@ -217,7 +222,7 @@
     gap: 0.5rem;
     position: absolute;
     bottom: 24px;
-    
+
 }
 
 .formFooter a {
@@ -228,7 +233,7 @@
     font-weight: 400;
     line-height: 1.5;
     color: rgb(50 50 214);
-    
+
 
 }
 
@@ -242,73 +247,109 @@
             background-color: var(--secondaryColor1) !important;
             transition: none !important;
             color: var(--fontColor1);
+                border: 1px solid var(--primaryColor1);
+
 
         }
 
         .p-inputtext.ng-dirty.ng-invalid {
-            border: var(--primaryColor1) !important;
+            border-color: var(--primaryColor1) !important;
         }
 
         .p-inputtext:enabled:hover {
             border-color: var(--primaryColor1) !important;
-            
+
         }
 
         .p-inputtext:enabled:focus {
-            border:1px solid var(--primaryColor1) !important;
+            border: 1px solid var(--primaryColor1) !important;
             box-shadow: none !important;
 
         }
-        .p-float-label > label {
+
+        .p-float-label>label {
             color: var(--fontColor1);
         }
 
     }
-.themeInput {
+
+    .themeInput {
         .p-inputtext {
+              background-color: var(--defaultPrimary) !important;
             transition: none !important;
-            color: var(--fontColor1);
+            color: var(--fontColor11);
 
         }
 
         .p-inputtext.ng-dirty.ng-invalid {
-            border: var(--primaryColor1) !important;
+            border-color: var(--defaultSecondary) !important;
         }
 
         .p-inputtext:enabled:hover {
-            border-color: var(--primaryColor1) !important;
-            
+            border-color: var(--defaultSecondary) !important;
+
         }
 
         .p-inputtext:enabled:focus {
-            border:1px solid var(--primaryColor1) !important;
+            border: 1px solid var(--defaultSecondary) !important;
             box-shadow: none !important;
 
         }
-        .p-float-label > label {
-            color: var(--fontColor1);
+
+        .p-float-label>label {
+            color: var(--fontColor11);
         }
 
     }
+     .themeInputSecondary {
+        .p-inputtext {
+              background-color: var(--defaultSecondary) !important;
+            transition: none !important;
+            color: var(--fontColor12);
+
+        }
+
+        .p-inputtext.ng-dirty.ng-invalid {
+            border-color: var(--defaultPrimary) !important;
+        }
+
+        .p-inputtext:enabled:hover {
+            border-color: var(--defaultPrimary) !important;
+
+        }
+
+        .p-inputtext:enabled:focus {
+            border: 1px solid var(--defaultPrimary) !important;
+            box-shadow: none !important;
+
+        }
+
+        .p-float-label>label {
+            color: var(--fontColor12);
+        }
+
+    }
+
 
 
 
     .submitButton {
         .p-button:focus {
-                            box-shadow: 5px 7px rgb(208, 204, 204);
+            box-shadow: 5px 7px rgb(208, 204, 204);
         }
-         .p-button {
-                color:var(--buttonFontColor) !important;
-                background:var(--primaryColor1) !important;
-                border: 1px solid var(--primaryColor1) !important;
-            }
+
+        .p-button {
+            color: var(--buttonFontColor) !important;
+            background: var(--primaryColor1) !important;
+            border: 1px solid var(--primaryColor1) !important;
+        }
     }
 
 
     @media screen and (max-width:735px) {
 
         .emailTag,
-        .passwordTag,.themeInput {
+        .passwordTag {
             .p-inputtext {
                 background-color: var(--secondaryColor1) !important;
                 transition: none !important;
@@ -324,37 +365,73 @@
             }
 
             .p-inputtext:enabled:focus {
-                border: var(--primaryColor1) !important;
+                border-color: var(--primaryColor1) !important;
                 box-shadow: none !important;
 
             }
         }
-        .themeInput {
+
+
+
+        
+
+         .themeInput {
         .p-inputtext {
+              background-color: var(--secondaryColor1) !important;
             transition: none !important;
-            color: var(--fontColor1);
+            color: var(--fontColor11);
 
         }
 
         .p-inputtext.ng-dirty.ng-invalid {
-            border: var(--primaryColor1) !important;
+            border-color: var(--primaryColor1) !important;
         }
 
         .p-inputtext:enabled:hover {
             border-color: var(--primaryColor1) !important;
-            
+
         }
 
         .p-inputtext:enabled:focus {
-            border:1px solid var(--primaryColor1) !important;
+            border: 1px solid var(--primaryColor1) !important;
             box-shadow: none !important;
 
         }
-        .p-float-label > label {
-            color: var(--fontColor1);
+
+        .p-float-label>label {
+            color: var(--fontColor11);
         }
 
     }
+     .themeInputSecondary {
+        .p-inputtext {
+              background-color: var(--secondaryColor1) !important;
+            transition: none !important;
+            color: var(--fontColor12);
+
+        }
+
+        .p-inputtext.ng-dirty.ng-invalid {
+            border-color: var(--primaryColor1) !important;
+        }
+
+        .p-inputtext:enabled:hover {
+            border-color: var(--primaryColor1) !important;
+
+        }
+
+        .p-inputtext:enabled:focus {
+            border: 1px solid var(--primaryColor1) !important;
+            box-shadow: none !important;
+
+        }
+
+        .p-float-label>label {
+            color: var(--fontColor12);
+        }
+
+    }
+
 
 
 
@@ -363,8 +440,8 @@
             margin-top: 3rem !important;
 
             .p-button {
-                color:var(--buttonFontColor) !important;
-                background:var(--primaryColor1) !important;
+                color: var(--buttonFontColor) !important;
+                background: var(--primaryColor1) !important;
                 border: 1px solid var(--primaryColor1) !important;
             }
         }
@@ -372,24 +449,24 @@
 
     }
 
-    .themeChangeDialog{
+    .themeChangeDialog {
         .p-dialog {
             max-height: auto;
         }
+
         .p-dialog .p-dialog-header {
             padding: 0.8rem;
         }
-        .dialogbodyPart{
+
+        .dialogbodyPart {
             margin-top: 2rem;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             gap: 1rem;
-               
+
         }
-        
+
     }
 }
-
-

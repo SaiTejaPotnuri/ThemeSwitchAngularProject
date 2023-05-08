@@ -50,11 +50,16 @@ export class HeaderpageComponent implements OnInit {
 
   buttonClicked(){
       this.visible = !this.visible    
+    this.fetchedColors1 = this.customThemeService.fetchPrimaryColor();
+
     this.myNewTheme.patchValue(this.fetchedColors1)
     this.colorPickerTheme1.get('primaryColor11').setValue(this.fetchedColors1.primaryColor)
     this.colorPickerTheme1.get('secondaryColor11').setValue(this.fetchedColors1.secondaryColor)
-    console.log(this.customThemeService.getFontColor(this.fetchedColors1.secondaryColor));
-    document.documentElement.style.setProperty('--fontColor1', '#000000')
+    document.documentElement.style.setProperty('--defaultPrimary', this.fetchedColors1.primaryColor)
+    document.documentElement.style.setProperty('--defaultSecondary', this.fetchedColors1.secondaryColor)
+
+    document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(this.fetchedColors1.primaryColor))
+    document.documentElement.style.setProperty('--fontColor12', this.customThemeService.getFontColor(this.fetchedColors1.secondaryColor))
 
 
   }
@@ -74,12 +79,29 @@ export class HeaderpageComponent implements OnInit {
 
   }
 
-  applyingColorsToInput1(colorData, idData, colorPickerFormController, customThemeControlername) {
+  applyingColorsToInput1(colorData, colorPickerFormController, customThemeControlername) {
 
     
-    document.getElementById(idData).style.backgroundColor = "#" + this.customThemeService.fetchHexaCode(colorData)
+    let colorData1
+    if (this.myNewTheme.valid) {
+      colorData1 = "#" + this.customThemeService.fetchHexaCode(colorData)
+      if (customThemeControlername === "primaryColor") {
+        document.documentElement.style.setProperty('--defaultPrimary', colorData1)
+        document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(colorData1))
+
+
+      }
+      else {
+        document.documentElement.style.setProperty('--defaultSecondary', colorData1)
+        document.documentElement.style.setProperty('--fontColor12', this.customThemeService.getFontColor(colorData1))
+
+      }
+    }
+
+
     let colorPickerSetValue = '#' + this.customThemeService.fetchHexaCode(colorData)
     this.colorPickerTheme1.get(colorPickerFormController)?.setValue(colorPickerSetValue)
+    
     this.myNewTheme.get(customThemeControlername)?.setValue(colorData)
 
 
