@@ -53,6 +53,10 @@ export class CustomthemeService {
   setNewTheme(themeInfo,stausOfThemeColors) {
 
     let { primaryColor, secondaryColor } = themeInfo;
+    
+    primaryColor = '#' + this.fetchHexaCode(primaryColor);
+    secondaryColor = '#' + this.fetchHexaCode(secondaryColor);
+
 
       localStorage.removeItem('primary')
       localStorage.removeItem('secondary')

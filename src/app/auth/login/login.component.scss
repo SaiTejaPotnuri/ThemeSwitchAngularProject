@@ -237,9 +237,35 @@
 ::ng-deep {
 
     .emailTag,
-    .passwordTag,.themeInput {
+    .passwordTag {
         .p-inputtext {
             background-color: var(--secondaryColor1) !important;
+            transition: none !important;
+            color: var(--fontColor1);
+
+        }
+
+        .p-inputtext.ng-dirty.ng-invalid {
+            border: var(--primaryColor1) !important;
+        }
+
+        .p-inputtext:enabled:hover {
+            border-color: var(--primaryColor1) !important;
+            
+        }
+
+        .p-inputtext:enabled:focus {
+            border:1px solid var(--primaryColor1) !important;
+            box-shadow: none !important;
+
+        }
+        .p-float-label > label {
+            color: var(--fontColor1);
+        }
+
+    }
+.themeInput {
+        .p-inputtext {
             transition: none !important;
             color: var(--fontColor1);
 
@@ -303,6 +329,33 @@
 
             }
         }
+        .themeInput {
+        .p-inputtext {
+            transition: none !important;
+            color: var(--fontColor1);
+
+        }
+
+        .p-inputtext.ng-dirty.ng-invalid {
+            border: var(--primaryColor1) !important;
+        }
+
+        .p-inputtext:enabled:hover {
+            border-color: var(--primaryColor1) !important;
+            
+        }
+
+        .p-inputtext:enabled:focus {
+            border:1px solid var(--primaryColor1) !important;
+            box-shadow: none !important;
+
+        }
+        .p-float-label > label {
+            color: var(--fontColor1);
+        }
+
+    }
+
 
 
 
@@ -338,3 +391,5 @@
         
     }
 }
+
+

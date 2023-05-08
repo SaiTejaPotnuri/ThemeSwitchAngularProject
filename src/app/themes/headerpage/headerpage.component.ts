@@ -10,8 +10,11 @@ import { CustomthemeService } from 'src/app/Services/customtheme.service';
 })
 export class HeaderpageComponent implements OnInit {
   myNewTheme: FormGroup
+  colorPickerTheme1:FormGroup
   visible:boolean=false
+  fetchedColors1:any
   themesColorFetchingStatus1:boolean;
+  
 
   constructor(
     private fb: FormBuilder,
@@ -22,6 +25,10 @@ export class HeaderpageComponent implements OnInit {
     this.myNewTheme = this.fb.group({
       primaryColor: ['', [Validators.pattern("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{1,3})$"), Validators.minLength(2), Validators.maxLength(7)]],
       secondaryColor: ['', [Validators.pattern("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{1,3})$"), Validators.minLength(2), Validators.maxLength(7)]],
+    })
+    this.colorPickerTheme1 = this.fb.group({
+      primaryColor11: ['', [Validators.pattern("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{1,3})$"), Validators.minLength(2), Validators.maxLength(7)]],
+      secondaryColor11: ['', [Validators.pattern("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{1,3})$"), Validators.minLength(2), Validators.maxLength(7)]],
     })
 
   }
@@ -34,15 +41,22 @@ export class HeaderpageComponent implements OnInit {
 
   callFunctionsWhenLoaded() {
     this.visible = false
-    let fetchedColors = this.customThemeService.fetchPrimaryColor();
+    this.fetchedColors1 = this.customThemeService.fetchPrimaryColor();
     this.themesColorFetchingStatus1 = true
-    this.customThemeService.setNewTheme(fetchedColors, this.themesColorFetchingStatus1);
-    this.myNewTheme.patchValue(fetchedColors)
+    this.customThemeService.setNewTheme(this.fetchedColors1, this.themesColorFetchingStatus1);
+    this.myNewTheme.patchValue(this.fetchedColors1)
 
   }
 
   buttonClicked(){
       this.visible = !this.visible    
+    this.myNewTheme.patchValue(this.fetchedColors1)
+    this.colorPickerTheme1.get('primaryColor11').setValue(this.fetchedColors1.primaryColor)
+    this.colorPickerTheme1.get('secondaryColor11').setValue(this.fetchedColors1.secondaryColor)
+    console.log(this.customThemeService.getFontColor(this.fetchedColors1.secondaryColor));
+    document.documentElement.style.setProperty('--fontColor1', '#000000')
+
+
   }
 
 
@@ -59,4 +73,27 @@ export class HeaderpageComponent implements OnInit {
     this.visible = !this.visible
 
   }
+
+  applyingColorsToInput1(colorData, idData, colorPickerFormController, customThemeControlername) {
+
+    
+    document.getElementById(idData).style.backgroundColor = "#" + this.customThemeService.fetchHexaCode(colorData)
+    let colorPickerSetValue = '#' + this.customThemeService.fetchHexaCode(colorData)
+    this.colorPickerTheme1.get(colorPickerFormController)?.setValue(colorPickerSetValue)
+    this.myNewTheme.get(customThemeControlername)?.setValue(colorData)
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 }

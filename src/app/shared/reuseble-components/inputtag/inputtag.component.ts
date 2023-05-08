@@ -24,16 +24,18 @@ export class InputtagComponent {
 
   ngOnInit(): void {
     this.colorName = this.formGroupInfo.get(this.formControlNameInfo).value
+
   }
 
   fetchColorPicker(data){
-
+      
       this.formGroupInfo.get(this.formControlNameInfo).setValue(data)
       
   }
 
 
-  onchangeFunctionOnInput(amountData: number) {
+  onchangeFunctionOnInput(amountData: any) { 
+    
     this.valueChangeStatus.emit(amountData);
   } 
 
