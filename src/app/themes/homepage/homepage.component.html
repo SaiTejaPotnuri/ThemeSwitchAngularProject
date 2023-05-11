@@ -40,59 +40,69 @@
 
     </div>
     <div class="postContainer">
+        <div class="postHeaderContainer">
+        </div>
 
-        <!-- <div *ngFor="let user of userData">
+        <div class="cardsContainer">
 
-        </div> -->
-        <div class="myCard">
-            <p-card [style]="{ width: '33rem' }" >
-                <ng-template pTemplate="header">
-                    <div class="cardHeader">
-                            <div class="postProfilePic">
-                              <img src="{{userInfo.profileImage}}" alt="">
+            <div *ngFor="let user of usersData let i = index" class="myCard">
+                <p-card [style]="{ width: '31rem' }">
+                    <ng-template pTemplate="header">
+                        <div class="cardHeader">
+                            <div class="cardSubHeader">
+                                <div class="postProfilePic">
+                                    <img src="{{user.profileImage1}}" alt="">
+                                </div>
+                                <div class="postBioInfo">
+                                    <p>{{user.nameOfTheUser}}</p>
+                                    <p>{{user.designation}}</p>
+                                </div>
                             </div>
-                            <div class="postBioInfo">
-                                    <p>name of the user</p>
-                                    <p>designation at company name</p>
-                            </div>
-                    </div>
 
-                </ng-template>
-                <div class="postBodyPart">
+                            <div class="eventDiv">
+                                <i class="bi bi-person-add"></i>
+                                <p>Follow</p>
+                            </div>
+                        </div>
+
+                    </ng-template>
+                    <div class="postBodyPart">
                         <div class="postDescription">
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing </p>
+                            <p>{{user.description}}</p>
 
                         </div>
                         <div class="postBodyPartImage">
-                            <img src="{{userInfo.bannerImage}}" alt="noPostImage">
-                        </div>
-                </div>
-
-
-                <ng-template pTemplate="footer">
-                    <div class="cardFooter">
-
-                        <div class="eventDiv">
-                                <i class="bi bi-heart"></i>
-                                <p>Like</p>
-                        </div>
-
-                        <div class="eventDiv">
-                        <i class="bi bi-chat-text"></i>
-                            <p>Comment</p>
-                        </div>
-                        <div class="eventDiv">
-                        <i class="bi bi-person-add"></i>
-                            <p>Follow</p>
-                        </div>
-                        <div class="eventDiv">
-                        <i class="bi bi-send"></i>
-                            <p>Share</p>
+                            <img src="{{user.eventPic}}" alt="noPostImage">
                         </div>
                     </div>
-                </ng-template>
-            </p-card>
 
+
+                    <ng-template pTemplate="footer">
+                        <div class="cardFooter">
+
+                            <div class="eventDiv">
+                                <i class="bi bi-heart"></i>
+                                <p>Like</p>
+                            </div>
+
+                            <div class="eventDiv">
+                                <i class="bi bi-chat-text"></i>
+                                <p>Comment</p>
+                            </div>
+
+                            <div class="eventDiv">
+                                <i class="bi bi-send"></i>
+                                <p>Share</p>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-card>
+
+            </div>
+
+
+        </div>
+        <div class="postFooterContainer">
         </div>
 
 
