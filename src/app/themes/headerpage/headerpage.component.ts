@@ -14,6 +14,10 @@ export class HeaderpageComponent implements OnInit {
   visible:boolean=false
   fetchedColors1:any
   themesColorFetchingStatus1:boolean;
+
+  images={
+    colorPicker:'assets/Images/colorPickerIcon.png'
+  }
   
 
   constructor(
@@ -40,11 +44,14 @@ export class HeaderpageComponent implements OnInit {
 
 
   callFunctionsWhenLoaded() {
+    
     this.visible = false
     this.fetchedColors1 = this.customThemeService.fetchPrimaryColor();
     this.themesColorFetchingStatus1 = true
     this.customThemeService.setNewTheme(this.fetchedColors1, this.themesColorFetchingStatus1);
     this.myNewTheme.patchValue(this.fetchedColors1)
+    document.documentElement.style.setProperty('--headerFontColor', this.customThemeService.getFontColor(this.fetchedColors1.primaryColor))
+
 
   }
 
@@ -82,12 +89,15 @@ export class HeaderpageComponent implements OnInit {
   applyingColorsToInput1(colorData, colorPickerFormController, customThemeControlername) {
 
     
+    
     let colorData1
     if (this.myNewTheme.valid) {
       colorData1 = "#" + this.customThemeService.fetchHexaCode(colorData)
       if (customThemeControlername === "primaryColor") {
         document.documentElement.style.setProperty('--defaultPrimary', colorData1)
         document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(colorData1))
+        document.documentElement.style.setProperty('--headerFontColor', this.customThemeService.getFontColor(colorData))
+
 
 
       }

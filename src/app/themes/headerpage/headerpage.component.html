@@ -6,14 +6,14 @@
 
                 <ul>
                         <li><a routerLink="/mythemes/themeHome" routerLinkActive="active" >Home</a></li>
-                        <li><a routerLink="/mythemes/colorPicker" routerLinkActive="active">ColorPicker</a></li>
+                        <li><a routerLink="/mythemes/colorPicker" routerLinkActive="active">About</a></li>
                         <li><a routerLink="/login" routerLinkActive="active">LogOut</a></li>
 
                 </ul>
                 <div class="themeChangeButton">
+
+                        <img [src]="images.colorPicker"  alt="NoImage" (click)="buttonClicked()">
                 
-                        <app-buttontag [classInfo]="'p-button-info p-button-text'" [label]="' Create Your Theme '" [buttonType]="'submit'"
-                                (buttonStatus)="buttonClicked()"></app-buttontag>
                 
                 </div>
 

@@ -17,7 +17,9 @@ export class ButtontagComponent implements OnInit {
   @Input() disabledInfo: boolean = false;
   @Input() buttonType: string = '';
   @Input() loadingStatus: boolean = false;
+  @Input() iconInfo:string
   @Output() buttonStatus = new EventEmitter<any>();
+
 
   checkAfterClick() {
     this.buttonStatus.emit();

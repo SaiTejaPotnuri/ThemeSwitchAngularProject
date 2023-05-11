@@ -1,1 +1,132 @@
-<p>homepage works!</p>
+<div class="homeMainContainer">
+
+    <div class="profileContainer">
+        <div class="subContainer">
+            <div class="bannerContainer">
+                <img [src]="userInfo.bannerImage" alt="NoImage" />
+            </div>
+            <div style="width: 100%;
+    display: flex;
+    justify-content: center;">
+                <div class="profilePic">
+                    <img [src]="userInfo.profileImage" alt="NoProfile">
+                </div>
+            </div>
+
+        </div>
+        <div class="userName">
+            <h2>{{userInfo.employeeName}}({{userInfo.employeeId}})</h2>
+        </div>
+
+        <div class="bioInfo">
+            <div class="bioSubContainer">
+                <i class="pi pi-building"></i>
+                <h3>{{userInfo.companyName}}</h3>
+            </div>
+            <div class="bioSubContainer">
+                <i class="pi pi-user"></i>
+                <h3>{{userInfo.designation}}</h3>
+            </div>
+            <div class="bioSubContainer">
+                <i class="pi pi-phone"></i>
+                <h3>{{userInfo.contactNumber}}</h3>
+            </div>
+            <div class="bioSubContainer1">
+                <i class="bi bi-geo-alt"></i>
+                <p>{{userInfo.employeeLocation}}</p>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="postContainer">
+
+        <!-- <div *ngFor="let user of userData">
+
+        </div> -->
+        <div class="myCard">
+            <p-card [style]="{ width: '33rem' }" >
+                <ng-template pTemplate="header">
+                    <div class="cardHeader">
+                            <div class="postProfilePic">
+                              <img src="{{userInfo.profileImage}}" alt="">
+                            </div>
+                            <div class="postBioInfo">
+                                    <p>name of the user</p>
+                                    <p>designation at company name</p>
+                            </div>
+                    </div>
+
+                </ng-template>
+                <div class="postBodyPart">
+                        <div class="postDescription">
+                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing </p>
+
+                        </div>
+                        <div class="postBodyPartImage">
+                            <img src="{{userInfo.bannerImage}}" alt="noPostImage">
+                        </div>
+                </div>
+
+
+                <ng-template pTemplate="footer">
+                    <div class="cardFooter">
+
+                        <div class="eventDiv">
+                                <i class="bi bi-heart"></i>
+                                <p>Like</p>
+                        </div>
+
+                        <div class="eventDiv">
+                        <i class="bi bi-chat-text"></i>
+                            <p>Comment</p>
+                        </div>
+                        <div class="eventDiv">
+                        <i class="bi bi-person-add"></i>
+                            <p>Follow</p>
+                        </div>
+                        <div class="eventDiv">
+                        <i class="bi bi-send"></i>
+                            <p>Share</p>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-card>
+
+        </div>
+
+
+    </div>
+    <div class="searchContainer">
+
+        <div class="subSearchContainer">
+            <app-inputtag [type]="'text'" [placeholderText]="'Search here'" [formGroupInfo]="searchForm"
+                [formControlNameInfo]="'serchingText'" [iconInfo]="'pi pi-search'"
+                [iconPosition]="'p-input-icon-left'"></app-inputtag>
+
+        </div>
+        <div class="newsContainer">
+
+            <div class="companyLogo">
+                <img src="{{userInfo.companyLogo}}" alt="NoLOgo">
+            </div>
+            <div class="postNews">
+                <img src="{{userInfo.profileImage}}" alt="NoLOgo">
+                <a href="#">Post</a>
+
+            </div>
+            <div class="newsIcons">
+                <i class="bi bi-image"></i>
+                <i class="bi bi-play-btn"></i>
+                <i class="bi bi-calendar-event"></i>
+                <i class="bi bi-journal-text"></i>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</div>

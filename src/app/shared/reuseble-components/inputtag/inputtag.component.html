@@ -1,5 +1,17 @@
-<span class="p-float-label" [formGroup]="formGroupInfo">
-    <input [id]="idInfo" class="inputStyle"  [type]="type" [placeholder]="placeholderText" [(ngModel)]="colorName"
-        (keyup)="onchangeFunctionOnInput(colorName)" (input)="fetchColorPicker(colorName);onchangeFunctionOnInput(colorName)" [formControlName]="formControlNameInfo" pInputText />
-    <label [for]="idInfo">{{label}}</label>
-</span>
+<div *ngIf="iconInfo.length ===0">
+    <span class="p-float-label" [formGroup]="formGroupInfo">
+        <input [id]="idInfo" class="inputStyle" [type]="type" [placeholder]="placeholderText" [(ngModel)]="colorName"
+            (keyup)="onchangeFunctionOnInput(colorName)"
+            (input)="fetchColorPicker(colorName);onchangeFunctionOnInput(colorName)"
+            [formControlName]="formControlNameInfo" pInputText />
+        <label [for]="idInfo">{{label}}</label>
+    </span>
+</div>
+
+<div *ngIf="iconInfo.length !==0" style="height: 100%;">
+    <span [class]="iconPosition" class="inputStyle" [formGroup]="formGroupInfo">
+        <i [class]="iconInfo"></i>
+        <input [type]="type" class="inputStyle" [placeholder]="placeholderText" pInputText
+            [formControlName]="formControlNameInfo" [(ngModel)]="colorName" />
+    </span>
+</div>

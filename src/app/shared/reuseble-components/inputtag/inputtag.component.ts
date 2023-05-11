@@ -14,8 +14,11 @@ export class InputtagComponent {
   @Input() formGroupInfo!: FormGroup;
   @Input() formControlNameInfo: string = ''
   @Input() placeholderText: string = ''
+  @Input() iconInfo:string='';
+  @Input() iconPosition="";
   @Output() valueChangeStatus = new EventEmitter<any>();
   colorName: any = '';
+
 
 
 

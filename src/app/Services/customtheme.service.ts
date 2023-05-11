@@ -16,17 +16,21 @@ export class CustomthemeService {
 
     let prim = localStorage.getItem('primary')
     let seco = localStorage.getItem('secondary')
+    
 // this is for checking if user changing data in localstorage and update and setting to default code
     if (prim !== null || seco !== null){
-      if (!CSS.supports('color', prim) || !CSS.supports('color', seco) || prim.length === 4 || seco.length === 4 || prim.length ===5 || seco.length === 5){
-        prim = '#000000'
-        seco = '#FFFFFF'
-          this.toasterService.error('Do To invalid colorCode Came to Default Color','')
-      }
-      else if(prim.length ===2 || seco.length === 2){
-            prim = '#' + this.fetchHexaCode(prim)
-            seco = '#'+ this.fetchHexaCode(seco)
-        this.toasterService.error('Do To invalid colorCode Came to Default Color', '')
+      if (!CSS.supports('color', prim) || !CSS.supports('color', seco) || (prim.length >= 4 && prim.length <= 5) || (seco.length >= 4 && seco.length <= 5)){
+
+
+        if ((((prim.length >= 2 && prim.length <= 4) || (seco.length >= 2 && seco.length <= 4)) && (prim.charAt(0) === '#' && seco.charAt(0) === '#' && (CSS.supports('color', prim) && CSS.supports('color', seco))  ) )){
+          prim = '#' + this.fetchHexaCode(prim)
+          seco = '#' + this.fetchHexaCode(seco)
+        }else{
+              prim = '#000000'
+              seco = '#FFFFFF'
+          this.toasterService.error('Do To invalid colorCode Came to Default Color', '')
+        }
+
       }
     }
     else{
