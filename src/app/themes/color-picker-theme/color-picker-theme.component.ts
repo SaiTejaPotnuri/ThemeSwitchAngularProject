@@ -35,12 +35,34 @@ export class ColorPickerThemeComponent implements OnInit {
   ngOnInit(): void {
     this.webSocketService.listen('typing').subscribe((data: { user: string, message: string }) => this.updateFeedback(data));
     this.webSocketService.listen('chat').subscribe((data: { user: string, message: string }) => this.updateMessage(data));
+    this.messageForm.get('messageText').setValue(null)
   }
 
 
   messageTyping(info): void {
     
+    
     this.webSocketService.emit('typing', this.loggedInUser);
+    
+    if(info ==='' || info===null){
+      this.messageForm.get('messageText').setValue(null)
+    }
+    else{
+      if (info.keyEntered === 13) {
+        if (info.enteredText === null) {
+          this.messageForm.get('messageText').setValue(null)
+        }
+        else {
+          this.messageForm.get('messageText').setValue(info.enteredText)
+          this.sendMessage(this.messageForm.value);
+        }
+      }
+    }
+
+
+    
+
+    
   }
 
 
@@ -49,6 +71,7 @@ export class ColorPickerThemeComponent implements OnInit {
 
   sendMessage(message): void {
     // this.userData = localStorage.getItem('userInfo')
+
     this.webSocketService.emit('chat', {
       user: this.loggedInUser,
       message: message.messageText

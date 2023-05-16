@@ -33,13 +33,24 @@ export class InputtagComponent {
   fetchColorPicker(data){
       
       this.formGroupInfo.get(this.formControlNameInfo).setValue(data)
-      
+
   }
 
 
-  onchangeFunctionOnInput(amountData: any) { 
+  onchangeFunctionOnInput(amountData: any,eventType) { 
+    let dataEntered = amountData;
+    if (eventType.keyCode ===13){
+      amountData={
+        enteredText: dataEntered,
+        keyEntered: eventType.keyCode
+      }
+    }
+    else{
+      amountData = dataEntered
+    }
     
     this.valueChangeStatus.emit(amountData);
+    
   } 
 
 
