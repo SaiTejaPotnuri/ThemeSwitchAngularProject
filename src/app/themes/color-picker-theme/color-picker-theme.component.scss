@@ -1,47 +1,229 @@
 @import '../../../global.scss';
 
 
-
-
-
 .mainContainer {
     width: 100%;
     height: 100%;
     background-color: var(--secondaryColor1);
-}
-
-.subContainer {
-    width: 100%;
-    height: 100%;
+    padding: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.chatContainer {
+    width: 30rem;
+    height: 100%;
+    box-shadow: 0px 0px 20px #aeadad;
+    border-radius: 15px;
 
 }
 
-.subContainer .card {
-    width: 60%;
+.chatHeader {
+    width: 100%;
+    height: 5rem;
+    border-bottom: 1px solid #aeadad;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 1rem;
-    border: 2px solid var(--primaryColor1);
-    height: fit-content;
-    background-color: var(--secondaryColor1);
-
 }
 
-.subContainer .card h2 {
-    font-size: 1.5rem;
-    font-weight: 300;
-    font-family: $fontFamily;
-    margin-bottom: 0.5rem;
+.chatHeader img {
+    width: 13rem;
+    height: 5rem;
+    object-fit: contain;
+}
+
+.mediaIconsContainer {
+    width: calc(100% - 13rem);
+    height: 5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 2rem;
+}
+
+.mediaIconsContainer i {
+    font-size: 1.6rem;
     color: var(--primaryColor1);
+    cursor: pointer;
 }
 
-.subContainer .card p {
-    font-size: 0.9rem;
-    font-weight: 100;
+.chatBodyPart {
+    width: 100%;
+    height: calc(100% - 11rem);
+    padding: 2rem;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+
+}
+
+// .chatBodyPart::-webkit-scrollbar {
+//    display: none;
+// }
+
+
+
+.chatFooter {
+    width: 100%;
+    height: 6rem;
+    padding: 1rem 1rem 2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+}
+
+.chatMessagePart {
+    width: 70%;
+    // height: 5rem;
+    position: relative;
+}
+
+
+
+
+
+.submessageContainer {
+    width: 100%;
+    height: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 11px #aeadad;
+}
+
+
+
+.mediaUploadContainer i {
+    font-size: 1rem;
+    color: var(--fontColor1);
+    cursor: pointer;
+
+}
+
+.mediaUploadContainer {
+    position: absolute;
+    right: 20px;
+    height: 16px;
+    top: calc(50% - 8px)
+}
+
+
+.sendMessageContainer {
+    width: fit-content;
+    height: 3rem;
+    box-shadow: 0px 0px 11px #aeadad;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+
+}
+
+.sendMessageContainer i {
+    font-size: 1.5rem;
+    color: var(--fontColor1);
+    cursor: pointer;
+    padding: 1rem;
+}
+
+
+
+.messageSent{
+   width: 100%;
+   display: flex;
+   justify-content: flex-end;
+   margin-bottom: 6px;
+   
+    
+}
+.messageSent p{
+    width: fit-content;
+     padding: 7px 1rem;
     font-family: $fontFamily;
-    text-align: left;
-    color:var(--fontColor1);
+    font-size: 1rem;
+    color: var(--headerFontColor);
+    background-color: var(--primaryColor1);
+    border-radius: 20px;
+    max-width: 90%;
+    
+        
+}
+
+.messageRecieved{
+      width: 100%;
+   display: flex;
+   justify-content: flex-start;
+      margin-bottom: 6px;
+
+}
+.messageRecieved p{
+     width: fit-content;
+     padding: 7px 1rem;
+    font-family: $fontFamily;
+    font-size:1rem ;
+    color: var(--headerFontColor);
+    background-color: var(--primaryColor1);
+    opacity: 0.5;
+        border-radius: 20px;
+        max-width: 90%;
+
 }
 
 
+// .messageBg{
+//     width: fit-content;
+//     height: fit-content;
+// }
+
+// .messageArray .messageBg p{
+//         font-family: $fontFamily;
+//         font-size: 1rem;
+//         color: var(--headerFontColor);
+// }
+
+
+
+::ng-deep {
+    .submessageContainer {
+
+        .p-input-icon-left>.p-icon-wrapper.p-icon,
+        .p-input-icon-left>i:first-of-type {
+            left: 1rem;
+            color: var(--fontColor1);
+            font-size: 1.2rem;
+        }
+
+        .p-input-icon-left>.p-inputtext {
+            padding-left: 3.5rem;
+            padding-right: 3.5rem;
+        }
+
+        .p-inputtext {
+            margin: 0;
+            border-radius: 1rem;
+        }
+
+        .p-inputtext {
+            font-family: $fontFamily;
+            font-size: 1rem;
+            color: var(--fontColor1);
+            background: var(--secondaryColor1) 0.5;
+            padding: 0.75rem 0.75rem;
+            border: none;
+            transition: none;
+        }
+
+        .p-inputtext:enabled:hover {
+            border-color: none;
+        }
+
+        .p-inputtext:enabled:focus {
+            outline: 0 none;
+            outline-offset: 0;
+            box-shadow: none;
+            border-color: none;
+        }
+    }
+}

@@ -1,23 +1,49 @@
 <div class="mainContainer">
 
-    <div class="subContainer">
-        <div class="card">
 
+    <div class="chatContainer">
 
-            <h2>Welcome to Theme Application</h2>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id tempore fuga quos similique. Unde
-                perspiciatis quidem sunt! Quibusdam minus unde non quod aspernatur qui inventore fugiat quos adipisci?
-                Ab quis ex quo totam reprehenderit odio, voluptas vitae dolore labore illum saepe. Odit et adipisci,
-                laboriosam tempore temporibus maxime perferendis consectetur, sequi numquam odio iusto aperiam, eos
-                natus molestias corrupti magni! Accusantium repellat, labore excepturi autem eius quia dignissimos a at
-                aut qui? Voluptas quibusdam illo ad nihil pariatur fuga. Consectetur dolore nisi modi? Facilis labore
-                quas ex nostrum sit repellendus quod non porro voluptas, voluptates molestias ipsam et maxime assumenda.
-                Delectus recusandae mollitia quidem provident itaque assumenda illo nam reprehenderit ullam voluptas
-                quas repellendus consequuntur veniam, accusantium dolorum. Architecto sint animi non maxime ratione
-                nesciunt magnam aspernatur mollitia possimus a, explicabo aperiam inventore dignissimos nulla
-                consequuntur amet exercitationem omnis dolore? Autem voluptatibus modi accusantium aut commodi qui quam
-                perspiciatis accusamus!</p>
+        <div class="chatHeader">
+            <img src="{{company.companyLogo}}" alt="">
+            <div class="mediaIconsContainer">
+                <i class="bi bi-camera"></i>
+                <i class="bi bi-search"></i>
+                <i class="bi bi-three-dots-vertical"></i>
+
+            </div>
         </div>
+        <div class="chatBodyPart">
+            <div *ngFor="let data of messageArray">
+                <div class="messageSent" *ngIf="data.user === loggedInUser">
+                     <p>{{data.user}} : {{data.message}}</p>
+                </div>
+                <div class="messageRecieved"  *ngIf="data.user !== loggedInUser">
+                             <p>{{data.user}} : {{data.message}}</p>
+
+                </div>
+            </div>
+            
+
+        </div>
+        <div class="chatFooter">
+            <div class="chatMessagePart">
+                <div class="submessageContainer">
+                    <app-inputtag [type]="'text'" [placeholderText]="'Message'" [formGroupInfo]="messageForm"
+                        [formControlNameInfo]="'messageText'" [iconInfo]="'bi bi-emoji-smile'"
+                        [iconPosition]="'p-input-icon-left'" (valueChangeStatus)="messageTyping($event)"></app-inputtag>
+                </div>
+                <div class="mediaUploadContainer">
+                                <i class="pi pi-link"></i>
+                            </div>
+
+            </div>
+            <div class="sendMessageContainer">
+                <i *ngIf="messageForm.get('messageText')?.value === null" class="bi bi-mic"></i>
+                <i *ngIf="messageForm.get('messageText')?.value !== null" class="bi bi-send"  (click)="sendMessage(messageForm.value)"></i>
+            </div>
+           
+        </div>
+
     </div>
 
 </div>

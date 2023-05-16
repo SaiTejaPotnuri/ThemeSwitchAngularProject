@@ -8,6 +8,10 @@ import { ThemesModule } from './themes/themes.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
+import { WebSocketServerService } from './Services/web-socket-server.service';
+import { HttpClientModule } from '@angular/common/http';
+
+
 
 @NgModule({
   declarations: [
@@ -18,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
     AppRoutingModule,
     AuthModule,
     ThemesModule,
+    HttpClientModule,
     BrowserAnimationsModule,
       FormsModule,
     ReactiveFormsModule,
@@ -28,7 +33,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     
   ],
-  providers: [],
+  providers: [WebSocketServerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

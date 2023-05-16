@@ -37,10 +37,15 @@ export class HeaderpageComponent implements OnInit {
 
   }
 
+  
+
   ngOnInit(): void {
     this.callFunctionsWhenLoaded()
   }
 
+  logOut(){
+    localStorage.removeItem('userInfo')
+  }
 
 
   callFunctionsWhenLoaded() {

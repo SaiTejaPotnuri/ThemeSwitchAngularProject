@@ -79,7 +79,9 @@ export class LoginComponent {
 
 
   submitSignInDetails(a: any) {
-
+    let userName = a.signInEmail.split('@')[0]
+    
+    localStorage.setItem('userInfo',userName)
     this.router.navigate(['/mythemes'])
 
   }
