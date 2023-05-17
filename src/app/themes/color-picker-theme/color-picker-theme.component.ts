@@ -72,13 +72,17 @@ export class ColorPickerThemeComponent implements OnInit {
   sendMessage(message): void {
     // this.userData = localStorage.getItem('userInfo')
 
-    this.webSocketService.emit('chat', {
-      user: this.loggedInUser,
-      message: message.messageText
-    });
+
+    if (message.messageText !== null){
+      this.webSocketService.emit('chat', {
+        user: this.loggedInUser,
+        message: message.messageText
+      });
+
+    }
+
     message = "";
     this.messageForm.reset();
-    console.log(`${this.userData} send a message ${message.messageText}`);
 
 
   }

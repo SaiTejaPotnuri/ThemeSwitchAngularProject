@@ -37,9 +37,8 @@
                             </div>
 
             </div>
-            <div class="sendMessageContainer">
-                <i *ngIf="messageForm.get('messageText')?.value === null" class="bi bi-mic"></i>
-                <i *ngIf="messageForm.get('messageText')?.value !== null" class="bi bi-send"  (click)="sendMessage(messageForm.value)"></i>
+            <div class="sendMessageContainer"  [ngClass]="messageForm.get('messageText')?.value === null ? 'customStyle' : '' ">
+                <i class="bi bi-send"  (click)="sendMessage(messageForm.value)"></i>
             </div>
            
         </div>
