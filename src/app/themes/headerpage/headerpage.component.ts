@@ -103,7 +103,7 @@ export class HeaderpageComponent implements OnInit {
     
     let colorData1
       
-    if(colorData.charAt(0) === '#' && ((colorData.length >= 4 && colorData.length <= 5) || (colorData.length >=3 || colorData.length === 6 ))){
+    if (colorData.charAt(0) === '#' && ((colorData.length >= 4 && colorData.length <= 5) || (colorData.length >= 3 || colorData.length === 6)) && CSS.supports('color', colorData)){
 
       colorData1 = "#" + this.customThemeService.fetchHexaCode(colorData)
       this.validateColorStatus =true
