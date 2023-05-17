@@ -47,8 +47,9 @@ export class InputtagComponent {
     }
     else{
       amountData = dataEntered
+      
     }
-    
+
     this.valueChangeStatus.emit(amountData);
     
   } 

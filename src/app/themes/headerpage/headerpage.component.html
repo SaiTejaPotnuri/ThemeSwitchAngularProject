@@ -5,19 +5,19 @@
         <div class="subContainer">
 
                 <ul>
-                        <li><a routerLink="/mythemes/themeHome" routerLinkActive="active" >Home</a></li>
+                        <li><a routerLink="/mythemes/themeHome" routerLinkActive="active">Home</a></li>
                         <li><a routerLink="/mythemes/colorPicker" routerLinkActive="active">Chat With Us</a></li>
                         <li><a routerLink="/login" (click)="logOut()" routerLinkActive="active">LogOut</a></li>
 
                 </ul>
                 <div class="themeChangeButton">
 
-                        <img [src]="images.colorPicker"  alt="NoImage" (click)="buttonClicked()">
-                
-                
+                        <img [src]="images.colorPicker" alt="NoImage" (click)="buttonClicked()">
+
+
                 </div>
 
-                
+
         </div>
 
 </div>
@@ -26,39 +26,44 @@
         <p-dialog header="Create Theme" [(visible)]="visible" [style]="{width: '30vw'}" [modal]="true"
                 [draggable]="false" [resizable]="false">
                 <div class="dialogbodyPart">
+                        <p>Text and Hexa accepted</p>
                         <div class="primaryTheme">
-                        <div class="themeInput">
-                                <app-inputtag [type]="'text'" [label]="'Primary Color'" [idInfo]="'float-input9'" [formGroupInfo]="myNewTheme"
-                                        [formControlNameInfo]="'primaryColor'"
-                                        (valueChangeStatus)="applyingColorsToInput1($event,'primaryColor11','primaryColor')"></app-inputtag>
-                        </div>
-                        <div class="themeInput2">
-                                <app-inputtag [type]="'color'" [idInfo]="'float-input6'" [formGroupInfo]="colorPickerTheme1"
-                                        [formControlNameInfo]="'primaryColor11'"
-                                        (valueChangeStatus)="applyingColorsToInput1($event,'primaryColor11','primaryColor')"></app-inputtag>
-                        
-                        </div>
+                                <div class="themeInput">
+                                        <app-inputtag [type]="'text'" [label]="'Primary Color'"
+                                                [idInfo]="'float-input9'" [formGroupInfo]="myNewTheme"
+                                                [formControlNameInfo]="'primaryColor'"
+                                                (valueChangeStatus)="applyingColorsToInput1($event,'primaryColor11','primaryColor')"></app-inputtag>
+                                </div>
+                                <div class="themeInput2">
+                                        <app-inputtag [type]="'color'" [idInfo]="'float-input6'"
+                                                [formGroupInfo]="colorPickerTheme1"
+                                                [formControlNameInfo]="'primaryColor11'"
+                                                (valueChangeStatus)="applyingColorsToInput1($event,'primaryColor11','primaryColor')"></app-inputtag>
+
+                                </div>
 
                         </div>
                         <div class="secondaryTheme">
                                 <div class="themeInputSecondary">
-                                        <app-inputtag [type]="'text'" [label]="'Secondary Color'" [idInfo]="'float-input10'"
-                                                [formGroupInfo]="myNewTheme" [formControlNameInfo]="'secondaryColor'"
+                                        <app-inputtag [type]="'text'" [label]="'Secondary Color'"
+                                                [idInfo]="'float-input10'" [formGroupInfo]="myNewTheme"
+                                                [formControlNameInfo]="'secondaryColor'"
                                                 (valueChangeStatus)="applyingColorsToInput1($event,'secondaryColor11','secondaryColor')"></app-inputtag>
-                                
+
                                 </div>
                                 <div class="themeInput2">
-                                        <app-inputtag [type]="'color'" [idInfo]="'float-input7'" [formGroupInfo]="colorPickerTheme1"
+                                        <app-inputtag [type]="'color'" [idInfo]="'float-input7'"
+                                                [formGroupInfo]="colorPickerTheme1"
                                                 [formControlNameInfo]="'secondaryColor11'"
                                                 (valueChangeStatus)="applyingColorsToInput1($event,'secondaryColor11','secondaryColor')"></app-inputtag>
-                                
+
                                 </div>
                         </div>
 
 
                         <div class="createThemeButton">
                                 <app-buttontag [classInfo]="'p-button-raised'" [label]="' Create '"
-                                        [buttonType]="'submit'" [disabledInfo]="myNewTheme.invalid"
+                                        [buttonType]="'submit'" [disabledInfo]="!validateColorStatus"
                                         (buttonStatus)="newThemeInDashboard(myNewTheme.value)"></app-buttontag>
                         </div>
                 </div>

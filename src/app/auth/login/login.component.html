@@ -35,6 +35,8 @@
                     <p-dialog header="Create Theme" [(visible)]="visible" [style]="{width: '30vw'}" [modal]="true"
                         [draggable]="false" [resizable]="false">
                         <div class="dialogbodyPart">
+                                                    <p>Text and Hexa accepted</p>
+
                             <div class="primaryTheme">
                                 <div class="themeInput">
                                     <app-inputtag [type]="'text'" [label]="'Primary Color'" [idInfo]="'float-input5'"
@@ -67,7 +69,7 @@
 
                             <div class="createThemeButton">
                                 <app-buttontag [classInfo]="'p-button-raised'" [label]="' Create '"
-                                    [buttonType]="'submit'" [disabledInfo]="customTheme.invalid"
+                                    [buttonType]="'submit'" [disabledInfo]="!validateColorStatus1"
                                     (buttonStatus)="newTheme(customTheme.value)"></app-buttontag>
                             </div>
                         </div>

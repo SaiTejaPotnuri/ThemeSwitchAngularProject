@@ -14,6 +14,7 @@ export class LoginComponent {
   customTheme: FormGroup
   colorPickerTheme:FormGroup
   visible: boolean = false
+  validateColorStatus1:boolean=false
   imagesList = {
     logisticsImage: './assets/Images/logisticLogo.png'
   }
@@ -50,8 +51,8 @@ export class LoginComponent {
     })
 
     this.customTheme = this.fb.group({
-      primaryColor: ['', [Validators.pattern("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{1,3})$"), Validators.minLength(2),Validators.maxLength(7)]],
-      secondaryColor: ['', [Validators.pattern("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{1,3})$"), Validators.minLength(2),Validators.maxLength(7)]],
+      primaryColor: ['', [Validators.required]],
+      secondaryColor: ['', [Validators.required]],
     })
     this.colorPickerTheme = this.fb.group({
       primaryColor11: ['', [Validators.pattern("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{1,3})$"), Validators.minLength(2), Validators.maxLength(7)]],
@@ -111,6 +112,15 @@ export class LoginComponent {
 
     let { primaryColor, secondaryColor } = themeDetails;
     this.themesColorFetchingStatus = false
+
+    if (primaryColor.charAt(0) !== '#' || secondaryColor.charAt(0) !== '#') {
+      primaryColor = this.customThemeService.fetchTextToHexaCode(primaryColor)
+      secondaryColor = this.customThemeService.fetchTextToHexaCode(secondaryColor)
+    }
+
+
+
+
       themeDetails.primaryColor.length <= 3 ? themeDetails.primaryColor = '#' + this.customThemeService.fetchHexaCode(primaryColor) : themeDetails.primaryColor = primaryColor
       themeDetails.secondaryColor.length <= 3 ? themeDetails.secondaryColor = '#' + this.customThemeService.fetchHexaCode(secondaryColor) : themeDetails.secondaryColor = secondaryColor
    
@@ -122,29 +132,47 @@ export class LoginComponent {
 
 
   applyingColorsToInput(colorData,colorPickerFormController,customThemeControlername){
-      let colorData1
-   if(this.customTheme.valid){
-     colorData1 = "#" + this.customThemeService.fetchHexaCode(colorData)
-     if (customThemeControlername === "primaryColor") {
-       document.documentElement.style.setProperty('--defaultPrimary', colorData1)
-       document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(colorData1))
+
+    let colorData1
+
+    if (colorData.charAt(0) === '#' && ((colorData.length >= 4 && colorData.length <= 5) || (colorData.length >= 3 || colorData.length === 6))) {
+
+      colorData1 = "#" + this.customThemeService.fetchHexaCode(colorData)
+      this.validateColorStatus1 = true
+    }
+    else if (colorData.charAt(0) !== '#' && CSS.supports('color', colorData)) {
+
+      colorData1 = this.customThemeService.fetchTextToHexaCode(colorData);
+      this.validateColorStatus1 = true
+    }
+    else {
+      this.validateColorStatus1 = false
+    }
 
 
-     }
-     else {
-       document.documentElement.style.setProperty('--defaultSecondary', colorData1)
-       document.documentElement.style.setProperty('--fontColor12', this.customThemeService.getFontColor(colorData1))
 
-     }
+    if (this.validateColorStatus1) {
+      if (customThemeControlername === "primaryColor") {
+        document.documentElement.style.setProperty('--defaultPrimary', colorData1)
+        document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(colorData1))
+        document.documentElement.style.setProperty('--headerFontColor', this.customThemeService.getFontColor(colorData))
+      }
+      else {
+        document.documentElement.style.setProperty('--defaultSecondary', colorData1)
+        document.documentElement.style.setProperty('--fontColor12', this.customThemeService.getFontColor(colorData1))
+
+      }
+
+      let colorPickerSetValue = '#' + this.customThemeService.fetchHexaCode(colorData1)
+
+      this.colorPickerTheme.get(colorPickerFormController)?.setValue(colorPickerSetValue)
+
+      this.customTheme.get(customThemeControlername)?.setValue(colorData)
+
+    }
   
 
 
-     let colorPickerSetValue = '#' + this.customThemeService.fetchHexaCode(colorData)
-     this.colorPickerTheme.get(colorPickerFormController)?.setValue(colorPickerSetValue)
-     this.customTheme.get(customThemeControlername)?.setValue(colorData)
-
-
-   } 
    
   }
 
