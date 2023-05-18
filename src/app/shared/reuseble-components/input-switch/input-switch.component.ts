@@ -12,8 +12,13 @@ export class InputSwitchComponent {
 
 
   switchPressed(){
-   
-    this.changeMyTheme.emit(this.checked);
+
+    let info:any={
+      messageFromSwitch: true,
+      statusOfClick: this.checked
+    }
+    
+    this.changeMyTheme.emit(info);
     
 
   }

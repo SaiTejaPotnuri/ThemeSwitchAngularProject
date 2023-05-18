@@ -120,20 +120,38 @@ h2::first-letter {
 .switchContainer{
     width: fit-content;
     height: auto;
-    padding: 1rem;
+    padding: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.switchPart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+.switchPart p{
+     font-family: $fontFamily;
+    font-weight: 500;
+    color: var(--fontColor1);
+    font-size: 1.2rem;
+    font-style: bold;
+}
 
-
+.setColorWhite{
+        color: var(--headerFontColor) !important;
+}
+.setColorBlack{
+        color: #000000 !important;
+}
 
 
 ::ng-deep {
 
 
-    .switchContainer{
+   .switchPart .switchContainer{
         .p-inputswitch.p-focus .p-inputswitch-slider{
                 box-shadow: none;
         }

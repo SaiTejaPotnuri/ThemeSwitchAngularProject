@@ -10,14 +10,22 @@
                         <li><a routerLink="/login" (click)="logOut()" routerLinkActive="active">LogOut</a></li>
 
                 </ul>
-                <div class="themeChangeButton">
+             
 
+                <div class="switchPart">
+                        <p [ngClass]="lightAndDarkThemeStatus==false  ? 'setColorWhite' : 'setColorBlack' " >Light</p>
+                        <div class="switchContainer">
+                                <app-input-switch (changeMyTheme)="changeDarkOrLightTheme($event)"></app-input-switch>
+                        </div>
+                         <p [ngClass]="lightAndDarkThemeStatus ? 'setColorWhite' : 'setColorBlack' " >Dark</p>
+
+
+                </div>
+                <div class="themeChangeButton">
+                
                         <img [src]="images.colorPicker" alt="NoImage" (click)="buttonClicked()">
                 </div>
-
-                <div class="switchContainer">
-                        <app-input-switch (changeMyTheme)="changeDarkOrLightTheme($event)"></app-input-switch>
-                </div>
+                
 
 
         </div>

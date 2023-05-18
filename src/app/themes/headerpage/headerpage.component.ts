@@ -15,8 +15,8 @@ export class HeaderpageComponent implements OnInit {
   fetchedColors1: any
   themesColorFetchingStatus1: boolean;
   validateColorStatus: boolean = false
-  lightAndDarkThemeStatus: boolean = false;
-  switchStatus:boolean=false
+  lightAndDarkThemeStatus: boolean = true;
+  pageRefreshStatus: boolean = false
 
   images = {
     colorPicker: 'assets/Images/colorPickerIcon.png'
@@ -59,6 +59,14 @@ export class HeaderpageComponent implements OnInit {
     this.customThemeService.setNewTheme(this.fetchedColors1, this.themesColorFetchingStatus1);
     this.myNewTheme.patchValue(this.fetchedColors1)
     document.documentElement.style.setProperty('--headerFontColor', this.customThemeService.getFontColor(this.fetchedColors1.primaryColor))
+
+    let switchInfo: any = {
+      messageFromSwitch: false,
+      statusOfClick: false
+
+    }
+
+    this.changeDarkOrLightTheme(switchInfo)
 
   }
 
@@ -152,38 +160,63 @@ export class HeaderpageComponent implements OnInit {
 
 
 
-  changeDarkOrLightTheme(status) {
+  changeDarkOrLightTheme(infoFromSwitch) {
 
-    this.switchStatus = true
 
-    this.lightAndDarkThemeStatus = status
+    // console.log(document.documentElement.style.getPropertyValue($mystyle),"came data");
+
+
+    let { messageFromSwitch, statusOfClick } = infoFromSwitch
+
+    this.pageRefreshStatus = true
+    this.lightAndDarkThemeStatus = statusOfClick
+
+
     let themeObject: any
-    
-    if (this.switchStatus){
 
-      if (this.lightAndDarkThemeStatus) {
-
-        themeObject = {
-          primaryColor: '#5f5f63',
-          secondaryColor: '#000000'
-        }
+    console.log(this.lightAndDarkThemeStatus, "lightAndDarkThemeStatus");
 
 
+    if (this.lightAndDarkThemeStatus) {
 
+      themeObject = {
+        primaryColor: '#5f5f63',
+        secondaryColor: '#000000'
       }
-      else {
+
+
+
+    }
+    else {
+      themeObject = {
+        primaryColor: '#9999ad',
+        secondaryColor: '#ffffff'
+      }
+
+      console.log("Came inside else");
+
+
+    }
+
+    if (messageFromSwitch) {
+      this.customThemeService.setNewTheme(themeObject, true);
+      console.log("came inside theme set");
+    }
+    else {
+      if (localStorage.getItem('primary') === '#5f5f63') {
         themeObject = {
           primaryColor: '#9999ad',
           secondaryColor: '#ffffff'
         }
+        this.customThemeService.setNewTheme(themeObject, true);
 
       }
 
-      this.customThemeService.setNewTheme(themeObject, true);
-
     }
 
-    this.switchStatus = false
+
+
+
 
 
   }
