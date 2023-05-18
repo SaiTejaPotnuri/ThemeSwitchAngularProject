@@ -4,6 +4,7 @@ import { ButtontagComponent } from './buttontag/buttontag.component';
 import { PrimengModule } from '../primeng/primeng.module';
 import { InputtagComponent } from './inputtag/inputtag.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputSwitchComponent } from './input-switch/input-switch.component';
 
 
 
@@ -11,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     ButtontagComponent,
     InputtagComponent,
+    InputSwitchComponent,
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   exports:[
     ButtontagComponent,
-    InputtagComponent
+    InputtagComponent,
+    InputSwitchComponent
   ]
 })
 export class ReusebleComponentsModule { }

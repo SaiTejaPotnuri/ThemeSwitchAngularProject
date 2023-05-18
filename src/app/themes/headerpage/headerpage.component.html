@@ -13,8 +13,10 @@
                 <div class="themeChangeButton">
 
                         <img [src]="images.colorPicker" alt="NoImage" (click)="buttonClicked()">
+                </div>
 
-
+                <div class="switchContainer">
+                        <app-input-switch (changeMyTheme)="changeDarkOrLightTheme($event)"></app-input-switch>
                 </div>
 
 

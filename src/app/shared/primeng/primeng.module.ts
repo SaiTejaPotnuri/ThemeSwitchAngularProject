@@ -4,6 +4,7 @@ import { InputTextModule } from 'primeng/inputtext'
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 @NgModule({
@@ -13,14 +14,16 @@ import { CardModule } from 'primeng/card';
     ButtonModule,
     InputTextModule,
     DialogModule, 
-    CardModule
+    CardModule,
+    InputSwitchModule
     
   ],
   exports:[
     ButtonModule ,
     InputTextModule,
     DialogModule,
-    CardModule
+    CardModule,
+    InputSwitchModule
     
   ]
 

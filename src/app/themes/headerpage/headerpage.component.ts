@@ -10,23 +10,25 @@ import { CustomthemeService } from 'src/app/Services/customtheme.service';
 })
 export class HeaderpageComponent implements OnInit {
   myNewTheme: FormGroup
-  colorPickerTheme1:FormGroup
-  visible:boolean=false
-  fetchedColors1:any
-  themesColorFetchingStatus1:boolean;
-  validateColorStatus:boolean=false
+  colorPickerTheme1: FormGroup
+  visible: boolean = false
+  fetchedColors1: any
+  themesColorFetchingStatus1: boolean;
+  validateColorStatus: boolean = false
+  lightAndDarkThemeStatus: boolean = false;
+  switchStatus:boolean=false
 
-  images={
-    colorPicker:'assets/Images/colorPickerIcon.png'
+  images = {
+    colorPicker: 'assets/Images/colorPickerIcon.png'
   }
-  
+
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private customThemeService: CustomthemeService,
 
-  ){
+  ) {
     this.myNewTheme = this.fb.group({
       primaryColor: ['', [Validators.required]],
       secondaryColor: ['', [Validators.required]],
@@ -38,19 +40,19 @@ export class HeaderpageComponent implements OnInit {
 
   }
 
-  
+
 
   ngOnInit(): void {
     this.callFunctionsWhenLoaded()
   }
 
-  logOut(){
+  logOut() {
     localStorage.removeItem('userInfo')
   }
 
 
   callFunctionsWhenLoaded() {
-    
+
     this.visible = false
     this.fetchedColors1 = this.customThemeService.fetchPrimaryColor();
     this.themesColorFetchingStatus1 = true
@@ -58,11 +60,10 @@ export class HeaderpageComponent implements OnInit {
     this.myNewTheme.patchValue(this.fetchedColors1)
     document.documentElement.style.setProperty('--headerFontColor', this.customThemeService.getFontColor(this.fetchedColors1.primaryColor))
 
-
   }
 
-  buttonClicked(){
-      this.visible = !this.visible    
+  buttonClicked() {
+    this.visible = !this.visible
     this.fetchedColors1 = this.customThemeService.fetchPrimaryColor();
 
     this.myNewTheme.patchValue(this.fetchedColors1)
@@ -83,12 +84,12 @@ export class HeaderpageComponent implements OnInit {
     let { primaryColor, secondaryColor } = themeDetails;
     this.themesColorFetchingStatus1 = false
 
-    if(primaryColor.charAt(0) !== '#' || secondaryColor.charAt(0) !== '#' ){
+    if (primaryColor.charAt(0) !== '#' || secondaryColor.charAt(0) !== '#') {
       primaryColor = this.customThemeService.fetchTextToHexaCode(primaryColor)
       secondaryColor = this.customThemeService.fetchTextToHexaCode(secondaryColor)
     }
-    
-  
+
+
     themeDetails.primaryColor.length <= 3 ? themeDetails.primaryColor = '#' + this.customThemeService.fetchHexaCode(primaryColor) : themeDetails.primaryColor = primaryColor
     themeDetails.secondaryColor.length <= 3 ? themeDetails.secondaryColor = '#' + this.customThemeService.fetchHexaCode(secondaryColor) : themeDetails.secondaryColor = secondaryColor
 
@@ -99,30 +100,30 @@ export class HeaderpageComponent implements OnInit {
 
   applyingColorsToInput1(colorData, colorPickerFormController, customThemeControlername) {
 
-    
-    
+
+
     let colorData1
-      
-    if (colorData.charAt(0) === '#' && ((colorData.length >= 4 && colorData.length <= 5) || (colorData.length >= 3 || colorData.length === 6)) && CSS.supports('color', colorData)){
+
+    if (colorData.charAt(0) === '#' && ((colorData.length >= 4 && colorData.length <= 5) || (colorData.length >= 3 || colorData.length === 6)) && CSS.supports('color', colorData)) {
 
       colorData1 = "#" + this.customThemeService.fetchHexaCode(colorData)
-      this.validateColorStatus =true
+      this.validateColorStatus = true
     }
-    else if (colorData.charAt(0) !== '#' && CSS.supports('color', colorData)){
+    else if (colorData.charAt(0) !== '#' && CSS.supports('color', colorData)) {
 
       colorData1 = this.customThemeService.fetchTextToHexaCode(colorData);
-      this.validateColorStatus =true
+      this.validateColorStatus = true
     }
-    else{  
+    else {
       this.validateColorStatus = false
       //making form controler invalid 
       this.myNewTheme.controls[customThemeControlername].setErrors({ 'incorrect': true });
 
     }
 
-    
 
-    if (this.validateColorStatus){
+
+    if (this.validateColorStatus) {
       if (customThemeControlername === "primaryColor") {
         document.documentElement.style.setProperty('--defaultPrimary', colorData1)
         document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(colorData1))
@@ -142,14 +143,50 @@ export class HeaderpageComponent implements OnInit {
 
     }
 
-  
-   
-    
+
+
+
 
   }
 
 
 
+
+  changeDarkOrLightTheme(status) {
+
+    this.switchStatus = true
+
+    this.lightAndDarkThemeStatus = status
+    let themeObject: any
+    
+    if (this.switchStatus){
+
+      if (this.lightAndDarkThemeStatus) {
+
+        themeObject = {
+          primaryColor: '#5f5f63',
+          secondaryColor: '#000000'
+        }
+
+
+
+      }
+      else {
+        themeObject = {
+          primaryColor: '#9999ad',
+          secondaryColor: '#ffffff'
+        }
+
+      }
+
+      this.customThemeService.setNewTheme(themeObject, true);
+
+    }
+
+    this.switchStatus = false
+
+
+  }
 
 
 

@@ -14,7 +14,7 @@
 .chatContainer {
     width: 30rem;
     height: 100%;
-    box-shadow: 0px 0px 20px #aeadad;
+    box-shadow: 0px 0px 20px var(--fontColor1);
     border-radius: 15px;
 
 }
@@ -95,7 +95,7 @@
     width: 100%;
     height: 3rem;
     border-radius: 1rem;
-    box-shadow: 0px 0px 11px #aeadad;
+    box-shadow: 0px 0px 11px var(--fontColor1);
 }
 
 
@@ -118,7 +118,7 @@
 .sendMessageContainer {
     width: fit-content;
     height: 3rem;
-    box-shadow: 0px 0px 11px #aeadad;
+    box-shadow: 0px 0px 11px var(--fontColor1);
     display: flex;
     justify-content: center;
     align-items: center;
