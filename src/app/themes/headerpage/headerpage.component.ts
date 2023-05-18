@@ -115,6 +115,9 @@ export class HeaderpageComponent implements OnInit {
     }
     else{  
       this.validateColorStatus = false
+      //making form controler invalid 
+      this.myNewTheme.controls[customThemeControlername].setErrors({ 'incorrect': true });
+
     }
 
     

@@ -147,6 +147,8 @@ export class LoginComponent {
     }
     else {
       this.validateColorStatus1 = false
+      this.customTheme.controls[customThemeControlername].setErrors({ 'incorrect': true });
+
     }
 
 

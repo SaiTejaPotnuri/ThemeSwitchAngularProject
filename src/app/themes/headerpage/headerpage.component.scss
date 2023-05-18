@@ -147,6 +147,7 @@ h2::first-letter {
             color: var(--fontColor1);
             font-size: 1rem;
             font-style: italic;
+            margin-bottom: 0.8rem;
         }
 
     }
@@ -176,7 +177,7 @@ h2::first-letter {
         }
 
         .p-float-label>label {
-            color: var(--fontColor11);
+            color: var(--fontColor1);
         }
 
     }
@@ -205,7 +206,7 @@ h2::first-letter {
         }
 
         .p-float-label>label {
-            color: var(--fontColor12);
+            color: var(--fontColor1);
         }
 
     }

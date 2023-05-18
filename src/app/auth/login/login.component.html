@@ -69,7 +69,7 @@
 
                             <div class="createThemeButton">
                                 <app-buttontag [classInfo]="'p-button-raised'" [label]="' Create '"
-                                    [buttonType]="'submit'" [disabledInfo]="!validateColorStatus1"
+                                    [buttonType]="'submit'" [disabledInfo]="!validateColorStatus1 && customTheme.invalid"
                                     (buttonStatus)="newTheme(customTheme.value)"></app-buttontag>
                             </div>
                         </div>

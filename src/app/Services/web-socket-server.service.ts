@@ -9,7 +9,7 @@ import { Socket, io } from 'socket.io-client';
 export class WebSocketServerService {
 
   socket: Socket
-  url = 'http://10.25.0.2:3000/'
+  url = 'http://10.25.0.184:3000/'
 
   constructor() {
     this.socket = io(this.url, { transports: ['websocket', 'polling', 'flashsocket'] });
