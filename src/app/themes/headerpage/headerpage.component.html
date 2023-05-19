@@ -15,7 +15,7 @@
                 <div class="switchPart">
                         <p [ngClass]="lightAndDarkThemeStatus==false  ? 'setColorWhite' : 'setColorBlack' " >Light</p>
                         <div class="switchContainer">
-                                <app-input-switch (changeMyTheme)="changeDarkOrLightTheme($event)"></app-input-switch>
+                                <app-input-switch  (changeMyTheme)="changeDarkOrLightTheme($event)"></app-input-switch>
                         </div>
                          <p [ngClass]="lightAndDarkThemeStatus ? 'setColorWhite' : 'setColorBlack' " >Dark</p>
 

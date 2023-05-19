@@ -15,7 +15,7 @@ export class HeaderpageComponent implements OnInit {
   fetchedColors1: any
   themesColorFetchingStatus1: boolean;
   validateColorStatus: boolean = false
-  lightAndDarkThemeStatus: boolean = true;
+  lightAndDarkThemeStatus: boolean = false;
   pageRefreshStatus: boolean = false
 
   images = {
@@ -67,6 +67,9 @@ export class HeaderpageComponent implements OnInit {
     }
 
     this.changeDarkOrLightTheme(switchInfo)
+
+
+    this.lightAndDarkThemeStatus = localStorage.getItem('primary') === '#5f5f63' ? true : false
 
   }
 
@@ -202,17 +205,7 @@ export class HeaderpageComponent implements OnInit {
       this.customThemeService.setNewTheme(themeObject, true);
       console.log("came inside theme set");
     }
-    else {
-      if (localStorage.getItem('primary') === '#5f5f63') {
-        themeObject = {
-          primaryColor: '#9999ad',
-          secondaryColor: '#ffffff'
-        }
-        this.customThemeService.setNewTheme(themeObject, true);
-
-      }
-
-    }
+   
 
 
 

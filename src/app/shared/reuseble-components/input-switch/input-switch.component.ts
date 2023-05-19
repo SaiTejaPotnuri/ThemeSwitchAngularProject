@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-input-switch',
@@ -7,8 +7,19 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class InputSwitchComponent {
 
+  @Input() fetchStatus;
   @Output()  changeMyTheme = new EventEmitter<any>();
+
+
+
   checked:boolean;
+
+  ngOnInit(){
+
+    this.checked = localStorage.getItem('primary') === '#5f5f63' ? true : false
+    
+  }
+
 
 
   switchPressed(){
