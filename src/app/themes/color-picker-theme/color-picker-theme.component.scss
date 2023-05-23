@@ -4,7 +4,7 @@
 .mainContainer {
     width: 100%;
     height: 100%;
-    background-color: var(--secondaryColor1);
+    background-color: $secondary;
     padding: 2rem;
     display: flex;
     align-items: center;
@@ -14,7 +14,7 @@
 .chatContainer {
     width: 30rem;
     height: 100%;
-    box-shadow: 0px 0px 7px var(--primaryColor1);
+    box-shadow: 0px 0px 7px $primary;
     border-radius: 15px;
 
 }
@@ -46,7 +46,7 @@
 
 .mediaIconsContainer i {
     font-size: 1.6rem;
-    color: var(--primaryColor1);
+    color: $primary;
     cursor: pointer;
 }
 
@@ -95,14 +95,14 @@
     width: 100%;
     height: 3rem;
     border-radius: 1rem;
-    box-shadow: 0px 0px 7px var(--primaryColor1);
+    box-shadow: 0px 0px 7px $primary;
 }
 
 
 
 .mediaUploadContainer i {
     font-size: 1rem;
-    color: var(--fontColor1);
+    color: $fontColor;
     cursor: pointer;
 
 }
@@ -118,7 +118,7 @@
 .sendMessageContainer {
     width: fit-content;
     height: 3rem;
-    box-shadow: 0px 0px 7px var(--primaryColor1);
+    box-shadow: 0px 0px 7px $primary;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -129,7 +129,7 @@
 
 .sendMessageContainer i {
     font-size: 1.5rem;
-    color: var(--fontColor1);
+    color: $fontColor;
     padding: 1rem;
 }
 
@@ -148,8 +148,8 @@
      padding: 7px 1rem;
     font-family: $fontFamily;
     font-size: 1rem;
-    color: var(--headerFontColor);
-    background-color: var(--primaryColor1);
+    color: $headerFontColor;
+    background-color: $primary;
     border-radius: 20px;
     max-width: 90%;
     
@@ -168,8 +168,8 @@
      padding: 7px 1rem;
     font-family: $fontFamily;
     font-size:1rem ;
-    color: var(--headerFontColor);
-    background-color: var(--primaryColor1);
+    color:$headerFontColor;
+    background-color: $primary;
     opacity: 0.5;
         border-radius: 20px;
         max-width: 90%;
@@ -196,7 +196,7 @@
         .p-input-icon-left>.p-icon-wrapper.p-icon,
         .p-input-icon-left>i:first-of-type {
             left: 1rem;
-            color: var(--fontColor1);
+            color: $fontColor;
             font-size: 1.2rem;
         }
 
@@ -213,8 +213,8 @@
         .p-inputtext {
             font-family: $fontFamily;
             font-size: 1rem;
-            color: var(--fontColor1);
-            background: var(--secondaryColor1) 0.5;
+            color:$fontColor;
+            background: $secondary 0.5;
             padding: 0.75rem 0.75rem;
             border: none;
             transition: none;

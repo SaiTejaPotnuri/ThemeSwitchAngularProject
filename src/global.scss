@@ -1,6 +1,14 @@
 
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
+  $primary :var(--primaryColor1);
+  $secondary:var(--secondaryColor1);
+  $primaryInputTextFontColor:var(--primaryInputTextFontColor);
+  $secondaryInputTextFontColor:var(--secondaryInputTextFontColor);
+  $headerFontColor:var(--headerFontColor);
+  $fontColor:var(--fontColor1);
+  $buttonFontColor:var(--buttonFontColor);
+  $selectedDefaulThemeBorder : black;
+
   $fontFamily:'poppins';
-  $colorPTag: rgb(126, 120, 120);
-  $mystyle: 'Hello'
+  

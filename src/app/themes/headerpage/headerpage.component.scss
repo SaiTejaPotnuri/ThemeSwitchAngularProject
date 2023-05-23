@@ -4,8 +4,8 @@
     width: 100%;
     height: 100%;
     // box-shadow: 0px 0px 32px #f1e9e9;
-    filter: drop-shadow(0px 0px 7px var(--fontColor1));
-    background-color: var(--primaryColor1);
+    filter: drop-shadow(0px 0px 7px $headerFontColor);
+    background-color: $primary;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,7 +24,7 @@
 .headerContainer .logoPart h2 {
     font-family: $fontFamily;
     font-weight: 500;
-    color: var(--headerFontColor);
+    color: $headerFontColor;
     font-size: 1.5rem;
     font-style: italic;
 }
@@ -47,7 +47,7 @@
 
 
 h2::first-letter {
-    color: var(--headerFontColor);
+    color: $headerFontColor;
     font-size: 2rem;
     font-style: italic;
 }
@@ -72,7 +72,7 @@ h2::first-letter {
 
 .subContainer ul li a {
     text-decoration: none;
-    color: var(--headerFontColor);
+    color: $headerFontColor;
     font-family: $fontFamily;
     font-size: 1.1rem;
     font-weight: 400;
@@ -80,15 +80,15 @@ h2::first-letter {
 
     &.active {
         transition: 0.5s;
-        background-color: var(--secondaryColor1);
+        background-color: $secondary;
         border-radius: 40px;
-        color: var(--fontColor1);
+        color: $fontColor;
     }
 }
 
 
 .subContainer ul li:hover {
-    border-bottom: 4px solid var(--secondaryColor1);
+    border-bottom: 4px solid $secondary;
 }
 
 .primaryTheme,
@@ -135,13 +135,13 @@ h2::first-letter {
 .switchPart p{
      font-family: $fontFamily;
     font-weight: 500;
-    color: var(--fontColor1);
+    color: $fontColor;
     font-size: 1.2rem;
     font-style: bold;
 }
 
 .setColorWhite{
-        color: var(--headerFontColor) !important;
+        color: $headerFontColor !important;
 }
 .setColorBlack{
         color: #000000 !important;
@@ -193,7 +193,7 @@ h2::first-letter {
 
 .addborderPadding{
     border-radius: 50%;
-    border: 4px solid black;
+    border: 4px solid $selectedDefaulThemeBorder;
 }
 
 
@@ -202,7 +202,7 @@ h2::first-letter {
      p{
             font-family: $fontFamily;
             font-weight: 500;
-            color: #000000;
+            color: $selectedDefaulThemeBorder;
             font-size: 0.8rem;
             font-style: italic;
             margin-top: 1rem;
@@ -218,7 +218,7 @@ h2::first-letter {
                 box-shadow: none;
         }
         .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-            background: var(--secondaryColor1);
+            background: $secondary;
         }
         // .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
         //     background: var(--);
@@ -247,7 +247,7 @@ h2::first-letter {
         .dialogbodyPart p {
             font-family: $fontFamily;
             font-weight: 500;
-            color: var(--primaryColor1);
+            color: $primary;
             font-size: 1rem;
             font-style: italic;
             margin-bottom: 0.8rem;
@@ -258,58 +258,58 @@ h2::first-letter {
 
     .themeInput {
         .p-inputtext {
-            background-color: var(--defaultPrimary) !important;
+            background-color: $primary !important;
             transition: none !important;
-            color: var(--fontColor11);
+            color: $headerFontColor;
 
         }
 
         .p-inputtext.ng-dirty.ng-invalid {
-            border-color: var(--defaultSecondary) !important;
+            border-color: $secondary !important;
         }
 
         .p-inputtext:enabled:hover {
-            border-color: var(--defaultSecondary) !important;
+            border-color: $secondary !important;
 
         }
 
         .p-inputtext:enabled:focus {
-            border: 1px solid var(--defaultSecondary) !important;
+            border: 1px solid $secondary !important;
             box-shadow: none !important;
 
         }
 
         .p-float-label>label {
-            color: var(--fontColor1);
+            color: $primary;
         }
 
     }
 
     .themeInputSecondary {
         .p-inputtext {
-            background-color: var(--defaultSecondary) !important;
+            background-color: $secondary !important;
             transition: none !important;
-            color: var(--fontColor12);
+            color: $fontColor;
 
         }
 
         .p-inputtext.ng-dirty.ng-invalid {
-            border-color: var(--defaultPrimary) !important;
+            border-color: $primary !important;
         }
 
         .p-inputtext:enabled:hover {
-            border-color: var(--defaultPrimary) !important;
+            border-color: $primary !important;
 
         }
 
         .p-inputtext:enabled:focus {
-            border: 1px solid var(--defaultPrimary) !important;
+            border: 1px solid $primary !important;
             box-shadow: none !important;
 
         }
 
         .p-float-label>label {
-            color: var(--fontColor1);
+            color: $secondary;
         }
 
     }
@@ -323,58 +323,58 @@ h2::first-letter {
 
         .themeInput {
             .p-inputtext {
-                background-color: var(--secondaryColor1) !important;
+                background-color: $secondary !important;
                 transition: none !important;
-                color: var(--fontColor11);
+                color: $headerFontColor;
 
             }
 
             .p-inputtext.ng-dirty.ng-invalid {
-                border-color: var(--primaryColor1) !important;
+                border-color: $primary !important;
             }
 
             .p-inputtext:enabled:hover {
-                border-color: var(--primaryColor1) !important;
+                border-color: $primary !important;
 
             }
 
             .p-inputtext:enabled:focus {
-                border: 1px solid var(--primaryColor1) !important;
+                border: 1px solid $primary !important;
                 box-shadow: none !important;
 
             }
 
             .p-float-label>label {
-                color: var(--fontColor11);
+                color: $primary;
             }
 
         }
 
         .themeInputSecondary {
             .p-inputtext {
-                background-color: var(--secondaryColor1) !important;
+                background-color: $secondary !important;
                 transition: none !important;
-                color: var(--fontColor12);
+                color: $fontColor;
 
             }
 
             .p-inputtext.ng-dirty.ng-invalid {
-                border-color: var(--primaryColor1) !important;
+                border-color: $primary !important;
             }
 
             .p-inputtext:enabled:hover {
-                border-color: var(--primaryColor1) !important;
+                border-color: $primary !important;
 
             }
 
             .p-inputtext:enabled:focus {
-                border: 1px solid var(--primaryColor1) !important;
+                border: 1px solid $primary !important;
                 box-shadow: none !important;
 
             }
 
             .p-float-label>label {
-                color: var(--fontColor12);
+                color: $secondary;
             }
 
         }

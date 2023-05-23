@@ -12,14 +12,14 @@ import { CustomthemeService } from 'src/app/Services/customtheme.service';
 export class LoginComponent {
   signInForm: FormGroup;
   customTheme: FormGroup
-  colorPickerTheme:FormGroup
+  colorPickerTheme: FormGroup
   visible: boolean = false
-  validateColorStatus1:boolean=false
+  validateColorStatus1: boolean = false
   imagesList = {
     logisticsImage: './assets/Images/logisticLogo.png'
   }
   fetchedColors: any
-  defaulthemesList1: Array<any> = [] 
+  defaulthemesList1: Array<any> = []
 
 
   themesColorFetchingStatus: boolean = false
@@ -76,48 +76,61 @@ export class LoginComponent {
   callFunctionsWhenLoaded() {
     this.visible = false
     this.fetchedColors = this.customThemeService.fetchPrimaryColor();
-    
+
     this.themesColorFetchingStatus = true
     this.customThemeService.setNewTheme(this.fetchedColors, this.themesColorFetchingStatus);
     this.customTheme.patchValue(this.fetchedColors)
-    this.colorPickerTheme.get('primaryColor11').setValue(this.fetchedColors.primaryColor)
-    this.colorPickerTheme.get('secondaryColor11').setValue(this.fetchedColors.secondaryColor)
-    
-   
+
+    this.setValuesToTheForm(this.colorPickerTheme, 'primaryColor11', this.fetchedColors.primaryColor)
+    this.setValuesToTheForm(this.colorPickerTheme, 'secondaryColor11', this.fetchedColors.secondaryColor)
+
+    this.changeFontColors();
+    this.defaulthemesList1.filter(theme => theme.prime !== this.fetchedColors.primaryColor || theme.secondary !== this.fetchedColors.secondaryColor).map(selectedTheme => selectedTheme.active = false)
+
+  }
+
+
+ 
+
+  setValuesToTheForm(formGroupInfo,formControllerNameInfo,assigningValue){
+    formGroupInfo.get(formControllerNameInfo)?.setValue(assigningValue)
   }
 
 
   submitSignInDetails(a: any) {
     let userName = a.signInEmail.split('@')[0]
-    
-    localStorage.setItem('userInfo',userName)
+
+    localStorage.setItem('userInfo', userName)
     this.router.navigate(['/mythemes'])
 
   }
 
+
+  changeFontColors() {
+
+    this.customThemeService.setPropertyValuesToCSSVariables('--primaryColor1', this.fetchedColors.primaryColor)
+    this.customThemeService.setPropertyValuesToCSSVariables('--primaryInputTextFontColor', this.customThemeService.getFontColor(this.fetchedColors.primaryColor))
+    this.customThemeService.setPropertyValuesToCSSVariables('--secondaryColor1', this.fetchedColors.secondaryColor)
+    this.customThemeService.setPropertyValuesToCSSVariables('--secondaryInputTextFontColor', this.customThemeService.getFontColor(this.fetchedColors.secondaryColor))
+
+  }
 
 
 
 
 
   changeTheme() {
+
     this.visible = !this.visible
     this.fetchedColors = this.customThemeService.fetchPrimaryColor();
     this.customTheme.patchValue(this.fetchedColors)
-    
-    this.colorPickerTheme.get('primaryColor11').setValue(this.fetchedColors.primaryColor)
-    this.colorPickerTheme.get('secondaryColor11').setValue(this.fetchedColors.secondaryColor)
-    document.documentElement.style.setProperty('--defaultPrimary', this.fetchedColors.primaryColor)
-    document.documentElement.style.setProperty('--defaultSecondary', this.fetchedColors.secondaryColor)
-    document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(this.fetchedColors.primaryColor))
-    document.documentElement.style.setProperty('--fontColor12', this.customThemeService.getFontColor(this.fetchedColors.secondaryColor))
+    this.setValuesToTheForm(this.colorPickerTheme, 'primaryColor11', this.fetchedColors.primaryColor)
+    this.setValuesToTheForm(this.colorPickerTheme, 'secondaryColor11', this.fetchedColors.secondaryColor)
 
-
-    this.defaulthemesList1.filter(theme => theme.prime === this.fetchedColors.primaryColor && theme.secondary === this.fetchedColors.secondaryColor).map(selectedTheme => selectedTheme.active = true)
-  
   }
 
   newTheme(themeDetails) {
+
 
     let { primaryColor, secondaryColor } = themeDetails;
     this.themesColorFetchingStatus = false
@@ -127,14 +140,14 @@ export class LoginComponent {
       secondaryColor = this.customThemeService.fetchTextToHexaCode(secondaryColor)
     }
 
+    themeDetails.primaryColor.length <= 3 ? themeDetails.primaryColor = '#' + this.customThemeService.fetchHexaCode(primaryColor) : themeDetails.primaryColor = primaryColor
+    themeDetails.secondaryColor.length <= 3 ? themeDetails.secondaryColor = '#' + this.customThemeService.fetchHexaCode(secondaryColor) : themeDetails.secondaryColor = secondaryColor
 
+    this.customThemeService.setNewTheme(themeDetails, this.themesColorFetchingStatus);
+    this.defaulthemesList1.filter(theme => theme.prime !== themeDetails.primaryColor || theme.secondary !== themeDetails.secondaryColor).map(selectedTheme => selectedTheme.active = false)
+    this.defaulthemesList1.filter(theme => theme.prime === themeDetails.primaryColor && theme.secondary === themeDetails.secondaryColor).map(selectedTheme => selectedTheme.active = true)
 
-
-      themeDetails.primaryColor.length <= 3 ? themeDetails.primaryColor = '#' + this.customThemeService.fetchHexaCode(primaryColor) : themeDetails.primaryColor = primaryColor
-      themeDetails.secondaryColor.length <= 3 ? themeDetails.secondaryColor = '#' + this.customThemeService.fetchHexaCode(secondaryColor) : themeDetails.secondaryColor = secondaryColor
-   
-      this.customThemeService.setNewTheme(themeDetails, this.themesColorFetchingStatus);
-      this.visible = !this.visible
+    this.visible = !this.visible
 
   }
 
@@ -150,16 +163,9 @@ export class LoginComponent {
     }
 
     let localstorageTheme = this.customThemeService.fetchPrimaryColor();
-
-
-
     this.customThemeService.setNewTheme(defaultTheme, true);
     themeInfo.active = true
-
-
     this.defaulthemesList1.filter(theme => theme.prime !== themeInfo.prime && theme.secondary !== themeInfo.secondary).map(unselectedThemes => unselectedThemes.active = false)
-
-
 
     if (defaultTheme.primaryColor === localstorageTheme.primaryColor && defaultTheme.secondaryColor === localstorageTheme.secondaryColor) {
       this.visible = true
@@ -171,31 +177,28 @@ export class LoginComponent {
         this.visible = false
       }, 500)
     }
-    document.documentElement.style.setProperty('--headerFontColor', this.customThemeService.getFontColor(defaultTheme.primaryColor))
 
-
-
-
-
-
-
-
+    this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(defaultTheme.primaryColor))
+  
   }
 
 
-
-
-
-
-
-  applyingColorsToInput(colorData,colorPickerFormController,customThemeControlername){
+  applyingColorsToInput(colorData, colorPickerFormController, customThemeControlername) {
 
     let colorData1
 
-    if (colorData.charAt(0) === '#' && ((colorData.length >= 4 && colorData.length <= 5) || (colorData.length >= 3 || colorData.length === 6)) && CSS.supports('color', colorData)) {
+    if (colorData.charAt(0) === '#' && (colorData.length <= 4 || colorData.length === 7)) {
 
-      colorData1 = "#" + this.customThemeService.fetchHexaCode(colorData)
-      this.validateColorStatus1 = true
+      let check = "#" + this.customThemeService.fetchHexaCode(colorData)
+
+      if (CSS.supports('color', check)) {
+        colorData1 = check
+        this.validateColorStatus1 = true
+      }
+      else {
+        this.customTheme.controls[customThemeControlername].setErrors({ 'incorrect': true });
+      }
+
     }
     else if (colorData.charAt(0) !== '#' && CSS.supports('color', colorData)) {
 
@@ -212,30 +215,21 @@ export class LoginComponent {
 
     if (this.validateColorStatus1) {
       if (customThemeControlername === "primaryColor") {
-        document.documentElement.style.setProperty('--defaultPrimary', colorData1)
-        document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(colorData1))
-        document.documentElement.style.setProperty('--headerFontColor', this.customThemeService.getFontColor(colorData))
+        this.customThemeService.setPropertyValuesToCSSVariables('--primaryColor1', colorData1)
+        this.customThemeService.setPropertyValuesToCSSVariables('--primaryInputTextFontColor', this.customThemeService.getFontColor(colorData1))
       }
       else {
-        document.documentElement.style.setProperty('--defaultSecondary', colorData1)
-        document.documentElement.style.setProperty('--fontColor12', this.customThemeService.getFontColor(colorData1))
-
+        this.customThemeService.setPropertyValuesToCSSVariables('--secondaryColor1', colorData1)
+        this.customThemeService.setPropertyValuesToCSSVariables('--secondaryInputTextFontColor', this.customThemeService.getFontColor(colorData1))
       }
 
       let colorPickerSetValue = '#' + this.customThemeService.fetchHexaCode(colorData1)
 
-      this.colorPickerTheme.get(colorPickerFormController)?.setValue(colorPickerSetValue)
-
-      this.customTheme.get(customThemeControlername)?.setValue(colorData)
+      this.setValuesToTheForm(this.colorPickerTheme, colorPickerFormController, colorPickerSetValue)
+      this.setValuesToTheForm(this.customTheme, customThemeControlername, colorData)
 
     }
-  
 
-
-   
   }
-
-
-
 
 }

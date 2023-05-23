@@ -16,7 +16,7 @@
     height: calc(100% - 2rem);
     border-radius: 1rem;
     margin: 0px 1rem;
-    box-shadow: 0px 0px 7px var(--primaryColor1);
+    box-shadow: 0px 0px 7px $primary;
 
 
 }
@@ -39,10 +39,14 @@
 .postContainer {
     width: 35rem;
     height: calc(100% - 2rem);
-    box-shadow: 0px 0px 7px var(--primaryColor1);
+    box-shadow: 0px 0px 7px $primary;
     border-radius: 1rem;
     margin: 0px 1rem;
     padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
      
 }
 .postContainer .postHeaderContainer,.postFooterContainer{
@@ -53,12 +57,11 @@
 
  .cardsContainer{
 
-    width: 100%;
+    width: 31rem;
     height:550px;
      overflow-y: scroll;
      scroll-behavior: smooth;
-     padding-left: 1rem;
-
+    
 
 
 }
@@ -95,7 +98,7 @@
 .profilePic {
     width: 8rem;
     height: 8rem;
-    border: 4px solid var(--headerFontColor);
+    border: 4px solid $headerFontColor;
     border-radius: 50%;
     position: relative;
     top: -3.5rem;
@@ -121,7 +124,7 @@
 .userName h2 {
     font-family: $fontFamily;
     font-weight: 500;
-    color: var(--primaryColor1);
+    color: $primary;
     font-size: 1.5rem;
     font-style: bold;
 }
@@ -168,14 +171,14 @@
 .bioSubContainer i,
 .bioSubContainer1 i {
     font-size: 1.2rem;
-    color: var(--fontColor1);
+    color: $fontColor;
 }
 
 .bioSubContainer h3,
 .bioSubContainer1 p {
     font-family: $fontFamily;
     font-weight: 500;
-    color: var(--fontColor1);
+    color: $fontColor;
     font-size: 1rem;
     word-break: break-all;
 
@@ -186,7 +189,7 @@
     width: 100%;
     height: 3rem;
     border-radius: 1rem;
-    box-shadow: 0px 0px 7px var(--primaryColor1);
+    box-shadow: 0px 0px 7px $primary;
 
 
 }
@@ -197,7 +200,7 @@
     width: 100%;
     height: 15rem;
     border-radius: 1rem;
-    box-shadow: 0px 0px 7px var(--primaryColor1);
+    box-shadow: 0px 0px 7px $primary;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -233,16 +236,16 @@
     width: 3.8rem;
     height: 3.8rem;
     border-radius: 50%;
-    border: 4px solid var(--headerFontColor);
+    border: 4px solid $headerFontColor;
     object-fit: contain;
 }
 
 .postNews a {
     text-decoration: none;
-    background-color: var(--primaryColor1);
+    background-color: $primary;
     padding: 0.5rem 2.3rem;
     border-radius: 2rem;
-    color: var(--headerFontColor);
+    color: $headerFontColor;
     font-family: $fontFamily;
     font-size: 1rem;
     cursor: pointer;
@@ -260,13 +263,12 @@
 
 .newsIcons i {
     font-size: 1.3rem;
-    color: var(--primaryColor1);
+    color: $fontColor;
     cursor: pointer;
 }
 
 .myCard {
     margin-bottom: 0.5rem;
-
    
 }
 
@@ -321,13 +323,13 @@
 .postBioInfo p {
     font-family: $fontFamily;
     font-weight: 500;
-    color: var(--headerFontColor);
+    color: $fontColor;
     font-size: 1rem;
     font-style: bold;
 }
 
 .postBioInfo p:nth-child(2) {
-    color: var(--headerFontColor);
+    color: $fontColor;
     opacity: 0.5;
 }
 
@@ -355,7 +357,7 @@
 .postBodyPart .postDescription p {
     font-family: $fontFamily;
     font-weight: 500;
-    color: var(--headerFontColor);
+    color: $fontColor;
     font-size: 0.9rem;
 
 }
@@ -400,7 +402,7 @@
     font-size: 1.5rem;
     font-family: $fontFamily;
     font-weight: 500;
-    color: var(--headerFontColor);
+    color: $fontColor;
     cursor: pointer;
 }
 
@@ -409,7 +411,7 @@
 .eventDiv p {
     font-family: $fontFamily;
     font-weight: 500;
-    color: var(--headerFontColor);
+    color: $fontColor;
     font-size: 1rem;
 }
 
@@ -424,7 +426,7 @@
         .p-input-icon-left>.p-icon-wrapper.p-icon,
         .p-input-icon-left>i:first-of-type {
             left: 1rem;
-            color: var(--fontColor1);
+            color:$fontColor;
             font-size: 1.2rem;
         }
 
@@ -432,7 +434,7 @@
             padding-left: 3.5rem;
         }
 
-        .p-inputtext {
+        .p-inputtext{
             margin: 0;
             border-radius: 1rem;
         }
@@ -440,8 +442,8 @@
         .p-inputtext {
             font-family: $fontFamily;
             font-size: 1rem;
-            color: var(--fontColor1);
-            background: var(--secondaryColor1) 0.5;
+            color: $fontColor;
+            background: $secondary 0.5;
             padding: 0.75rem 0.75rem;
             border: none;
             transition: none;
@@ -465,10 +467,10 @@
         }
 
         .p-card {
-            background: var(--primaryColor1);
-            opacity: 0.8;
-            box-shadow: 0px 0px 7px var(--primaryColor1);
-            border-radius: 6px;
+
+            background: none;
+            border: 3px solid $primary;
+            // box-shadow: 0px 0px 7px $primary;
         }
 
         .p-card .p-card-footer {

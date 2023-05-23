@@ -1,8 +1,9 @@
+@import '../../../global.scss';
 
 .DashboardStyle {
     width: 100vw;
     height: 100vh;
-    background-color: var(--secondaryColor1);
+    background-color: $secondary;
 }
 
 .header {
