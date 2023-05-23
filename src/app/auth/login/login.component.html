@@ -74,6 +74,48 @@
                             </div>
                         </div>
 
+
+                        <div class="separationLine">
+                            <table>
+                                <tr>
+                                    <td style="width:46%">
+                                        <hr />
+                                    </td>
+                                    <td class="horizontaillineAndOrText">or</td>
+                                    <td style="width:47%">
+                                        <hr />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="defaultThemeings">
+                        
+                            <div class="subTheme" *ngFor="let theme of defaulthemesList1 let i = index">
+                                <div id="theme1" (click)="changeDefaultThemes(theme)" [ngClass]="theme.active ? 'addborderPadding':'' ">
+                                    <div class="upperColorPart1" [style.background]="theme.prime">
+                                    </div>
+                                    <div class="lowerColorPart1" [style.background]="theme.secondary">
+                                    </div>
+                                </div>
+                                <div class="themeFontStyle">
+                                    <p>{{theme.colorsName}}</p>
+                                </div>
+                        
+                            </div>
+                        
+                        
+                        
+                        </div>
+
+
+
+
+
+
+
+
+
+
                     </p-dialog>
                 </div>
 

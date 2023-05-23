@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CustomthemeService } from 'src/app/Services/customtheme.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class HeaderpageComponent implements OnInit {
   validateColorStatus: boolean = false
   lightAndDarkThemeStatus: boolean = false;
   pageRefreshStatus: boolean = false
+  defaulthemesList:Array<any> =[] 
 
   images = {
     colorPicker: 'assets/Images/colorPickerIcon.png'
@@ -27,6 +29,7 @@ export class HeaderpageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private customThemeService: CustomthemeService,
+    private toasterService: ToastrService
 
   ) {
     this.myNewTheme = this.fb.group({
@@ -44,6 +47,13 @@ export class HeaderpageComponent implements OnInit {
 
   ngOnInit(): void {
     this.callFunctionsWhenLoaded()
+    this.defaulthemesList=[
+      { prime: '#27374D', secondary: '#526D82', active: false, colorsName:'Blue & pink'},
+      { prime: '#643843', secondary: '#99627A', active: false, colorsName: 'Purple Theme ' },
+      { prime: '#2C5F2D', secondary: '#97BC62', active: false, colorsName: 'Forest g.. & moss g..' },
+      { prime: '#ECF8F9', secondary: '#068DA9', active: false, colorsName: 'Royal B.. & Pale Y..' },
+    ]
+
   }
 
   logOut() {
@@ -86,6 +96,7 @@ export class HeaderpageComponent implements OnInit {
     document.documentElement.style.setProperty('--fontColor11', this.customThemeService.getFontColor(this.fetchedColors1.primaryColor))
     document.documentElement.style.setProperty('--fontColor12', this.customThemeService.getFontColor(this.fetchedColors1.secondaryColor))
 
+    this.defaulthemesList.filter(theme => theme.prime === this.fetchedColors1.primaryColor && theme.secondary === this.fetchedColors1.secondaryColor).map(selectedTheme => selectedTheme.active=true)
 
   }
 
@@ -162,12 +173,58 @@ export class HeaderpageComponent implements OnInit {
 
 
 
+  changeDefaultThemes(themeInfo){
+
+    
+   let  defaultTheme = {
+     primaryColor: themeInfo.prime,
+     secondaryColor: themeInfo.secondary
+    }
+
+    let localstorageTheme = this.customThemeService.fetchPrimaryColor();
+
+   
+
+    this.customThemeService.setNewTheme(defaultTheme, true);
+    themeInfo.active =true
+
+
+    this.defaulthemesList.filter(theme => theme.prime !== themeInfo.prime && theme.secondary !== themeInfo.secondary).map(unselectedThemes => unselectedThemes.active = false)
+
+
+
+    if (defaultTheme.primaryColor === localstorageTheme.primaryColor && defaultTheme.secondaryColor === localstorageTheme.secondaryColor)
+    {
+      this.visible = true
+      this.toasterService.warning('Theme already applied ',)
+    }
+    else{
+
+      setTimeout(() => {
+        this.visible = false
+      }, 500)
+    }
+    document.documentElement.style.setProperty('--headerFontColor', this.customThemeService.getFontColor(defaultTheme.primaryColor))
+
+
+    
+
+
+
+
+
+  }
+
+
+
 
   changeDarkOrLightTheme(infoFromSwitch) {
 
 
     // console.log(document.documentElement.style.getPropertyValue($mystyle),"came data");
 
+
+    this.defaulthemesList.map(theme => theme.active=false)
 
     let { messageFromSwitch, statusOfClick } = infoFromSwitch
 
@@ -203,23 +260,10 @@ export class HeaderpageComponent implements OnInit {
 
     if (messageFromSwitch) {
       this.customThemeService.setNewTheme(themeObject, true);
-      console.log("came inside theme set");
     }
    
 
-
-
-
-
-
   }
-
-
-
-
-
-
-
 
 
 }

@@ -9,7 +9,8 @@ import { Socket, io } from 'socket.io-client';
 export class WebSocketServerService {
 
   socket: Socket
-  url = 'http://10.25.0.184:3000/'
+  // need to give your ipconfig IPV4 value like 10.25.0.184 or only one system place as a localhost
+  url = 'http://10.25.0.10:3000/'
 
   constructor() {
     this.socket = io(this.url, { transports: ['websocket', 'polling', 'flashsocket'] });

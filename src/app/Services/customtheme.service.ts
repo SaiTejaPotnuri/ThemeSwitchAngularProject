@@ -116,8 +116,6 @@ export class CustomthemeService {
     let b: any;
 
     hex1 = this.fetchHexaCode(hex1)
-
-
     r = parseInt(hex1.slice(0, 2), 16);
     g = parseInt(hex1.slice(2, 4), 16);
     b = parseInt(hex1.slice(4, 6), 16);

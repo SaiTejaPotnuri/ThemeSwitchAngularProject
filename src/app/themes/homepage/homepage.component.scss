@@ -16,7 +16,7 @@
     height: calc(100% - 2rem);
     border-radius: 1rem;
     margin: 0px 1rem;
-    box-shadow: 0px 0px 20px var(--primaryColor1);
+    box-shadow: 0px 0px 7px var(--primaryColor1);
 
 
 }
@@ -39,7 +39,7 @@
 .postContainer {
     width: 35rem;
     height: calc(100% - 2rem);
-    box-shadow: 0px 0px 15px var(--fontColor1);
+    box-shadow: 0px 0px 7px var(--primaryColor1);
     border-radius: 1rem;
     margin: 0px 1rem;
     padding: 1rem;
@@ -186,7 +186,7 @@
     width: 100%;
     height: 3rem;
     border-radius: 1rem;
-    box-shadow: 0px 0px 11px var(--fontColor1);
+    box-shadow: 0px 0px 7px var(--primaryColor1);
 
 
 }
@@ -197,7 +197,7 @@
     width: 100%;
     height: 15rem;
     border-radius: 1rem;
-    box-shadow: 0px 0px 11px var(--fontColor1);
+    box-shadow: 0px 0px 7px var(--primaryColor1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -467,7 +467,7 @@
         .p-card {
             background: var(--primaryColor1);
             opacity: 0.8;
-            box-shadow: 0px 0px 3px var(--fontColor1);
+            box-shadow: 0px 0px 7px var(--primaryColor1);
             border-radius: 6px;
         }
 

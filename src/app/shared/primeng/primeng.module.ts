@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     InputTextModule,
     DialogModule, 
     CardModule,
-    InputSwitchModule
+    InputSwitchModule,
+    TableModule
     
   ],
   exports:[
@@ -23,7 +25,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     InputTextModule,
     DialogModule,
     CardModule,
-    InputSwitchModule
+    InputSwitchModule,
+    TableModule
     
   ]
 

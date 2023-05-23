@@ -19,6 +19,8 @@ export class LoginComponent {
     logisticsImage: './assets/Images/logisticLogo.png'
   }
   fetchedColors: any
+  defaulthemesList1: Array<any> = [] 
+
 
   themesColorFetchingStatus: boolean = false
 
@@ -62,6 +64,12 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.callFunctionsWhenLoaded()
+    this.defaulthemesList1 = [
+      { prime: '#27374D', secondary: '#526D82', active: false, colorsName: 'Blue & pink' },
+      { prime: '#643843', secondary: '#99627A', active: false, colorsName: 'Purple Theme ' },
+      { prime: '#2C5F2D', secondary: '#97BC62', active: false, colorsName: 'Forest g.. & moss g..' },
+      { prime: '#ECF8F9', secondary: '#068DA9', active: false, colorsName: 'Royal B.. & Pale Y..' },
+    ]
   }
 
 
@@ -105,7 +113,8 @@ export class LoginComponent {
     document.documentElement.style.setProperty('--fontColor12', this.customThemeService.getFontColor(this.fetchedColors.secondaryColor))
 
 
-        
+    this.defaulthemesList1.filter(theme => theme.prime === this.fetchedColors.primaryColor && theme.secondary === this.fetchedColors.secondaryColor).map(selectedTheme => selectedTheme.active = true)
+  
   }
 
   newTheme(themeDetails) {
@@ -128,6 +137,54 @@ export class LoginComponent {
       this.visible = !this.visible
 
   }
+
+
+
+
+  changeDefaultThemes(themeInfo) {
+
+
+    let defaultTheme = {
+      primaryColor: themeInfo.prime,
+      secondaryColor: themeInfo.secondary
+    }
+
+    let localstorageTheme = this.customThemeService.fetchPrimaryColor();
+
+
+
+    this.customThemeService.setNewTheme(defaultTheme, true);
+    themeInfo.active = true
+
+
+    this.defaulthemesList1.filter(theme => theme.prime !== themeInfo.prime && theme.secondary !== themeInfo.secondary).map(unselectedThemes => unselectedThemes.active = false)
+
+
+
+    if (defaultTheme.primaryColor === localstorageTheme.primaryColor && defaultTheme.secondaryColor === localstorageTheme.secondaryColor) {
+      this.visible = true
+      this.toasterService.warning('Theme already applied ',)
+    }
+    else {
+
+      setTimeout(() => {
+        this.visible = false
+      }, 500)
+    }
+    document.documentElement.style.setProperty('--headerFontColor', this.customThemeService.getFontColor(defaultTheme.primaryColor))
+
+
+
+
+
+
+
+
+  }
+
+
+
+
 
 
 
