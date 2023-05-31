@@ -32,7 +32,7 @@
 
                 </div>
                 <div class="themeChangeDialog">
-                    <p-dialog header="Create Theme" [(visible)]="visible" [style]="{width: '30vw'}" [modal]="true"
+                    <p-dialog header="Create Theme" [(visible)]="visible" [style]="{width: '35vw',height:'60rem'}" [modal]="true"
                         [draggable]="false" [resizable]="false">
                         <div class="dialogbodyPart">
                                                     <p>Text and Hexa accepted</p>
@@ -66,6 +66,10 @@
                                 </div>
                             </div>
 
+                            <div class="checkBoxContainer">
+                                    <app-checkboxtype [formGroup]="makeDefaultThemeStatusForm"[checkBoxFormControlerName]="'makeDefaultThemeStatus'" [labelForCheckBox]="'Make It Default Theme'" [idForCheckBox]="'defaultCheck'"></app-checkboxtype>
+                            </div>
+
 
                             <div class="createThemeButton">
                                 <app-buttontag [classInfo]="'p-button-raised'" [label]="' Create '"
@@ -88,8 +92,12 @@
                                 </tr>
                             </table>
                         </div>
+                        <div class="defaultThemeTitle">
+                            <p>Chosse Your Themes</p>
+                        </div>
                         <div class="defaultThemeings">
                         
+                            
                             <div class="subTheme" *ngFor="let theme of defaulthemesList1 let i = index">
                                 <div id="theme1" (click)="changeDefaultThemes(theme)" [ngClass]="theme.active ? 'addborderPadding':'' ">
                                     <div class="upperColorPart1" [style.background]="theme.prime">
@@ -97,12 +105,10 @@
                                     <div class="lowerColorPart1" [style.background]="theme.secondary">
                                     </div>
                                 </div>
-                                <div class="themeFontStyle">
-                                    <p>{{theme.colorsName}}</p>
-                                </div>
-                        
+                               
                             </div>
                         
+                            
                         
                         
                         </div>

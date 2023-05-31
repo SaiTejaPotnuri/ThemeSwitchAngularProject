@@ -5,6 +5,7 @@ import { PrimengModule } from '../primeng/primeng.module';
 import { InputtagComponent } from './inputtag/inputtag.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputSwitchComponent } from './input-switch/input-switch.component';
+import { CheckboxtypeComponent } from './checkboxtype/checkboxtype.component';
 
 
 
@@ -13,6 +14,7 @@ import { InputSwitchComponent } from './input-switch/input-switch.component';
     ButtontagComponent,
     InputtagComponent,
     InputSwitchComponent,
+    CheckboxtypeComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { InputSwitchComponent } from './input-switch/input-switch.component';
   exports:[
     ButtontagComponent,
     InputtagComponent,
-    InputSwitchComponent
+    InputSwitchComponent,
+    CheckboxtypeComponent
   ]
 })
 export class ReusebleComponentsModule { }

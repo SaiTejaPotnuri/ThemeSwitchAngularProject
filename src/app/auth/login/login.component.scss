@@ -181,6 +181,10 @@
     width: 20%;
     height: 3.5rem;
 }
+.checkBoxContainer{
+    width: 100%;
+    height:2rem;
+}
 
 .primaryTheme,
 .secondaryTheme {
@@ -249,6 +253,24 @@
         text-align: center;
         padding: 0px 5px;
 }
+
+.defaultThemeTitle{
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+
+}
+.defaultThemeTitle p{
+      font-family: $fontFamily;
+            font-weight: 500;
+            color: #000000;
+            font-size: 1rem;
+            font-style: italic;
+}
+
 .defaultThemeings{
     width: 100%;
     height: auto;
@@ -258,6 +280,12 @@
     align-items: center;
     gap: 0.5rem;
 }
+
+
+
+
+
+
 .subTheme{
     display: flex;
     align-items: center;
@@ -285,7 +313,7 @@
 }
 
 
-.themeFontStyle{
+.themeFontStyle {
 
      p{
             font-family: $fontFamily;
@@ -520,7 +548,7 @@
         }
 
         .dialogbodyPart {
-            margin-top: 2rem;
+            margin-top: 0.5rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -530,11 +558,11 @@
         }
          .dialogbodyPart p {
             font-family: $fontFamily;
-            font-weight: 500;
-            color: $fontColor;
-            font-size: 1rem;
-            font-style: italic;
-            margin-bottom: 0.8rem;
+            font-weight: 500 !important;
+            color: $primary !important;
+            font-size: 1rem !important;
+            font-style: italic !important;
+            margin-bottom: 0.6rem !important;
 
         }
 

@@ -66,7 +66,7 @@ export class HeaderpageComponent implements OnInit {
     this.visible = false
     this.fetchedColors1 = this.customThemeService.fetchPrimaryColor();
     this.themesColorFetchingStatus1 = true
-    this.customThemeService.setNewTheme(this.fetchedColors1, this.themesColorFetchingStatus1);
+    this.customThemeService.setNewTheme(this.fetchedColors1, this.themesColorFetchingStatus1,'');
     this.myNewTheme.patchValue(this.fetchedColors1)
     this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(this.fetchedColors1.primaryColor))
    
@@ -124,7 +124,7 @@ export class HeaderpageComponent implements OnInit {
     themeDetails.primaryColor.length <= 3 ? themeDetails.primaryColor = '#' + this.customThemeService.fetchHexaCode(primaryColor) : themeDetails.primaryColor = primaryColor
     themeDetails.secondaryColor.length <= 3 ? themeDetails.secondaryColor = '#' + this.customThemeService.fetchHexaCode(secondaryColor) : themeDetails.secondaryColor = secondaryColor
 
-    this.customThemeService.setNewTheme(themeDetails, this.themesColorFetchingStatus1);
+    this.customThemeService.setNewTheme(themeDetails, this.themesColorFetchingStatus1,'');
     this.visible = !this.visible
 
   }
@@ -195,7 +195,7 @@ export class HeaderpageComponent implements OnInit {
     }
 
     let localstorageTheme = this.customThemeService.fetchPrimaryColor();
-    this.customThemeService.setNewTheme(defaultTheme, true);
+    this.customThemeService.setNewTheme(defaultTheme, true,'');
     themeInfo.active =true
     this.defaulthemesList.filter(theme => theme.prime !== themeInfo.prime && theme.secondary !== themeInfo.secondary).map(unselectedThemes => unselectedThemes.active = false)
 
@@ -243,7 +243,7 @@ export class HeaderpageComponent implements OnInit {
 
 
     if (messageFromSwitch) {
-      this.customThemeService.setNewTheme(themeObject, true);
+      this.customThemeService.setNewTheme(themeObject, true,'');
     }
 
   }

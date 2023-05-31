@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
+import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { CustomthemeService } from 'src/app/Services/customtheme.service';
+import { customThemeChoosen } from 'src/app/states/usertheme.actions';
+import { themeChangeModal } from 'src/app/states/usertheme.state';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +17,7 @@ export class LoginComponent {
   signInForm: FormGroup;
   customTheme: FormGroup
   colorPickerTheme: FormGroup
+  makeDefaultThemeStatusForm:FormGroup
   visible: boolean = false
   validateColorStatus1: boolean = false
   imagesList = {
@@ -20,15 +25,17 @@ export class LoginComponent {
   }
   fetchedColors: any
   defaulthemesList1: Array<any> = []
+  themeSubscription: Subscription;
 
 
   themesColorFetchingStatus: boolean = false
 
   constructor(
-    private fb: FormBuilder,
+    private fb:FormBuilder,
     private router: Router,
     private customThemeService: CustomthemeService,
-    private toasterService: ToastrService
+    private toasterService: ToastrService,
+    private store: Store<{ myThemePicker: themeChangeModal }>
 
   ) {
 
@@ -60,7 +67,13 @@ export class LoginComponent {
       primaryColor11: ['', [Validators.pattern("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{1,3})$"), Validators.minLength(2), Validators.maxLength(7)]],
       secondaryColor11: ['', [Validators.pattern("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{1,3})$"), Validators.minLength(2), Validators.maxLength(7)]],
     })
+
+    this.makeDefaultThemeStatusForm = this.fb.group({
+        makeDefaultThemeStatus:['']
+    })
   }
+
+
 
   ngOnInit(): void {
     this.callFunctionsWhenLoaded()
@@ -72,25 +85,28 @@ export class LoginComponent {
     ]
   }
 
+  ngOnDestroy(): void {
+
+    //In the above we are subscribed this is to unsubscribe
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe()
+    }
+  }
+
 
   callFunctionsWhenLoaded() {
     this.visible = false
     this.fetchedColors = this.customThemeService.fetchPrimaryColor();
-
     this.themesColorFetchingStatus = true
-    this.customThemeService.setNewTheme(this.fetchedColors, this.themesColorFetchingStatus);
+    this.customThemeService.setNewTheme(this.fetchedColors, this.themesColorFetchingStatus,'');
     this.customTheme.patchValue(this.fetchedColors)
-
     this.setValuesToTheForm(this.colorPickerTheme, 'primaryColor11', this.fetchedColors.primaryColor)
     this.setValuesToTheForm(this.colorPickerTheme, 'secondaryColor11', this.fetchedColors.secondaryColor)
-
     this.changeFontColors();
     this.defaulthemesList1.filter(theme => theme.prime !== this.fetchedColors.primaryColor || theme.secondary !== this.fetchedColors.secondaryColor).map(selectedTheme => selectedTheme.active = false)
 
   }
 
-
- 
 
   setValuesToTheForm(formGroupInfo,formControllerNameInfo,assigningValue){
     formGroupInfo.get(formControllerNameInfo)?.setValue(assigningValue)
@@ -107,17 +123,8 @@ export class LoginComponent {
 
 
   changeFontColors() {
-
-    this.customThemeService.setPropertyValuesToCSSVariables('--primaryColor1', this.fetchedColors.primaryColor)
-    this.customThemeService.setPropertyValuesToCSSVariables('--primaryInputTextFontColor', this.customThemeService.getFontColor(this.fetchedColors.primaryColor))
-    this.customThemeService.setPropertyValuesToCSSVariables('--secondaryColor1', this.fetchedColors.secondaryColor)
-    this.customThemeService.setPropertyValuesToCSSVariables('--secondaryInputTextFontColor', this.customThemeService.getFontColor(this.fetchedColors.secondaryColor))
-
+    this.customThemeService.fetchAndSetFontColors()
   }
-
-
-
-
 
   changeTheme() {
 
@@ -129,8 +136,8 @@ export class LoginComponent {
 
   }
 
-  newTheme(themeDetails) {
 
+  newTheme(themeDetails) {
 
     let { primaryColor, secondaryColor } = themeDetails;
     this.themesColorFetchingStatus = false
@@ -143,10 +150,19 @@ export class LoginComponent {
     themeDetails.primaryColor.length <= 3 ? themeDetails.primaryColor = '#' + this.customThemeService.fetchHexaCode(primaryColor) : themeDetails.primaryColor = primaryColor
     themeDetails.secondaryColor.length <= 3 ? themeDetails.secondaryColor = '#' + this.customThemeService.fetchHexaCode(secondaryColor) : themeDetails.secondaryColor = secondaryColor
 
-    this.customThemeService.setNewTheme(themeDetails, this.themesColorFetchingStatus);
+   
+    //assigning to the store
+    //------------------------------------
+
+    this.store.dispatch(customThemeChoosen({customThemeData: themeDetails}))
+    //----------------------------------
+
+    let defaultStatus = this.makeDefaultThemeStatusForm.get('makeDefaultThemeStatus')?.value !== null ? this.makeDefaultThemeStatusForm.get('makeDefaultThemeStatus')?.value[0] : ''
+    
+    this.customThemeService.setNewTheme(themeDetails, this.themesColorFetchingStatus, defaultStatus );
     this.defaulthemesList1.filter(theme => theme.prime !== themeDetails.primaryColor || theme.secondary !== themeDetails.secondaryColor).map(selectedTheme => selectedTheme.active = false)
     this.defaulthemesList1.filter(theme => theme.prime === themeDetails.primaryColor && theme.secondary === themeDetails.secondaryColor).map(selectedTheme => selectedTheme.active = true)
-
+    this.makeDefaultThemeStatusForm.reset()
     this.visible = !this.visible
 
   }
@@ -156,18 +172,31 @@ export class LoginComponent {
 
   changeDefaultThemes(themeInfo) {
 
-
     let defaultTheme = {
       primaryColor: themeInfo.prime,
       secondaryColor: themeInfo.secondary
     }
 
-    let localstorageTheme = this.customThemeService.fetchPrimaryColor();
-    this.customThemeService.setNewTheme(defaultTheme, true);
+    let themeDataFromStore = {
+      primaryColor :'',
+      secondaryColor:''
+    };
+
+    //assigning values to the form groups
+    this.customTheme.patchValue(defaultTheme)
+    this.setValuesToTheForm(this.colorPickerTheme, 'primaryColor11', defaultTheme.primaryColor)
+    this.setValuesToTheForm(this.colorPickerTheme, 'secondaryColor11', defaultTheme.secondaryColor)
+
+    //fetchesData From The Store
+    this.themeSubscription = this.store.select('myThemePicker').subscribe((data) => {
+      themeDataFromStore.primaryColor = data.primaryColor
+      themeDataFromStore.secondaryColor = data.secondaryColor
+    })
+
     themeInfo.active = true
     this.defaulthemesList1.filter(theme => theme.prime !== themeInfo.prime && theme.secondary !== themeInfo.secondary).map(unselectedThemes => unselectedThemes.active = false)
 
-    if (defaultTheme.primaryColor === localstorageTheme.primaryColor && defaultTheme.secondaryColor === localstorageTheme.secondaryColor) {
+    if (defaultTheme.primaryColor === themeDataFromStore.primaryColor && defaultTheme.secondaryColor === themeDataFromStore.secondaryColor) {
       this.visible = true
       this.toasterService.warning('Theme already applied ',)
     }
@@ -177,6 +206,11 @@ export class LoginComponent {
         this.visible = false
       }, 500)
     }
+
+    //store data to the store
+    this.store.dispatch(customThemeChoosen({ customThemeData: defaultTheme }))
+    //assigning new theme
+    this.customThemeService.setNewTheme(defaultTheme, true, '');
 
     this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(defaultTheme.primaryColor))
   
@@ -197,6 +231,7 @@ export class LoginComponent {
       }
       else {
         this.customTheme.controls[customThemeControlername].setErrors({ 'incorrect': true });
+
       }
 
     }
@@ -229,6 +264,7 @@ export class LoginComponent {
       this.setValuesToTheForm(this.customTheme, customThemeControlername, colorData)
 
     }
+    
 
   }
 

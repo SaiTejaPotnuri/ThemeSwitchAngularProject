@@ -10,8 +10,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { WebSocketServerService } from './Services/web-socket-server.service';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 
-
+import {usertheme} from './states/usertheme.reducer'
 
 @NgModule({
   declarations: [
@@ -26,6 +27,9 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
       FormsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({
+      myThemePicker: usertheme
+    }),
     ToastrModule.forRoot({
       timeOut: 1300,
       preventDuplicates: true,

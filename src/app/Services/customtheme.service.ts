@@ -1,102 +1,199 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { themeChangeModal } from '../states/usertheme.state';
+import { Subscription } from 'rxjs';
+import { customThemeChoosen } from '../states/usertheme.actions';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CustomthemeService {
-
-  constructor(private toasterService: ToastrService) { }
+export class CustomthemeService implements OnDestroy {
 
 
+  primaryColorChoosen: string;
+  secodaryColorChoosen: string;
+  themeSubscription: Subscription;
 
 
+  constructor(private toasterService: ToastrService, private store: Store<{ myThemePicker: themeChangeModal }>) { }
+
+  ngOnDestroy(): void {
+
+    //In the above we are subscribed this is to unsubscribe
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe()
+    }
+  }
+
+
+  fetchMyThemePickerActionValues() {
+    this.themeSubscription = this.store.select('myThemePicker').subscribe((data) => {
+      this.primaryColorChoosen = data.primaryColor
+      this.secodaryColorChoosen = data.secondaryColor
+    })
+  }
 
 
   setPropertyValuesToCSSVariables(cssColorName, valueAssigned) {
     document.documentElement.style.setProperty(cssColorName, valueAssigned)
   }
 
+
+  fetchPrimaryAndSecondaryColorsFromLocalstorage() {
+    let dataFromLocal = {
+      primaryColor: localStorage.getItem('primary'),
+      secondaryColor: localStorage.getItem('secondary')
+    }
+    return dataFromLocal;
+  }
+
+
+
+
   // creating new theme with given colors and assign to CSS variable 
 
-  setNewTheme(themeInfo, stausOfThemeColors) {
-
-    let { primaryColor, secondaryColor } = themeInfo;
-
-    primaryColor = '#' + this.fetchHexaCode(primaryColor);
-    secondaryColor = '#' + this.fetchHexaCode(secondaryColor);
-
-
-    localStorage.removeItem('primary')
-    localStorage.removeItem('secondary')
-    localStorage.setItem('primary', primaryColor || '')
-    localStorage.setItem('secondary', secondaryColor || '')
+  setNewTheme(themeInfo, stausOfThemeColors, defaultThemeStatus) {
+    //fetching data from store and assigns to the global variables 
+    this.fetchMyThemePickerActionValues()
+    // checking if user given theme as default 
+    if (defaultThemeStatus !== '' && defaultThemeStatus !== undefined) {
+      localStorage.setItem('primary', this.primaryColorChoosen || '')
+      localStorage.setItem('secondary', this.secodaryColorChoosen || '')
+    }
     !stausOfThemeColors ? this.toasterService.success('Theme Applied', '') : ''
 
-
-    this.setPropertyValuesToCSSVariables('--primaryColor1', primaryColor)
-    this.setPropertyValuesToCSSVariables('--secondaryColor1', secondaryColor)
-    this.setPropertyValuesToCSSVariables('--fontColor1', this.getFontColor(secondaryColor))
-    this.setPropertyValuesToCSSVariables('--buttonFontColor', this.getFontColor(primaryColor))
+    // assigning values to the color variables
+    this.setPropertyValuesToCSSVariables('--primaryColor1', this.primaryColorChoosen)
+    this.setPropertyValuesToCSSVariables('--secondaryColor1', this.secodaryColorChoosen)
+    this.setPropertyValuesToCSSVariables('--fontColor1', this.getFontColor(this.secodaryColorChoosen))
+    this.setPropertyValuesToCSSVariables('--buttonFontColor', this.getFontColor(this.primaryColorChoosen))
 
   }
+
+
+
+  checkTheColorCodeIsValidOrNot(){
+
+    let primeColor = localStorage.getItem('primary')
+    let secoColor = localStorage.getItem('secondary')
+    let status=false
+
+    if (primeColor === null || secoColor===null ){
+      return false
+    }    
+
+    if (CSS.supports('color', primeColor) && CSS.supports('color', secoColor) ){
+
+      if ((primeColor.charAt(0) === '#' && primeColor.length === 5) || (secoColor.charAt(0) === '#' && secoColor.length === 5)){
+        status=false        
+      }
+      else{
+        status=true
+      }
+      
+    }
+    else if ((primeColor.charAt(0) === '#' && (primeColor.length >= 1 && primeColor.length <= 3) && CSS.supports('color', secoColor) )   ){
+      status = true
+
+    }
+    else if ((secoColor.charAt(0) === '#' && (secoColor.length >= 1 && secoColor.length <= 3) && CSS.supports('color', primeColor))) {
+      status = true
+
+    }
+    else if (primeColor.charAt(0) === '#' || secoColor.charAt(0) === '#'){
+
+      primeColor = '#'+ this.fetchHexaCode(primeColor)
+      secoColor = '#' + this.fetchHexaCode(secoColor)
+      if (CSS.supports('color', primeColor) && CSS.supports('color', secoColor)){
+          status =true
+
+      } 
+      else{
+        status=false
+      }
+    }
+    else{
+      status=false
+    }
+
+    return status;
+
+  }
+
 
 
 
   // fetch and send the color codes from localstorage
 
   fetchPrimaryColor() {
+    let dataFromLocalStorage
 
-
-    let prim = localStorage.getItem('primary')
-    let seco = localStorage.getItem('secondary')
-
-    // this is for checking if user changing data in localstorage and update and setting to default code
-    if (prim !== null || seco !== null) {
-      if (!CSS.supports('color', prim) || !CSS.supports('color', seco) || (prim.length >= 4 && prim.length <= 5) || (seco.length >= 4 && seco.length <= 5)) {
-
-
-        if ((((prim.length >= 2 && prim.length <= 4) || (seco.length >= 2 && seco.length <= 4)) && (prim.charAt(0) === '#' && seco.charAt(0) === '#' && (CSS.supports('color', prim) && CSS.supports('color', seco))))) {
-          prim = '#' + this.fetchHexaCode(prim)
-          seco = '#' + this.fetchHexaCode(seco)
-        } else {
-          prim = '#000000'
-          seco = '#FFFFFF'
-          this.toasterService.error('Do To invalid colorCode Came to Default Color', '')
+    if (this.checkTheColorCodeIsValidOrNot()) {
+      this.fetchMyThemePickerActionValues()
+        if(this.primaryColorChoosen === '' || this.secodaryColorChoosen === ''){
+          dataFromLocalStorage = this.fetchPrimaryAndSecondaryColorsFromLocalstorage()
+              
+        }
+        else{
+          dataFromLocalStorage ={
+            primaryColor:this.primaryColorChoosen,
+            secondaryColor : this.secodaryColorChoosen
+          }
+          
         }
 
+      let { primaryColor, secondaryColor } = dataFromLocalStorage
+
+      primaryColor.charAt(0) !== '#' ? primaryColor = this.fetchTextToHexaCode(primaryColor) : primaryColor = '#'+ this.fetchHexaCode(primaryColor)
+      secondaryColor.charAt(0) !== '#' ? secondaryColor = this.fetchTextToHexaCode(secondaryColor) : secondaryColor = '#'+ this.fetchHexaCode(secondaryColor)
+      
+      dataFromLocalStorage={
+        primaryColor: primaryColor,
+        secondaryColor: secondaryColor
       }
+     
+      this.store.dispatch(customThemeChoosen({ customThemeData: dataFromLocalStorage }))
     }
     else {
-      prim = '#000000'
-      seco = '#FFFFFF'
-      this.toasterService.error('Do To invalid colorCode Came to Default Color', '')
+    
+      localStorage.setItem('primary', '#000000')
+      localStorage.setItem('secondary', '#FFFFFF')
+      dataFromLocalStorage = this.fetchPrimaryAndSecondaryColorsFromLocalstorage()      
+      this.store.dispatch(customThemeChoosen({ customThemeData: dataFromLocalStorage }))
+      this.toasterService.warning('Applying Default ColorTheme','')
 
     }
 
-    // final colors to set theme this below object holds it
-
-    let themeColors = {
-      primaryColor: prim,
-      secondaryColor: seco
-    }
-
-    return themeColors;
+    return dataFromLocalStorage;
 
   }
 
 
 
 
+  fetchAndSetFontColors() {
+
+    // it will fetch and assigns data to the global variables primaryColorChoosen and secodaryColorChoosen
+    this.fetchMyThemePickerActionValues()
+
+    this.setPropertyValuesToCSSVariables('--primaryColor1', this.primaryColorChoosen)
+    this.setPropertyValuesToCSSVariables('--primaryInputTextFontColor', this.getFontColor(this.primaryColorChoosen))
+    this.setPropertyValuesToCSSVariables('--secondaryColor1', this.secodaryColorChoosen)
+    this.setPropertyValuesToCSSVariables('--secondaryInputTextFontColor', this.getFontColor(this.secodaryColorChoosen))
+
+  }
+
+
+
   // findling the hexadecimal code 
   fetchHexaCode(hex: string) {
 
-    if(hex !== undefined){
+    if (hex !== undefined) {
 
       if (hex.indexOf('#') === 0) {
         hex = hex.slice(1);
       }
-
       // convert 3-digit hex to 6-digits.
       if (hex.length === 3) {
         hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
@@ -113,11 +210,7 @@ export class CustomthemeService {
       }
 
     }
-
-
     return hex;
-
-
   }
 
 
@@ -129,7 +222,7 @@ export class CustomthemeService {
     let b: any;
 
     hex1 = this.fetchHexaCode(hex1)
-    if(hex1 !== undefined){
+    if (hex1 !== undefined) {
       r = parseInt(hex1.slice(0, 2), 16);
       g = parseInt(hex1.slice(2, 4), 16);
       b = parseInt(hex1.slice(4, 6), 16);
