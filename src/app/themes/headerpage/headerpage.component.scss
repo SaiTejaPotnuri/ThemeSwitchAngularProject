@@ -161,6 +161,8 @@ h2::first-letter {
 }
 
 
+
+
 .defaultThemeings{
     width: 100%;
     height: auto;
@@ -208,6 +210,32 @@ h2::first-letter {
             margin-top: 1rem;
 }
 }
+
+
+
+.defaultThemeTitle{
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+
+}
+.defaultThemeTitle p{
+      font-family: $fontFamily;
+            font-weight: 500;
+            color: #000000;
+            font-size: 1rem;
+            font-style: italic;
+}
+
+.checkBoxContainer{
+    width: 100%;
+    height:2rem;
+}
+
+
 
 
 ::ng-deep {

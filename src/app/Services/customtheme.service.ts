@@ -55,6 +55,8 @@ export class CustomthemeService implements OnDestroy {
 
   setNewTheme(themeInfo, stausOfThemeColors, defaultThemeStatus) {
     //fetching data from store and assigns to the global variables 
+
+    
     this.fetchMyThemePickerActionValues()
     // checking if user given theme as default 
     if (defaultThemeStatus !== '' && defaultThemeStatus !== undefined) {

@@ -11,8 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { WebSocketServerService } from './Services/web-socket-server.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-
-import {usertheme} from './states/usertheme.reducer'
+import { appStoreReducer } from './store/appStore.state';
 
 @NgModule({
   declarations: [
@@ -27,9 +26,7 @@ import {usertheme} from './states/usertheme.reducer'
     BrowserAnimationsModule,
       FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({
-      myThemePicker: usertheme
-    }),
+    StoreModule.forRoot(appStoreReducer),
     ToastrModule.forRoot({
       timeOut: 1300,
       preventDuplicates: true,

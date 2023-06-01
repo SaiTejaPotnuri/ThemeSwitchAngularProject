@@ -14,6 +14,6 @@ const themeReducer = createReducer(defaultThemeColor,
     })
 );
 
-export function usertheme(state,action){
+export function userthemeReducer(state,action){
     return themeReducer(state,action)
 }

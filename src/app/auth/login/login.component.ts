@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { CustomthemeService } from 'src/app/Services/customtheme.service';
 import { customThemeChoosen } from 'src/app/states/usertheme.actions';
 import { themeChangeModal } from 'src/app/states/usertheme.state';
+import { appStoreState } from 'src/app/store/appStore.state';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,7 @@ export class LoginComponent {
     private router: Router,
     private customThemeService: CustomthemeService,
     private toasterService: ToastrService,
-    private store: Store<{ myThemePicker: themeChangeModal }>
+    private store: Store<appStoreState>
 
   ) {
 
@@ -103,7 +104,10 @@ export class LoginComponent {
     this.setValuesToTheForm(this.colorPickerTheme, 'primaryColor11', this.fetchedColors.primaryColor)
     this.setValuesToTheForm(this.colorPickerTheme, 'secondaryColor11', this.fetchedColors.secondaryColor)
     this.changeFontColors();
+    console.log(this.fetchedColors,"this.fetchedColors");
+    
     this.defaulthemesList1.filter(theme => theme.prime !== this.fetchedColors.primaryColor || theme.secondary !== this.fetchedColors.secondaryColor).map(selectedTheme => selectedTheme.active = false)
+    this.defaulthemesList1.filter(theme => theme.prime === this.fetchedColors.primaryColor && theme.secondary === this.fetchedColors.secondaryColor).map(selectedTheme => selectedTheme.active = true)
 
   }
 
@@ -245,7 +249,7 @@ export class LoginComponent {
       this.customTheme.controls[customThemeControlername].setErrors({ 'incorrect': true });
 
     }
-
+  
 
 
     if (this.validateColorStatus1) {
