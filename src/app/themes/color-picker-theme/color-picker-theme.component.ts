@@ -90,7 +90,6 @@ export class ColorPickerThemeComponent implements OnInit {
   updateMessage(data: any) {
     this.feedback = '';
     if (!data) return;
-    console.log(`${data.user} : ${data.message}`);
     this.messageArray.push(data);
   }
 

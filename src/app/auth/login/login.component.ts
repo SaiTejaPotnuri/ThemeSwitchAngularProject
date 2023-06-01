@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs';
 import { CustomthemeService } from 'src/app/Services/customtheme.service';
 import { customThemeChoosen } from 'src/app/states/usertheme.actions';
 import { themeChangeModal } from 'src/app/states/usertheme.state';
+import { addNewThmeToList, updateThemeActiveStatus } from 'src/app/states/userthemelist.actions';
+import { getThemesList } from 'src/app/states/userthemelist.selector';
 import { appStoreState } from 'src/app/store/appStore.state';
 
 @Component({
@@ -27,9 +29,9 @@ export class LoginComponent {
   fetchedColors: any
   defaulthemesList1: Array<any> = []
   themeSubscription: Subscription;
-
-
+  fetchDataFromEntireStore
   themesColorFetchingStatus: boolean = false
+  themeSubscription2:Subscription
 
   constructor(
     private fb:FormBuilder,
@@ -78,12 +80,6 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.callFunctionsWhenLoaded()
-    this.defaulthemesList1 = [
-      { prime: '#27374D', secondary: '#526D82', active: false, colorsName: 'Blue & pink' },
-      { prime: '#643843', secondary: '#99627A', active: false, colorsName: 'Purple Theme ' },
-      { prime: '#2C5F2D', secondary: '#97BC62', active: false, colorsName: 'Forest g.. & moss g..' },
-      { prime: '#ECF8F9', secondary: '#068DA9', active: false, colorsName: 'Royal B.. & Pale Y..' },
-    ]
   }
 
   ngOnDestroy(): void {
@@ -92,6 +88,22 @@ export class LoginComponent {
     if (this.themeSubscription) {
       this.themeSubscription.unsubscribe()
     }
+
+    if (this.themeSubscription2) {
+      this.themeSubscription2.unsubscribe()
+    }
+  }
+
+
+  changeDefaultThemeList() {
+    this.fetchAllDataFromStore()
+
+    this.defaulthemesList1 = []
+
+    let userChoosenThmes = this.fetchDataFromEntireStore.slice(-4)
+
+    this.defaulthemesList1 = [...userChoosenThmes]
+
   }
 
 
@@ -104,11 +116,47 @@ export class LoginComponent {
     this.setValuesToTheForm(this.colorPickerTheme, 'primaryColor11', this.fetchedColors.primaryColor)
     this.setValuesToTheForm(this.colorPickerTheme, 'secondaryColor11', this.fetchedColors.secondaryColor)
     this.changeFontColors();
-    console.log(this.fetchedColors,"this.fetchedColors");
     
-    this.defaulthemesList1.filter(theme => theme.prime !== this.fetchedColors.primaryColor || theme.secondary !== this.fetchedColors.secondaryColor).map(selectedTheme => selectedTheme.active = false)
-    this.defaulthemesList1.filter(theme => theme.prime === this.fetchedColors.primaryColor && theme.secondary === this.fetchedColors.secondaryColor).map(selectedTheme => selectedTheme.active = true)
+    this.fetchAllDataFromStore()
+   
 
+
+
+    let localStorageValues = this.customThemeService.fetchPrimaryAndSecondaryColorsFromLocalstorage()
+
+    let fetchFromStoreList = this.fetchDataFromEntireStore.find(theme => theme.prime === localStorageValues.primaryColor && theme.secondary === localStorageValues.secondaryColor)
+
+    
+
+
+    if (fetchFromStoreList !== undefined) {
+
+      let updateDefaultThemeActive = {
+        id: fetchFromStoreList.id,
+        prime: fetchFromStoreList.prime,
+        secondary: fetchFromStoreList.secondary,
+        active: true
+      }
+
+      this.store.dispatch(updateThemeActiveStatus({ themesStore: updateDefaultThemeActive }))
+      this.defaulthemesList1 = this.fetchDataFromEntireStore
+       
+     }
+     else{
+
+
+      let updateDefaultThemeActive = {
+        id: this.fetchDataFromEntireStore.length +1,
+        prime: localStorageValues.primaryColor,
+        secondary: localStorageValues.secondaryColor,
+        active: true
+      }
+
+      this.store.dispatch(addNewThmeToList({ themesStore: updateDefaultThemeActive }))
+
+      this.changeDefaultThemeList()
+     }
+  
   }
 
 
@@ -130,6 +178,10 @@ export class LoginComponent {
     this.customThemeService.fetchAndSetFontColors()
   }
 
+
+
+  
+
   changeTheme() {
 
     this.visible = !this.visible
@@ -137,8 +189,18 @@ export class LoginComponent {
     this.customTheme.patchValue(this.fetchedColors)
     this.setValuesToTheForm(this.colorPickerTheme, 'primaryColor11', this.fetchedColors.primaryColor)
     this.setValuesToTheForm(this.colorPickerTheme, 'secondaryColor11', this.fetchedColors.secondaryColor)
+    this.changeDefaultThemeList()
 
   }
+
+  fetchAllDataFromStore() {
+
+    this.store.select(getThemesList).subscribe((data) => {
+      this.fetchDataFromEntireStore = [...data]
+
+    })
+  }
+
 
 
   newTheme(themeDetails) {
@@ -154,6 +216,15 @@ export class LoginComponent {
     themeDetails.primaryColor.length <= 3 ? themeDetails.primaryColor = '#' + this.customThemeService.fetchHexaCode(primaryColor) : themeDetails.primaryColor = primaryColor
     themeDetails.secondaryColor.length <= 3 ? themeDetails.secondaryColor = '#' + this.customThemeService.fetchHexaCode(secondaryColor) : themeDetails.secondaryColor = secondaryColor
 
+    // fetch all data from store 
+    this.fetchAllDataFromStore()
+    const addNewThemeToListObject = {
+      id: this.fetchDataFromEntireStore.length + 1,
+      prime: themeDetails.primaryColor,
+      secondary: themeDetails.secondaryColor,
+      active: true
+    }
+
    
     //assigning to the store
     //------------------------------------
@@ -161,13 +232,24 @@ export class LoginComponent {
     this.store.dispatch(customThemeChoosen({customThemeData: themeDetails}))
     //----------------------------------
 
+
+    let findExistTheme = this.fetchDataFromEntireStore.find(theme => theme.prime === addNewThemeToListObject.prime && theme.secondary === addNewThemeToListObject.secondary)
+
+    if (findExistTheme === undefined) {
+      this.store.dispatch(addNewThmeToList({ themesStore: addNewThemeToListObject }))
+    }
+    else {
+      this.store.dispatch(updateThemeActiveStatus({ themesStore: addNewThemeToListObject }))
+    }
+
+    //----------------------------------
     let defaultStatus = this.makeDefaultThemeStatusForm.get('makeDefaultThemeStatus')?.value !== null ? this.makeDefaultThemeStatusForm.get('makeDefaultThemeStatus')?.value[0] : ''
     
     this.customThemeService.setNewTheme(themeDetails, this.themesColorFetchingStatus, defaultStatus );
-    this.defaulthemesList1.filter(theme => theme.prime !== themeDetails.primaryColor || theme.secondary !== themeDetails.secondaryColor).map(selectedTheme => selectedTheme.active = false)
-    this.defaulthemesList1.filter(theme => theme.prime === themeDetails.primaryColor && theme.secondary === themeDetails.secondaryColor).map(selectedTheme => selectedTheme.active = true)
     this.makeDefaultThemeStatusForm.reset()
     this.visible = !this.visible
+
+    this.changeDefaultThemeList()
 
   }
 
@@ -197,9 +279,7 @@ export class LoginComponent {
       themeDataFromStore.secondaryColor = data.secondaryColor
     })
 
-    themeInfo.active = true
-    this.defaulthemesList1.filter(theme => theme.prime !== themeInfo.prime && theme.secondary !== themeInfo.secondary).map(unselectedThemes => unselectedThemes.active = false)
-
+   
     if (defaultTheme.primaryColor === themeDataFromStore.primaryColor && defaultTheme.secondaryColor === themeDataFromStore.secondaryColor) {
       this.visible = true
       this.toasterService.warning('Theme already applied ',)
@@ -213,6 +293,28 @@ export class LoginComponent {
 
     //store data to the store
     this.store.dispatch(customThemeChoosen({ customThemeData: defaultTheme }))
+
+    this.fetchAllDataFromStore()
+
+
+
+    let findExistTheme = this.fetchDataFromEntireStore.find(theme => theme.prime === defaultTheme.primaryColor && theme.secondary === defaultTheme.secondaryColor)
+
+    if (findExistTheme !== undefined) {
+
+
+      let updateTheme = {
+        id: findExistTheme.id,
+        prime: findExistTheme.prime,
+        secondary: findExistTheme.secondary,
+        active: true
+      }
+
+      this.store.dispatch(updateThemeActiveStatus({ themesStore: updateTheme }))
+
+
+    }
+
     //assigning new theme
     this.customThemeService.setNewTheme(defaultTheme, true, '');
 

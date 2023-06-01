@@ -84,6 +84,19 @@ export class HeaderpageComponent implements OnInit {
   }
 
 
+
+  changeDefaultThemeList() {
+    this.fetchAllDataFromStore()
+
+    this.defaulthemesList = []
+
+    let userChoosenThmes = this.fetchDataFromEntireStore.slice(-4)
+
+    this.defaulthemesList = [...userChoosenThmes]
+
+  }
+
+
   callFunctionsWhenLoaded() {
 
 
@@ -95,8 +108,7 @@ export class HeaderpageComponent implements OnInit {
     this.setValuesToTheForm(this.colorPickerTheme1, 'primaryColor11', this.fetchedColors1.primaryColor)
     this.setValuesToTheForm(this.colorPickerTheme1, 'secondaryColor11', this.fetchedColors1.secondaryColor)
     this.changeFontColors1();
-    this.defaulthemesList.filter(theme => theme.prime !== this.fetchedColors1.primaryColor || theme.secondary !== this.fetchedColors1.secondaryColor).map(selectedTheme => selectedTheme.active = false)
-    this.defaulthemesList.filter(theme => theme.prime === this.fetchedColors1.primaryColor && theme.secondary === this.fetchedColors1.secondaryColor).map(selectedTheme => selectedTheme.active = true)
+   
     this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(this.fetchedColors1.primaryColor))
    
     let switchInfo: any = {
@@ -109,30 +121,44 @@ export class HeaderpageComponent implements OnInit {
     this.lightAndDarkThemeStatus = localStorage.getItem('primary') === '#5f5f63' ? true : false
 
     // fetches list of themes from store
-    this.themeSubscription2 = this.store.select(getThemesList).subscribe((data) => {
-      this.defaulthemesList = data
+    this.fetchAllDataFromStore()
 
-    })  
-    
-    
+
+
+
     let localStorageValues = this.customThemeService.fetchPrimaryAndSecondaryColorsFromLocalstorage()
 
-    let fetchFromStoreList = this.defaulthemesList.find(theme => theme.prime === localStorageValues.primaryColor && theme.secondary === localStorageValues.secondaryColor)
+    let fetchFromStoreList = this.fetchDataFromEntireStore.find(theme => theme.prime === localStorageValues.primaryColor && theme.secondary === localStorageValues.secondaryColor)
 
 
-    if (fetchFromStoreList !== undefined){
 
-      let updateDefaultThemeActive ={
+
+    if (fetchFromStoreList !== undefined) {
+
+      let updateDefaultThemeActive = {
         id: fetchFromStoreList.id,
         prime: fetchFromStoreList.prime,
         secondary: fetchFromStoreList.secondary,
-        active:true
+        active: true
       }
 
       this.store.dispatch(updateThemeActiveStatus({ themesStore: updateDefaultThemeActive }))
+      this.defaulthemesList = this.fetchDataFromEntireStore
 
     }
+    else {
 
+
+      let updateDefaultThemeActive = {
+        id: this.fetchDataFromEntireStore.length + 1,
+        prime: localStorageValues.primaryColor,
+        secondary: localStorageValues.secondaryColor,
+        active: true
+      }
+
+      this.store.dispatch(addNewThmeToList({ themesStore: updateDefaultThemeActive }))
+      this.changeDefaultThemeList()
+    }
 
 
   }
@@ -165,8 +191,8 @@ export class HeaderpageComponent implements OnInit {
     this.customThemeService.setPropertyValuesToCSSVariables('--fontColor1', this.customThemeService.getFontColor(this.fetchedColors1.secondaryColor))
    
 
-    // this.defaulthemesList.filter(theme => theme.prime !== this.fetchedColors1.primaryColor || theme.secondary !== this.fetchedColors1.secondaryColor).map(selectedTheme => selectedTheme.active = false)
-    // this.defaulthemesList.filter(theme => theme.prime === this.fetchedColors1.primaryColor && theme.secondary === this.fetchedColors1.secondaryColor).map(selectedTheme => selectedTheme.active=true)
+    this.changeDefaultThemeList()
+
 
   }
 
@@ -227,6 +253,9 @@ export class HeaderpageComponent implements OnInit {
 
     //----------------------------------
 
+
+    
+
     let defaultStatus = this.makeDefaultThemeStatusForm1.get('makeDefaultThemeStatus')?.value !== null ? this.makeDefaultThemeStatusForm1.get('makeDefaultThemeStatus')?.value[0] : ''
 
     this.customThemeService.setNewTheme(themeDetails, this.themesColorFetchingStatus1, defaultStatus);
@@ -234,7 +263,9 @@ export class HeaderpageComponent implements OnInit {
     this.makeDefaultThemeStatusForm1.reset()
     this.visible = !this.visible
 
-    this.customThemeService.setNewTheme(themeDetails, this.themesColorFetchingStatus1,'');
+  //assigning last four Objects to choose Default themes
+    this.changeDefaultThemeList()
+
 
   }
 
@@ -322,9 +353,7 @@ export class HeaderpageComponent implements OnInit {
       themeDataFromStore.secondaryColor = data.secondaryColor
     })
 
-    // themeInfo.active = true
-    // this.defaulthemesList.filter(theme => theme.prime !== themeInfo.prime && theme.secondary !== themeInfo.secondary).map(unselectedThemes => unselectedThemes.active = false)
-  
+   
     
 
 
@@ -381,6 +410,8 @@ export class HeaderpageComponent implements OnInit {
     this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(defaultTheme.primaryColor))
  
     
+    this.changeDefaultThemeList()
+
   }
 
 
@@ -389,7 +420,7 @@ export class HeaderpageComponent implements OnInit {
   changeDarkOrLightTheme(infoFromSwitch) {
     // console.log(document.documentElement.style.getPropertyValue($mystyle),"came data");
 
-    this.defaulthemesList.map(theme => theme.active=false)
+    
     let { messageFromSwitch, statusOfClick } = infoFromSwitch
     this.pageRefreshStatus = true
     this.lightAndDarkThemeStatus = statusOfClick
