@@ -33,7 +33,7 @@ const themesListReducer = createReducer(userListOfThemes,
     }),
     on(updateThemeActiveStatus,(state,action)=>{
 
-
+        
 
         let makeActive
         let themeContainer
@@ -45,10 +45,13 @@ const themesListReducer = createReducer(userListOfThemes,
                 secondary: theme.secondary,
                 active: false
             }
-
+            
+            
             return theme.active === true ? makeActive : theme
 
         })
+
+        
 
 
         let updateThemActiveStatusdata = themeContainer.map(theme=>{
@@ -64,9 +67,7 @@ const themesListReducer = createReducer(userListOfThemes,
 
         })
 
-        
-
-
+      
         return{
             ...state,
             themePosts: updateThemActiveStatusdata

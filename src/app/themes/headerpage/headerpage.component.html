@@ -15,7 +15,7 @@
                 <div class="switchPart">
                         <p [ngClass]="lightAndDarkThemeStatus==false  ? 'setColorWhite' : 'setColorBlack' ">Light</p>
                         <div class="switchContainer">
-                                <app-input-switch (changeMyTheme)="changeDarkOrLightTheme($event)"></app-input-switch>
+                                <app-input-switch [fetchStatus]="lightAndDarkThemeStatus" (changeMyTheme)="changeDarkOrLightTheme($event)"></app-input-switch>
                         </div>
                         <p [ngClass]="lightAndDarkThemeStatus ? 'setColorWhite' : 'setColorBlack' ">Dark</p>
 
@@ -103,7 +103,7 @@
                 </div>
                 <div class="defaultThemeings">
 
-                        <div class="subTheme" *ngFor="let theme of defaulthemesList let i = index">
+                        <div class="subTheme" *ngFor="let theme of defaulthemesList.reverse() let i = index">
                                 <div id="theme1" (click)="changeDefaultThemes(theme)"
                                         [ngClass]="theme.active ? 'addborderPadding':'' ">
                                         <div class="upperColorPart1" [style.background]="theme.prime">

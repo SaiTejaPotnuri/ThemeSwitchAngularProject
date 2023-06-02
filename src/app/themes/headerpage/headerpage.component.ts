@@ -24,9 +24,11 @@ export class HeaderpageComponent implements OnInit {
   validateColorStatus: boolean = false
   lightAndDarkThemeStatus: boolean = false;
   pageRefreshStatus: boolean = false
-  defaulthemesList:Array<any> =[] 
-  makeDefaultThemeStatusForm1:FormGroup
+  defaulthemesList: Array<any> = []
+  makeDefaultThemeStatusForm1: FormGroup
   fetchDataFromEntireStore
+  dummyObject
+  darkOrLightThemeStatus
 
 
   images = {
@@ -34,7 +36,7 @@ export class HeaderpageComponent implements OnInit {
   }
   themeSubscription1: Subscription;
   themeSubscription2: Subscription;
-  
+
 
   constructor(
     private fb: FormBuilder,
@@ -97,6 +99,12 @@ export class HeaderpageComponent implements OnInit {
   }
 
 
+  makeSwitchTrueOrFalse(){
+    
+    this.lightAndDarkThemeStatus = localStorage.getItem('themeType') === 'DARK' ? true : false
+  }
+
+
   callFunctionsWhenLoaded() {
 
 
@@ -108,29 +116,57 @@ export class HeaderpageComponent implements OnInit {
     this.setValuesToTheForm(this.colorPickerTheme1, 'primaryColor11', this.fetchedColors1.primaryColor)
     this.setValuesToTheForm(this.colorPickerTheme1, 'secondaryColor11', this.fetchedColors1.secondaryColor)
     this.changeFontColors1();
-   
+
     this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(this.fetchedColors1.primaryColor))
-   
-    let switchInfo: any = {
-      messageFromSwitch: false,
-      statusOfClick: false
+
+    let dataFromLocal = this.customThemeService.fetchPrimaryAndSecondaryColorsFromLocalstorage()
+
+    let { primaryColor, secondaryColor } = dataFromLocal
+
+    if (localStorage.getItem('themeType') === 'DARK'){
+      localStorage.setItem('themeType', 'DARK')
+
+    }
+    else if (localStorage.getItem('themeType') === 'LIGHT' && (primaryColor === '#5f5f63' && secondaryColor === '#000000') ){
+
+      this.store.select('myThemePicker').subscribe((data)=>{
+          if(data !== null){
+
+            if (data.primaryColor === '#5f5f63' && data.secondaryColor === '#000000'){
+              localStorage.setItem('themeType', 'DARK')
+
+            }
+            else{
+              localStorage.setItem('themeType', 'LIGHT')
+
+            }
+          
+          }
+        
+      })
+
+    }
+    else{
+      localStorage.setItem('themeType', 'LIGHT')
 
     }
 
-    this.changeDarkOrLightTheme(switchInfo)
-    this.lightAndDarkThemeStatus = localStorage.getItem('primary') === '#5f5f63' ? true : false
+    let previouslyChoosenThemeDATA = JSON.parse(localStorage.getItem('previouslyChoosenTheme'))
+
+    let defaultLightTheme = {
+      primaryColor: previouslyChoosenThemeDATA.primaryColor,
+      secondaryColor: previouslyChoosenThemeDATA.secondaryColor
+    }
+
+    localStorage.setItem('previouslyChoosenTheme', JSON.stringify(defaultLightTheme))
+
+    this.makeSwitchTrueOrFalse()
 
     // fetches list of themes from store
     this.fetchAllDataFromStore()
 
-
-
-
-    let localStorageValues = this.customThemeService.fetchPrimaryAndSecondaryColorsFromLocalstorage()
-
-    let fetchFromStoreList = this.fetchDataFromEntireStore.find(theme => theme.prime === localStorageValues.primaryColor && theme.secondary === localStorageValues.secondaryColor)
-
-
+ 
+    let fetchFromStoreList = this.fetchDataFromEntireStore.find(theme => theme.prime === dataFromLocal.primaryColor && theme.secondary === dataFromLocal.secondaryColor)
 
 
     if (fetchFromStoreList !== undefined) {
@@ -151,8 +187,8 @@ export class HeaderpageComponent implements OnInit {
 
       let updateDefaultThemeActive = {
         id: this.fetchDataFromEntireStore.length + 1,
-        prime: localStorageValues.primaryColor,
-        secondary: localStorageValues.secondaryColor,
+        prime: dataFromLocal.primaryColor,
+        secondary: dataFromLocal.secondaryColor,
         active: true
       }
 
@@ -180,6 +216,7 @@ export class HeaderpageComponent implements OnInit {
   buttonClicked() {
     this.visible = !this.visible
     this.fetchedColors1 = this.customThemeService.fetchPrimaryColor();
+    let updateThemEActive
 
     this.myNewTheme.patchValue(this.fetchedColors1)
     this.setValuesToTheForm(this.colorPickerTheme1, 'primaryColor11', this.fetchedColors1.primaryColor)
@@ -189,15 +226,29 @@ export class HeaderpageComponent implements OnInit {
     this.customThemeService.setPropertyValuesToCSSVariables('--secondaryColor1', this.fetchedColors1.secondaryColor)
     this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(this.fetchedColors1.primaryColor))
     this.customThemeService.setPropertyValuesToCSSVariables('--fontColor1', this.customThemeService.getFontColor(this.fetchedColors1.secondaryColor))
-   
 
+
+
+    let fetchedrecord = this.fetchDataFromEntireStore.find(theme => theme.prime === this.fetchedColors1.primaryColor && theme.secondary === this.fetchedColors1.secondaryColor)
+
+    if (fetchedrecord !== undefined){
+
+       updateThemEActive = {
+        id: fetchedrecord.id,
+        prime: fetchedrecord.prime,
+        secondary: fetchedrecord.secondary,
+        active: true
+      }
+
+      this.store.dispatch(updateThemeActiveStatus({ themesStore: updateThemEActive }))
+
+    }
     this.changeDefaultThemeList()
-
 
   }
 
 
-  fetchAllDataFromStore(){
+  fetchAllDataFromStore() {
 
     this.store.select(getThemesList).subscribe((data) => {
       this.fetchDataFromEntireStore = [...data]
@@ -208,12 +259,28 @@ export class HeaderpageComponent implements OnInit {
 
 
   newThemeInDashboard(themeDetails) {
-  
+
     this.visible = true
     let addNewThemeToListObject
-
+   
     let { primaryColor, secondaryColor } = themeDetails;
     this.themesColorFetchingStatus1 = false
+
+    if (primaryColor !== '#5f5f63' || secondaryColor !== '#000000') {
+      
+      localStorage.setItem('themeType', 'LIGHT')
+      localStorage.setItem('previouslyChoosenTheme', JSON.stringify(themeDetails))
+
+    }
+    else {
+      localStorage.setItem('themeType', 'DARK')
+
+    }
+
+    this.makeSwitchTrueOrFalse()
+
+
+
 
     if (primaryColor.charAt(0) !== '#' || secondaryColor.charAt(0) !== '#') {
       primaryColor = this.customThemeService.fetchTextToHexaCode(primaryColor)
@@ -223,16 +290,16 @@ export class HeaderpageComponent implements OnInit {
     themeDetails.primaryColor.length <= 3 ? themeDetails.primaryColor = '#' + this.customThemeService.fetchHexaCode(primaryColor) : themeDetails.primaryColor = primaryColor
     themeDetails.secondaryColor.length <= 3 ? themeDetails.secondaryColor = '#' + this.customThemeService.fetchHexaCode(secondaryColor) : themeDetails.secondaryColor = secondaryColor
 
-    
+
     // fetch all data from store 
     this.fetchAllDataFromStore()
-    
 
-    addNewThemeToListObject={
-       id: this.fetchDataFromEntireStore.length +1,
+
+    addNewThemeToListObject = {
+      id: this.fetchDataFromEntireStore.length + 1,
       prime: themeDetails.primaryColor,
       secondary: themeDetails.secondaryColor,
-      active:true
+      active: true
     }
 
 
@@ -240,30 +307,35 @@ export class HeaderpageComponent implements OnInit {
     //------------------------------------
     this.store.dispatch(customThemeChoosen({ customThemeData: themeDetails }))
     // storing values in a list
-    
+
 
     let findExistTheme = this.fetchDataFromEntireStore.find(theme => theme.prime === addNewThemeToListObject.prime && theme.secondary === addNewThemeToListObject.secondary)
 
-    if (findExistTheme === undefined){
+    if (findExistTheme === undefined) {
       this.store.dispatch(addNewThmeToList({ themesStore: addNewThemeToListObject }))
     }
-    else{
+    else {
       this.store.dispatch(updateThemeActiveStatus({ themesStore: addNewThemeToListObject }))
     }
 
     //----------------------------------
 
 
-    
+
 
     let defaultStatus = this.makeDefaultThemeStatusForm1.get('makeDefaultThemeStatus')?.value !== null ? this.makeDefaultThemeStatusForm1.get('makeDefaultThemeStatus')?.value[0] : ''
 
     this.customThemeService.setNewTheme(themeDetails, this.themesColorFetchingStatus1, defaultStatus);
-   
+
+
+    if (themeDetails.primaryColor !== '#5f5f63' && themeDetails.secondaryColor !== '#000000') {
+      localStorage.setItem('previouslyChoosenTheme', JSON.stringify(themeDetails))
+    }
+
     this.makeDefaultThemeStatusForm1.reset()
     this.visible = !this.visible
 
-  //assigning last four Objects to choose Default themes
+    //assigning last four Objects to choose Default themes
     this.changeDefaultThemeList()
 
 
@@ -306,8 +378,8 @@ export class HeaderpageComponent implements OnInit {
 
         this.customThemeService.setPropertyValuesToCSSVariables('--primaryColor1', colorData1)
         this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(colorData1))
-      //   this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(colorData))
-       }
+        //   this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(colorData))
+      }
       else {
 
         this.customThemeService.setPropertyValuesToCSSVariables('--secondaryColor1', colorData1)
@@ -327,19 +399,32 @@ export class HeaderpageComponent implements OnInit {
 
 
 
-  changeDefaultThemes(themeInfo){
+  changeDefaultThemes(themeInfo) {
 
-    
-   let  defaultTheme = {
-     primaryColor: themeInfo.prime,
-     secondaryColor: themeInfo.secondary
+    let updateTheme
+    let defaultTheme = {
+      primaryColor: themeInfo.prime,
+      secondaryColor: themeInfo.secondary
     }
+
+
+    if (defaultTheme.primaryColor !== '#5f5f63' && defaultTheme.secondaryColor !== '#000000'){
+      localStorage.setItem('previouslyChoosenTheme', JSON.stringify(defaultTheme))
+      localStorage.setItem('themeType', 'LIGHT')
+    }
+    else{
+      localStorage.setItem('themeType', 'DARK')
+
+    }
+    
+    this.makeSwitchTrueOrFalse()
+
 
     let themeDataFromStore = {
       primaryColor: '',
       secondaryColor: ''
     };
-    let status:boolean=false
+    let status: boolean = false
 
 
     //assigning values to the form groups
@@ -353,14 +438,10 @@ export class HeaderpageComponent implements OnInit {
       themeDataFromStore.secondaryColor = data.secondaryColor
     })
 
-   
-    
-
-
     if (defaultTheme.primaryColor === themeDataFromStore.primaryColor && defaultTheme.secondaryColor === themeDataFromStore.secondaryColor) {
       this.visible = true
       this.toasterService.warning('Theme already applied ',)
-      status=true
+      status = true
     }
     else {
 
@@ -369,90 +450,119 @@ export class HeaderpageComponent implements OnInit {
       }, 500)
     }
 
-
-
     this.store.dispatch(customThemeChoosen({ customThemeData: defaultTheme }))
-    //assigning new theme
-
-    ///--------------------
 
     // storing values in a list
     this.fetchAllDataFromStore()
-
-
 
     let findExistTheme = this.fetchDataFromEntireStore.find(theme => theme.prime === defaultTheme.primaryColor && theme.secondary === defaultTheme.secondaryColor)
 
     if (findExistTheme !== undefined) {
 
 
-      let updateTheme = {
+       updateTheme = {
         id: findExistTheme.id,
-        prime:findExistTheme.prime,
-        secondary:findExistTheme.secondary,
-        active:true
-    }
+        prime: findExistTheme.prime,
+        secondary: findExistTheme.secondary,
+        active: true
+      }
 
       this.store.dispatch(updateThemeActiveStatus({ themesStore: updateTheme }))
 
 
     }
-    
-
-
 
     //-------------
-
-
-
     this.customThemeService.setNewTheme(defaultTheme, status, '');
 
     this.customThemeService.setPropertyValuesToCSSVariables('--headerFontColor', this.customThemeService.getFontColor(defaultTheme.primaryColor))
- 
-    
+
+
     this.changeDefaultThemeList()
+    
 
   }
-
 
 
 
   changeDarkOrLightTheme(infoFromSwitch) {
     // console.log(document.documentElement.style.getPropertyValue($mystyle),"came data");
 
-    
+
     let { messageFromSwitch, statusOfClick } = infoFromSwitch
     this.pageRefreshStatus = true
     this.lightAndDarkThemeStatus = statusOfClick
     let themeObject: any
-    let dataFromLocalStorageInfo
+    let previouslyUpdatedData
+    let themeObject1
 
+    this.fetchAllDataFromStore()
+ 
   
+    
 
     if (this.lightAndDarkThemeStatus) {
+
+
+      localStorage.setItem('primary', '#5f5f63')
+      localStorage.setItem('secondary', '#000000')
+      
+      // update theme object
       themeObject = {
         primaryColor: '#5f5f63',
         secondaryColor: '#000000'
       }
+    
+      
+      localStorage.setItem('themeType', 'DARK')
+
+
     }
     else {
-     
-      dataFromLocalStorageInfo=this.customThemeService.fetchPrimaryAndSecondaryColorsFromLocalstorage()
+      this.changeDefaultThemeList()
+      previouslyUpdatedData = JSON.parse(localStorage.getItem('previouslyChoosenTheme'))
 
-     
+      
       themeObject = {
-        primaryColor: dataFromLocalStorageInfo.primaryColor,
-        secondaryColor: dataFromLocalStorageInfo.secondaryColor
+        primaryColor: previouslyUpdatedData.primaryColor,
+        secondaryColor: previouslyUpdatedData.secondaryColor
+      }
+      
+ 
+
+      let findThemeExistOrNot = this.fetchDataFromEntireStore.find(theme => theme.prime === themeObject.primaryColor && theme.secondary === themeObject.secondaryColor)
+
+      if (findThemeExistOrNot !== undefined){
+        themeObject1 = {
+          id: findThemeExistOrNot.id,
+          prime: findThemeExistOrNot.prime,
+          secondary: findThemeExistOrNot.secondary,
+          active: true
+
+        }
+
+        this.store.dispatch(updateThemeActiveStatus({ themesStore: themeObject1 }))
       }
 
+      localStorage.setItem('themeType', 'LIGHT')
 
+    
     }
+
+    this.changeDefaultThemeList()
+
+    // 
+    this.makeSwitchTrueOrFalse()
 
 
     if (messageFromSwitch) {
       this.store.dispatch(customThemeChoosen({ customThemeData: themeObject }))
-      this.customThemeService.setNewTheme(themeObject, true,'');
+      this.customThemeService.setNewTheme(themeObject, true, '');
     }
+
+
+
+
 
   }
 
