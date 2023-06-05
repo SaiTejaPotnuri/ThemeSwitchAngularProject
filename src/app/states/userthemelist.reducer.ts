@@ -1,8 +1,7 @@
 import { createReducer, on } from "@ngrx/store"
 import { userListOfThemes } from "./userthemelist.state"
 import { addNewThmeToList, updateThemeActiveStatus } from "./userthemelist.actions"
-import { state } from "@angular/animations"
-import { Actions } from "@ngrx/effects"
+
 
 
 const themesListReducer = createReducer(userListOfThemes,

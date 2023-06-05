@@ -153,10 +153,23 @@ export class HeaderpageComponent implements OnInit {
 
     let previouslyChoosenThemeDATA = JSON.parse(localStorage.getItem('previouslyChoosenTheme'))
 
-    let defaultLightTheme = {
-      primaryColor: previouslyChoosenThemeDATA.primaryColor,
-      secondaryColor: previouslyChoosenThemeDATA.secondaryColor
+    let defaultLightTheme 
+
+    if (previouslyChoosenThemeDATA !== null){
+      defaultLightTheme = {
+        primaryColor: previouslyChoosenThemeDATA.primaryColor ,
+        secondaryColor: previouslyChoosenThemeDATA.secondaryColor 
+      }
     }
+    else{
+      defaultLightTheme = {
+        primaryColor:'#000000',
+        secondaryColor: '#FFFFFF'
+      }
+
+    }
+
+
 
     localStorage.setItem('previouslyChoosenTheme', JSON.stringify(defaultLightTheme))
 
@@ -516,7 +529,7 @@ export class HeaderpageComponent implements OnInit {
       
       localStorage.setItem('themeType', 'DARK')
 
-
+      this.toasterService.warning('Your Default theme is changed to DARK theme')
     }
     else {
       this.changeDefaultThemeList()
@@ -544,7 +557,10 @@ export class HeaderpageComponent implements OnInit {
         this.store.dispatch(updateThemeActiveStatus({ themesStore: themeObject1 }))
       }
 
+      console.log("CAME HERE");
+      
       localStorage.setItem('themeType', 'LIGHT')
+
 
     
     }
