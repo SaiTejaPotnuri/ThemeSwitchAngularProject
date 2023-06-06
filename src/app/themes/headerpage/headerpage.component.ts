@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { CustomthemeService } from 'src/app/Services/customtheme.service';
 import { customThemeChoosen } from 'src/app/states/usertheme.actions';
+import { getTheme } from 'src/app/states/usertheme.selector';
 import { addNewThmeToList, updateThemeActiveStatus } from 'src/app/states/userthemelist.actions';
 import { getThemesList } from 'src/app/states/userthemelist.selector';
 import { appStoreState } from 'src/app/store/appStore.state';
@@ -129,7 +130,7 @@ export class HeaderpageComponent implements OnInit {
     }
     else if (localStorage.getItem('themeType') === 'LIGHT' && (primaryColor === '#5f5f63' && secondaryColor === '#000000') ){
 
-      this.store.select('myThemePicker').subscribe((data)=>{
+      this.store.select(getTheme).subscribe((data)=>{
           if(data !== null){
 
             if (data.primaryColor === '#5f5f63' && data.secondaryColor === '#000000'){
@@ -446,7 +447,7 @@ export class HeaderpageComponent implements OnInit {
     this.setValuesToTheForm(this.colorPickerTheme1, 'secondaryColor11', defaultTheme.secondaryColor)
 
     //fetchesData From The Store
-    this.themeSubscription1 = this.store.select('myThemePicker').subscribe((data) => {
+    this.themeSubscription1 = this.store.select(getTheme).subscribe((data) => {
       themeDataFromStore.primaryColor = data.primaryColor
       themeDataFromStore.secondaryColor = data.secondaryColor
     })

@@ -8,6 +8,11 @@ import { ThemesDashboardComponent } from './themes-dashboard/themes-dashboard.co
 import { HomepageComponent } from './homepage/homepage.component';
 import { HeaderpageComponent } from './headerpage/headerpage.component';
 import { SharedModule } from '../shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import { userthemeReducer } from '../states/usertheme.reducer';
+import { userThemesListReducer } from '../states/userthemelist.reducer';
+import { themeListContainer } from '../states/userthemelist.selector';
+import { newlyGeneratedTheme } from '../states/usertheme.selector';
 
 
 @NgModule({
@@ -22,7 +27,10 @@ import { SharedModule } from '../shared/shared.module';
     ThemesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature(newlyGeneratedTheme,userthemeReducer),
+    StoreModule.forFeature(themeListContainer, userThemesListReducer)
+
 
     
   ]

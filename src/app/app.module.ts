@@ -11,7 +11,6 @@ import { AuthModule } from './auth/auth.module';
 import { WebSocketServerService } from './Services/web-socket-server.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { appStoreReducer } from './store/appStore.state';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,7 @@ import { appStoreReducer } from './store/appStore.state';
     BrowserAnimationsModule,
       FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(appStoreReducer),
+    StoreModule.forRoot({}),
     ToastrModule.forRoot({
       timeOut: 1300,
       preventDuplicates: true,

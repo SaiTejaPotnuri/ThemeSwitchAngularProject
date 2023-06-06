@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { CustomthemeService } from 'src/app/Services/customtheme.service';
 import { customThemeChoosen } from 'src/app/states/usertheme.actions';
+import { getTheme } from 'src/app/states/usertheme.selector';
 import { addNewThmeToList, updateThemeActiveStatus } from 'src/app/states/userthemelist.actions';
 import { getThemesList } from 'src/app/states/userthemelist.selector';
 import { appStoreState } from 'src/app/store/appStore.state';
@@ -119,7 +120,7 @@ export class LoginComponent {
     this.fetchAllDataFromStore()
     let defaultLightTheme
 
-    this.store.select('myThemePicker').subscribe((data) => {
+    this.store.select(getTheme).subscribe((data) => {
 
       if (data !== null) {
 
@@ -308,7 +309,7 @@ export class LoginComponent {
     this.setValuesToTheForm(this.colorPickerTheme, 'secondaryColor11', defaultTheme.secondaryColor)
 
     //fetchesData From The Store
-    this.themeSubscription = this.store.select('myThemePicker').subscribe((data) => {
+    this.themeSubscription = this.store.select(getTheme).subscribe((data) => {
       themeDataFromStore.primaryColor = data.primaryColor
       themeDataFromStore.secondaryColor = data.secondaryColor
     })

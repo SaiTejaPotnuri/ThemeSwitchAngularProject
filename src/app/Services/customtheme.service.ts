@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { themeChangeModal } from '../states/usertheme.state';
 import { Subscription } from 'rxjs';
 import { customThemeChoosen } from '../states/usertheme.actions';
+import { appStoreState } from '../store/appStore.state';
+import { getTheme } from '../states/usertheme.selector';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class CustomthemeService implements OnDestroy {
   themeSubscription: Subscription;
 
 
-  constructor(private toasterService: ToastrService, private store: Store<{ myThemePicker: themeChangeModal }>) { }
+  constructor(private toasterService: ToastrService, private store: Store<appStoreState>) { }
 
   ngOnDestroy(): void {
 
@@ -28,7 +30,7 @@ export class CustomthemeService implements OnDestroy {
 
 
   fetchMyThemePickerActionValues() {
-    this.themeSubscription = this.store.select('myThemePicker').subscribe((data) => {
+    this.themeSubscription = this.store.select(getTheme).subscribe((data) => {
       this.primaryColorChoosen = data.primaryColor
       this.secodaryColorChoosen = data.secondaryColor
     })
