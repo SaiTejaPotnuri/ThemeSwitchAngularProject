@@ -4,7 +4,9 @@ import { Router } from '@angular/router'
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { AuthservicesService } from 'src/app/Services/authservices.service';
 import { CustomthemeService } from 'src/app/Services/customtheme.service';
+import { loginStart } from 'src/app/states/authState/auth.actions';
 import { customThemeChoosen } from 'src/app/states/usertheme.actions';
 import { getTheme } from 'src/app/states/usertheme.selector';
 import { addNewThmeToList, updateThemeActiveStatus } from 'src/app/states/userthemelist.actions';
@@ -38,7 +40,8 @@ export class LoginComponent {
     private router: Router,
     private customThemeService: CustomthemeService,
     private toasterService: ToastrService,
-    private store: Store<appStoreState>
+    private store: Store<appStoreState>,
+    private auth :AuthservicesService
 
   ) {
 
@@ -188,7 +191,16 @@ export class LoginComponent {
   submitSignInDetails(a: any) {
     let userName = a.signInEmail.split('@')[0]
 
+
+    let { signInEmail: email, signINPassword: password } =a
+
     localStorage.setItem('userInfo', userName)
+
+    //calling auth Service to check 
+    // this.auth.login(a)
+
+    this.store.dispatch(loginStart({email, password}))
+
     this.router.navigate(['/mythemes'])
 
   }

@@ -9,6 +9,10 @@ import { StoreModule } from '@ngrx/store';
 import { userThemesListReducer } from '../states/userthemelist.reducer';
 import { themeListContainer } from '../states/userthemelist.selector';
 import { newlyGeneratedTheme } from '../states/usertheme.selector';
+import { authStateName } from '../states/authState/auth.selector';
+import { authReducer } from '../states/authState/auth.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { authEffects } from '../states/authState/auth.effects';
 
 
 
@@ -22,6 +26,8 @@ import { newlyGeneratedTheme } from '../states/usertheme.selector';
     PrimengModule,
     FormsModule,
     ReactiveFormsModule,
+    EffectsModule.forFeature([authEffects]),
+    StoreModule.forFeature(authStateName, authReducer),
     StoreModule.forFeature(newlyGeneratedTheme, userthemeReducer),
     StoreModule.forFeature(themeListContainer, userThemesListReducer)
 
