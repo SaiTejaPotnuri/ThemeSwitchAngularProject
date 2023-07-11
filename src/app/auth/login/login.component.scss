@@ -19,6 +19,38 @@
     filter: drop-shadow(9px 9px 2px #aeadad);
 }
 
+.google{
+    width: 90%;
+    padding: 10px;   
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.google-button {
+    display: inline-block;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 10px;
+
+}
+
+.google-button:hover {
+    background-color: #eee;
+}
+
+.google-logo {
+    width: 70px;
+    height: 30px;
+    object-fit: fill;
+}
+
 
 @media screen and (max-height:600px) {
     .mainContainer {

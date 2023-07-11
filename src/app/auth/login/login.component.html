@@ -1,137 +1,191 @@
 <div class="containerLogin">
-    <div class="mainContainer">
-
-        <div class="imagePart">
-            <img [src]="imagesList.logisticsImage" alt="">
-        </div>
-        <div class="formPart">
-
-            <section id="In" class="signInForm">
-                <h2>Sign In</h2>
-                <p>Welcome to logistics supply chain platform</p>
-                <p>Login as member to experience</p>
-                <div class="emailTag">
-                    <app-inputtag [type]="'email'" [label]="'UserName'" [idInfo]="'float-input1'"
-                        [formGroupInfo]="signInForm" [formControlNameInfo]="'signInEmail'" ></app-inputtag>
-
-                </div>
-                <div class="passwordTag">
-                    <app-inputtag [type]="'password'" [label]="'Password'" [formGroupInfo]="signInForm"
-                        [formControlNameInfo]="'signINPassword'"></app-inputtag>
-
-                </div>
-                <div class="submitButton">
-                    <app-buttontag [classInfo]="'p-button-raised'" [label]="' Sign In '" [buttonType]="'submit'"
-                        (buttonStatus)="submitSignInDetails(signInForm.value)"
-                        [disabledInfo]="signInForm.invalid"></app-buttontag>
-                </div>
-
-                <div class="formFooter">
-                    <p>Change Theme?</p>
-                    <a (click)="changeTheme()">Click here</a>
-
-                </div>
-                <div class="themeChangeDialog">
-                    <p-dialog header="Create Theme" [(visible)]="visible" [style]="{width: '35vw',height:'60rem'}" [modal]="true"
-                        [draggable]="false" [resizable]="false">
-                        <div class="dialogbodyPart">
-                                                    <p>Text and Hexa accepted</p>
-
-                            <div class="primaryTheme">
-                                <div class="themeInput">
-                                    <app-inputtag [type]="'text'" [label]="'Primary Color'" [idInfo]="'float-input5'"
-                                        [formGroupInfo]="customTheme"
-                                        [formControlNameInfo]="'primaryColor'" (valueChangeStatus)="applyingColorsToInput($event,'primaryColor11','primaryColor')"></app-inputtag>
-                                </div>
-                                <div class="themeInput2">
-                                    <app-inputtag [type]="'color'" [idInfo]="'float-input6'"
-                                        [formGroupInfo]="colorPickerTheme"
-                                        [formControlNameInfo]="'primaryColor11'" (valueChangeStatus)="applyingColorsToInput($event,'primaryColor11','primaryColor')"></app-inputtag>
-
-                                </div>
-
-                            </div>
-                            <div class="secondaryTheme">
-                                <div class="themeInputSecondary">
-                                    <app-inputtag [type]="'text'" [label]="'Secondary Color'" [idInfo]="'float-input4'"
-                                        [formGroupInfo]="customTheme"
-                                        [formControlNameInfo]="'secondaryColor'" (valueChangeStatus)="applyingColorsToInput($event,'secondaryColor11','secondaryColor')"></app-inputtag>
-
-                                </div>
-                                <div class="themeInput2">
-                                    <app-inputtag [type]="'color'" [idInfo]="'float-input7'"
-                                        [formGroupInfo]="colorPickerTheme"
-                                        [formControlNameInfo]="'secondaryColor11'" (valueChangeStatus)="applyingColorsToInput($event,'secondaryColor11','secondaryColor')"></app-inputtag>
-
-                                </div>
-                            </div>
-
-                            <div class="checkBoxContainer">
-                                    <app-checkboxtype [formGroup]="makeDefaultThemeStatusForm"[checkBoxFormControlerName]="'makeDefaultThemeStatus'" [labelForCheckBox]="'Make It Default Theme'" [idForCheckBox]="'defaultCheck'"></app-checkboxtype>
-                            </div>
-
-
-                            <div class="createThemeButton">
-                                <app-buttontag [classInfo]="'p-button-raised'" [label]="' Create '"
-                                    [buttonType]="'submit'" [disabledInfo]="!validateColorStatus1 && customTheme.invalid"
-                                    (buttonStatus)="newTheme(customTheme.value)"></app-buttontag>
-                            </div>
-                        </div>
-
-
-                        <div class="separationLine">
-                            <table>
-                                <tr>
-                                    <td style="width:46%">
-                                        <hr />
-                                    </td>
-                                    <td class="horizontaillineAndOrText">or</td>
-                                    <td style="width:47%">
-                                        <hr />
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="defaultThemeTitle">
-                            <p>Chosse Your Themes</p>
-                        </div>
-                        <div class="defaultThemeings">
-                        
-                            
-                            <div class="subTheme" *ngFor="let theme of defaulthemesList1 let i = index">
-                                <div id="theme1" (click)="changeDefaultThemes(theme)" [ngClass]="theme.active ? 'addborderPadding':'' ">
-                                    <div class="upperColorPart1" [style.background]="theme.prime">
-                                    </div>
-                                    <div class="lowerColorPart1" [style.background]="theme.secondary">
-                                    </div>
-                                </div>
-                               
-                            </div>
-                        
-                            
-                        
-                        
-                        </div>
-
-
-
-
-
-
-
-
-
-
-                    </p-dialog>
-                </div>
-
-
-
-            </section>
-
-
-        </div>
-
+  <div class="mainContainer">
+    <div class="imagePart">
+      <img [src]="imagesList.logisticsImage" alt="" />
     </div>
+    <div class="formPart">
+      <section id="In" class="signInForm">
+        <h2>Sign In</h2>
+        <p>Welcome to logistics supply chain platform</p>
+        <p>Login as member to experience</p>
+        <div class="emailTag">
+          <app-inputtag
+            [type]="'email'"
+            [label]="'UserName'"
+            [idInfo]="'float-input1'"
+            [formGroupInfo]="signInForm"
+            [formControlNameInfo]="'signInEmail'"
+          ></app-inputtag>
+        </div>
+        <div class="passwordTag">
+          <app-inputtag
+            [type]="'password'"
+            [label]="'Password'"
+            [formGroupInfo]="signInForm"
+            [formControlNameInfo]="'signINPassword'"
+          ></app-inputtag>
+        </div>
+        <div class="submitButton">
+          <app-buttontag
+            [classInfo]="'p-button-raised'"
+            [label]="' Sign In '"
+            [buttonType]="'submit'"
+            (buttonStatus)="submitSignInDetails(signInForm.value)"
+            [disabledInfo]="signInForm.invalid"
+          ></app-buttontag>
+        </div>
+        <div class="google">
+                    <a (click)="continueWithGoogleLogin('google')" class="google-button">
+                      <img [src]="googleImage" alt="Google" class="google-logo">
+                  </a>
+                  <a (click)="continueWithGoogleLogin('github')" class="google-button">
+                    <img [src]="githubImage" alt="Google" class="google-logo">
+                </a>
+        </div>
 
+        <div class="formFooter">
+          <p>Change Theme?</p>
+          <a (click)="changeTheme()">Click here</a>
+        </div>
+        <div class="themeChangeDialog">
+          <p-dialog
+            header="Create Theme"
+            [(visible)]="visible"
+            [style]="{ width: '35vw', height: '60rem' }"
+            [modal]="true"
+            [draggable]="false"
+            [resizable]="false"
+          >
+            <div class="dialogbodyPart">
+              <p>Text and Hexa accepted</p>
+
+              <div class="primaryTheme">
+                <div class="themeInput">
+                  <app-inputtag
+                    [type]="'text'"
+                    [label]="'Primary Color'"
+                    [idInfo]="'float-input5'"
+                    [formGroupInfo]="customTheme"
+                    [formControlNameInfo]="'primaryColor'"
+                    (valueChangeStatus)="
+                      applyingColorsToInput(
+                        $event,
+                        'primaryColor11',
+                        'primaryColor'
+                      )
+                    "
+                  ></app-inputtag>
+                </div>
+                <div class="themeInput2">
+                  <app-inputtag
+                    [type]="'color'"
+                    [idInfo]="'float-input6'"
+                    [formGroupInfo]="colorPickerTheme"
+                    [formControlNameInfo]="'primaryColor11'"
+                    (valueChangeStatus)="
+                      applyingColorsToInput(
+                        $event,
+                        'primaryColor11',
+                        'primaryColor'
+                      )
+                    "
+                  ></app-inputtag>
+                </div>
+              </div>
+              <div class="secondaryTheme">
+                <div class="themeInputSecondary">
+                  <app-inputtag
+                    [type]="'text'"
+                    [label]="'Secondary Color'"
+                    [idInfo]="'float-input4'"
+                    [formGroupInfo]="customTheme"
+                    [formControlNameInfo]="'secondaryColor'"
+                    (valueChangeStatus)="
+                      applyingColorsToInput(
+                        $event,
+                        'secondaryColor11',
+                        'secondaryColor'
+                      )
+                    "
+                  ></app-inputtag>
+                </div>
+                <div class="themeInput2">
+                  <app-inputtag
+                    [type]="'color'"
+                    [idInfo]="'float-input7'"
+                    [formGroupInfo]="colorPickerTheme"
+                    [formControlNameInfo]="'secondaryColor11'"
+                    (valueChangeStatus)="
+                      applyingColorsToInput(
+                        $event,
+                        'secondaryColor11',
+                        'secondaryColor'
+                      )
+                    "
+                  ></app-inputtag>
+                </div>
+              </div>
+
+              <div class="checkBoxContainer">
+                <app-checkboxtype
+                  [formGroup]="makeDefaultThemeStatusForm"
+                  [checkBoxFormControlerName]="'makeDefaultThemeStatus'"
+                  [labelForCheckBox]="'Make It Default Theme'"
+                  [idForCheckBox]="'defaultCheck'"
+                ></app-checkboxtype>
+              </div>
+
+              <div class="createThemeButton">
+                <app-buttontag
+                  [classInfo]="'p-button-raised'"
+                  [label]="' Create '"
+                  [buttonType]="'submit'"
+                  [disabledInfo]="!validateColorStatus1 && customTheme.invalid"
+                  (buttonStatus)="newTheme(customTheme.value)"
+                ></app-buttontag>
+              </div>
+            </div>
+
+            <div class="separationLine">
+              <table>
+                <tr>
+                  <td style="width: 46%">
+                    <hr />
+                  </td>
+                  <td class="horizontaillineAndOrText">or</td>
+                  <td style="width: 47%">
+                    <hr />
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="defaultThemeTitle">
+              <p>Chosse Your Themes</p>
+            </div>
+            <div class="defaultThemeings">
+              <div
+                class="subTheme"
+                *ngFor="let theme of defaulthemesList1; let i = index"
+              >
+                <div
+                  id="theme1"
+                  (click)="changeDefaultThemes(theme)"
+                  [ngClass]="theme.active ? 'addborderPadding' : ''"
+                >
+                  <div
+                    class="upperColorPart1"
+                    [style.background]="theme.prime"
+                  ></div>
+                  <div
+                    class="lowerColorPart1"
+                    [style.background]="theme.secondary"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </p-dialog>
+        </div>
+      </section>
+    </div>
+  </div>
 </div>

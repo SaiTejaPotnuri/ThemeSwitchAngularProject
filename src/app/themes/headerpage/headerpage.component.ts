@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { AuthservicesService } from 'src/app/Services/authservices.service';
 import { CustomthemeService } from 'src/app/Services/customtheme.service';
 import { customThemeChoosen } from 'src/app/states/usertheme.actions';
 import { getTheme } from 'src/app/states/usertheme.selector';
@@ -44,7 +45,8 @@ export class HeaderpageComponent implements OnInit {
     private router: Router,
     private customThemeService: CustomthemeService,
     private toasterService: ToastrService,
-    private store: Store<appStoreState>
+    private store: Store<appStoreState>,
+    private auth:AuthservicesService
 
 
   ) {
@@ -69,7 +71,8 @@ export class HeaderpageComponent implements OnInit {
   }
 
   logOut() {
-    localStorage.removeItem('userInfo')
+    // this.oAuthService.logoutUrl = 'https://www.google.com/accounts/Logout'
+    this.auth.logout()
   }
 
   ngOnDestroy(): void {

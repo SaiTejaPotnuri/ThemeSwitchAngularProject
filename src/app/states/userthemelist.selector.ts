@@ -9,5 +9,4 @@ const getThemesListState = createFeatureSelector<userThemeSList>(themeListContai
 
 export const getThemesList = createSelector(getThemesListState ,(state)=>{
     return state.themePosts
-
 })
