@@ -13,12 +13,14 @@ import { authStateName } from '../states/authState/auth.selector';
 import { authReducer } from '../states/authState/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { authEffects } from '../states/authState/auth.effects';
+import { OAuth2InitComponent } from './oauth2-init/oauth2-init.component';
 
 
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    OAuth2InitComponent
   ],
   imports: [
     CommonModule,

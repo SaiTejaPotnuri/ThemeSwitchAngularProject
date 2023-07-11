@@ -7,6 +7,7 @@ import { CardModule } from 'primeng/card';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     CardModule,
     InputSwitchModule,
     TableModule,
-    CheckboxModule
+    CheckboxModule,
+    ProgressSpinnerModule
     
   ],
   exports:[
@@ -29,7 +31,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     CardModule,
     InputSwitchModule,
     TableModule,
-    CheckboxModule
+    CheckboxModule,
+    ProgressSpinnerModule
     
   ]
 

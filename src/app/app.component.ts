@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
+import { AuthservicesService } from './Services/authservices.service';
 
 
 @Component({
