@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  FIREBASE_API_KEY: 'AIzaSyCujwADzGU_0Bq45CbTKCbBRlMgD5QzJXQ'
+  FIREBASE_API_KEY: 'AIzaSyCujwADzGU_0Bq45CbTKCbBRlMgD5QzJXQ',
+  API_URL:'http://localhost:4200/'
 };
 
 /*

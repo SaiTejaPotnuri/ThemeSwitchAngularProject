@@ -1,0 +1,27 @@
+{
+      "google": {
+        "client_id": "224549912322-lodt3b5cd5lorhpiajstghocsm72a3a2.apps.googleusercontent.com",
+        "redirect_uri": "http://localhost:4200/authenticate",
+        "response_type": "code",
+        "scope": "email profile",
+        "client_secret": "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",
+        "token_url":"https://www.googleapis.com/oauth2/v4/token",
+        "profile_url":"https://www.googleapis.com/oauth2/v1/userinfo?access_token=",
+        "accounts_url":"https://accounts.google.com/o/oauth2/v2/auth?",
+        "grant_type":"authorization_code"
+      },
+      "github": {
+        "client_id": "cb2c01ae0ef6ab56fa38",
+        "redirect_uri": "http://localhost:4200/authenticate",
+        "response_type": "code",
+        "scope": "email profile",
+        "client_secret": "1f2521d2e62f65e08b464e938e702fe55c2fefcc",
+        "token_url":"https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token",
+        "profile_url":"https://api.github.com/user",
+        "accounts_url":"https://github.com/login/oauth/authorize?",
+        "grant_type":"authorization_code"
+      }
+    
+}
+
+

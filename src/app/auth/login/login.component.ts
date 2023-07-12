@@ -132,9 +132,9 @@ export class LoginComponent {
     this.defaulthemesList1 = [...userChoosenThmes];
   }
 
-  continueWithGoogleLogin(typeOfLogin:string){
+  continueWithLogining(typeOfLogin:string){
     localStorage.setItem('loginType',typeOfLogin) 
-       this.auth.continueWithGoogle();   
+       this.auth.continueWithLogin();   
   }
 
   callFunctionsWhenLoaded() {

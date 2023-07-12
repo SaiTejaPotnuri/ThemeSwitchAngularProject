@@ -14,7 +14,7 @@ export class OAuth2InitComponent {
   ngOnInit() {
     // use the code param in url and exchange for token google oauth2
     setTimeout(()=>{
-      this.auth.fetchResposeGoogleCallback(this.auth.fetchTheCode())
+      this.auth.fetchResposeCallback(this.auth.fetchTheCode())
     },800)
   }
 
