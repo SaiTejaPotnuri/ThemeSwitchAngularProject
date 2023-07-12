@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthservicesService } from 'src/app/Services/authservices.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class HomepageComponent implements OnInit {
 
   searchForm:FormGroup
 
-  constructor(private fb: FormBuilder,private auth:AuthservicesService) {
+  constructor(private fb: FormBuilder,private auth:AuthservicesService,private router:Router) {
       this.searchForm = this.fb.group({
           serchingText :['']
       })
@@ -86,13 +87,14 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.auth.isLoggedin()
     this.auth.fetchUserProfileData().subscribe((res)=>{
       this.usersData.forEach((user:any)=>{
-        user.profileImage1 = res['picture'] 
+        user.profileImage1 = res['picture'] || res['avatar_url']
         user.nameOfTheUser=res['name']
       })
 
-       this.userInfo.profileImage =res['picture'] 
+       this.userInfo.profileImage =res['picture'] || res['avatar_url']
        this.userInfo.employeeName =res['name']
 
       
